@@ -76,7 +76,7 @@
                 </div>
                 <div>
                     <h2 class="text-lg font-semibold mb-4">Contact Us</h2>
-                    <p>Email: support@autisticled.com</p>
+                    <p>Email: hello@autisticled.com</p>
                     <p>Phone: Coming soon!</p>
                 </div>
                 <div>
@@ -84,8 +84,15 @@
                     <p>Social media links coming soon!</p>
                 </div>
             </div>
+    
             <div class="mt-8 text-center text-sm text-white">
                 &copy; {{ date('Y') }} Autistic Led. All rights reserved.
+                <div class="mt-2 text-white">
+                    Made with <span class="text-red-500">♥</span> by 
+                    <a href="https://ebrookes.dev" target="_blank" class="text-yellow-500 hover:underline font-medium">
+                        Ellis Development
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
