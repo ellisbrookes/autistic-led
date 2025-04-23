@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autistic Led</title>
+    <title>Autistic Led - Homepage</title>
     @vite('resources/css/app.css')
 </head>
 <body class="text-white bg-gray-800">
@@ -19,7 +19,7 @@
                 <div class="hidden sm:flex space-x-8">
                     <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Home</a>
                     <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
-                    <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
+                    <a href="{{ route('contact') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
                     <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">What We Offer</a>
                     <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Autistic Led Directory</a>
                 </div>
@@ -39,7 +39,7 @@
         <div class="flex flex-col items-center py-4 space-y-4">
             <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Home</a>
             <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
-            <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
+            <a href="contact" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
             <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">What We Offer</a>
             <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Autistic Led Directory</a>
         </div>
