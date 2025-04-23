@@ -67,9 +67,9 @@
                 <div>
                     <h2 class="text-lg font-semibold mb-4">Useful Links</h2>
                     <ul class="space-y-2">
-                        <li><a href="{{ url('/') }}" class="hover:text-yellow-600">Home</a></li>
+                        <li><a href="/" class="hover:text-yellow-600">Home</a></li>
                         <li><a href="{{ url('/') }}" class="hover:text-yellow-600">About</a></li>
-                        <li><a href="{{ url('/') }}" class="hover:text-yellow-600">Contact</a></li>
+                        <li><a href="contact" class="hover:text-yellow-600">Contact</a></li>
                         <li><a href="{{ url('/') }}" class="hover:text-yellow-600">What We Offer</a></li>
                         <li><a href="{{ url('/') }}" class="hover:text-yellow-600">Autistic Led Directory</a></li>
                     </ul>
