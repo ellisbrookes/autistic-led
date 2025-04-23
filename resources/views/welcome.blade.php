@@ -35,7 +35,7 @@
         <div class="border-t-2 border-white"></div>
     </nav>
 
-    <div id="mobile-menu" class="sm:hidden hidden bg-gray-800 text-white">
+    <div id="mobile-menu" class="sm:hidden hidden bg-gray-700 text-white">
         <div class="flex flex-col items-center py-4 space-y-4">
             <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Home</a>
             <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
@@ -58,7 +58,37 @@
 
     <main class="py-8 flex justify-center">
         @yield('content')
+        <h1>Content Coming Soon!</h1>
     </main>
+
+    <footer class="bg-gray-900 mt-12 border-t-2 border-white">
+        <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-sm text-center sm:text-left">
+                <div>
+                    <h2 class="text-lg font-semibold mb-4">Useful Links</h2>
+                    <ul class="space-y-2">
+                        <li><a href="{{ url('/') }}" class="hover:text-yellow-600">Home</a></li>
+                        <li><a href="{{ url('/') }}" class="hover:text-yellow-600">About</a></li>
+                        <li><a href="{{ url('/') }}" class="hover:text-yellow-600">Contact</a></li>
+                        <li><a href="{{ url('/') }}" class="hover:text-yellow-600">What We Offer</a></li>
+                        <li><a href="{{ url('/') }}" class="hover:text-yellow-600">Autistic Led Directory</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold mb-4">Contact Us</h2>
+                    <p>Email: support@autisticled.com</p>
+                    <p>Phone: Coming soon!</p>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold mb-4">Follow Us</h2>
+                    <p>Social media links coming soon!</p>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-sm text-white">
+                &copy; {{ date('Y') }} Autistic Led. All rights reserved.
+            </div>
+        </div>
+    </footer>
 
     <script>
         document.getElementById('hamburger-icon').addEventListener('click', function() {
