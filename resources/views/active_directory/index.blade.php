@@ -19,9 +19,9 @@
 
                 <div class="hidden sm:flex space-x-6 items-center text-base">
                     <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Home</a>
-                    <a href="{{ url('/about') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
+                    <a href="{{ url('about') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
                     <a href="{{ route('contact') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
-                    <a href="{{ url('/services') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">What We Offer</a>
+                    <a href="{{ url('what_we_offer') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">What We Offer</a>
 
                     <div x-data="{ open: false }" class="relative">
                         <button
@@ -117,9 +117,9 @@
                     <h2 class="text-lg font-semibold mb-4">Useful Links</h2>
                     <ul class="space-y-2">
                         <li><a href="/" class="hover:text-yellow-600 hover:underline">Home</a></li>
-                        <li><a href="{{ url('/about') }}" class="hover:text-yellow-600 hover:underline">About</a></li>
+                        <li><a href="{{ url('about') }}" class="hover:text-yellow-600 hover:underline">About</a></li>
                         <li><a href="{{ route('contact') }}" class="hover:text-yellow-600 hover:underline">Contact</a></li>
-                        <li><a href="{{ url('/services') }}" class="hover:text-yellow-600 hover:underline">What We Offer</a></li>
+                        <li><a href="{{ url('what_we_offer') }}" class="hover:text-yellow-600 hover:underline">What We Offer</a></li>
                         <li><a href="{{ url('active_directory') }}" class="hover:text-yellow-600 hover:underline">Autistic Led Directory</a></li>
                     </ul>
                 </div>
