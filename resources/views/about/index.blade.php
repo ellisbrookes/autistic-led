@@ -80,14 +80,15 @@
         </div>
     </div>
 
-    <section class="bg-gray-900 w-full flex flex-col items-center justify-center py-6 border-b-2 border-white">
-        <img src="{{ asset('img/logo.png') }}" alt="Hero Logo" class="h-48 w-auto">
-        <h1 class="text-white text-lg sm:text-xl font-light text-center px-4 tracking-wide mt-3">
+    <section class="bg-gray-900 flex flex-col items-center p-4 border-b-2 border-white">
+        <img src="{{ asset('img/logo.png') }}" alt="Hero Logo" class="h-34">
+
+        <h1 class="text-white text-lg sm:text-xl tracking-wide my-4">
             The journey may vary but it is always Autistic Led
         </h1>
     </section>
 
-    <main class="p-8 flex items-center justify-center flex-1 flex-col">
+    <main class="p-4 flex items-center justify-center flex-1 flex-col">
         <div class="container md:w-4xl flex flex-col gap-3">
             <p>Autistic Led is an autistic adult peer support group that started in 2018 and covers the South Holland area of Lincolnshire, UK.</p>
 
@@ -96,7 +97,7 @@
             <p>But that's not where it ends!</p>
 
             <p>You see, at Autistic Led, it's all about meeting your own communication preferences as much as possible. So we have group chats on Whatsapp and Facebook as well as outdoor meet-ups. 
-            We are always thinking about new ways to bring the community closer together, specifically our autistic community but also the wider community through events so check back on the What We Offer page or follow us on Facebook: https://www.facebook.com/AutisticLedSouthHolland/</p>
+            We are always thinking about new ways to bring the community closer together, specifically our autistic community but also the wider community through events so check back on the What We Offer page or follow us on Facebook</p>
 
             <p>A LITTLE ABOUT ME</p>
 
