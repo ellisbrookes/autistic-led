@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autistic Led - Homepage</title>
+    <title>Autistic Led - Register</title>
     @vite('resources/css/app.css')
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
-<body class="text-white bg-gray-800 flex flex-col min-h-screen">
+<body class="text-white bg-gray-800">
 
     <nav class="bg-gray-900 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +18,7 @@
 
                 <div class="hidden sm:flex space-x-6 items-center whitespace-nowrap text-base">
                     <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Home</a>
-                    <a href="{{ url('about') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
+                    <a href="{{ url('/about') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
                     <a href="{{ route('contact') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
                     <a href="{{ url('what_we_offer') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">What We Offer</a>
 
@@ -92,9 +92,39 @@
 
     <div class="border-t-2 border-white"></div>
 
-    <main class="py-8 flex flex-1 justify-center">
+    <main class="py-8 flex justify-center">
         @yield('content')
-        <h1>Content Coming Soon!</h1>
+        <div class="mt-8 w-full max-w-md bg-gray-900 p-8 rounded-lg shadow-xl transform hover:scale-105 transition-all duration-300">
+            <h2 class="text-2xl font-semibold text-yellow-500 mb-6 text-center">Register</h2>
+
+            <form action="{{ route('active_directory.register') }}" method="POST">
+                @csrf
+
+                <div class="mb-5">
+                    <label for="name" class="block text-sm text-white">Name</label>
+                    <input type="text" name="name" id="name" class="w-full p-3 mt-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="email" class="block text-sm text-white">Email</label>
+                    <input type="email" name="email" id="email" class="w-full p-3 mt-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="password" class="block text-sm text-white">Password</label>
+                    <input type="password" name="password" id="password" class="w-full p-3 mt-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="password_confirmation" class="block text-sm text-white">Confirm Password</label>
+                    <input type="password" name="password_confirmation" id="password_confirmation" class="w-full p-3 mt-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600" required>
+                </div>
+
+                <div class="text-center mt-6">
+                    <button type="submit" class="w-full py-3 bg-yellow-600 text-white rounded-md text-lg font-semibold hover:bg-yellow-500 transition duration-200">Register</button>
+                </div>
+            </form>
+        </div>
     </main>
 
     <footer class="bg-gray-900 mt-12 border-t-2 border-white">
@@ -104,7 +134,7 @@
                     <h2 class="text-lg font-semibold mb-4">Useful Links</h2>
                     <ul class="space-y-2">
                         <li><a href="/" class="hover:text-yellow-600 hover:underline">Home</a></li>
-                        <li><a href="{{ url('about') }}" class="hover:text-yellow-600 hover:underline">About</a></li>
+                        <li><a href="{{ url('/about') }}" class="hover:text-yellow-600 hover:underline">About</a></li>
                         <li><a href="{{ route('contact') }}" class="hover:text-yellow-600 hover:underline">Contact</a></li>
                         <li><a href="{{ url('what_we_offer') }}" class="hover:text-yellow-600 hover:underline">What We Offer</a></li>
                         <li><a href="{{ url('active_directory') }}" class="hover:text-yellow-600 hover:underline">Autistic Led Directory</a></li>

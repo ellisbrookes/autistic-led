@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autistic Led - Homepage</title>
+    <title>Autistic Led - What we offer</title>
     @vite('resources/css/app.css')
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
-<body class="text-white bg-gray-800 flex flex-col min-h-screen">
+<body class="text-white bg-gray-800">
 
     <nav class="bg-gray-900 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -92,7 +92,7 @@
 
     <div class="border-t-2 border-white"></div>
 
-    <main class="py-8 flex flex-1 justify-center">
+    <main class="py-8 flex justify-center">
         @yield('content')
         <h1>Content Coming Soon!</h1>
     </main>

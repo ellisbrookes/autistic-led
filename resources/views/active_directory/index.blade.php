@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autistic Led - Homepage</title>
+    <title>Autistic Led - Coming Soon</title>
     @vite('resources/css/app.css')
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
-<body class="text-white bg-gray-800 flex flex-col min-h-screen">
+<body class="bg-gray-800 text-white min-h-screen flex flex-col">
 
+    <!-- Navigation -->
     <nav class="bg-gray-900 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -16,7 +17,7 @@
                     <img src="{{ asset('img/nav-logo.png') }}" alt="Logo" class="h-12 w-12 object-cover rounded-full">
                 </a>
 
-                <div class="hidden sm:flex space-x-6 items-center whitespace-nowrap text-base">
+                <div class="hidden sm:flex space-x-6 items-center text-base">
                     <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Home</a>
                     <a href="{{ url('about') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
                     <a href="{{ route('contact') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
@@ -28,7 +29,7 @@
                             class="flex items-center space-x-1 text-white hover:text-yellow-600 hover:underline font-medium focus:outline-none"
                         >
                             <span>Autistic Led Directory</span>
-                            <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transition-transform transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
@@ -57,19 +58,20 @@
         <div class="border-t-2 border-white"></div>
     </nav>
 
+    <!-- Mobile Menu -->
     <div id="mobile-menu" class="sm:hidden hidden bg-gray-700 text-white" x-data="{ mobileOpen: false }">
         <div class="flex flex-col items-center py-4 space-y-4 text-base text-center">
             <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Home</a>
-            <a href="{{ url('about') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
+            <a href="{{ url('/about') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
             <a href="{{ route('contact') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
-            <a href="{{ url('what_we_offer') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">What We Offer</a>
+            <a href="{{ url('/services') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">What We Offer</a>
 
             <button
                 @click="mobileOpen = !mobileOpen"
                 class="flex items-center justify-center space-x-1 text-white hover:text-yellow-600 hover:underline font-medium focus:outline-none"
             >
                 <span>Autistic Led Directory</span>
-                <svg :class="{ 'rotate-180': mobileOpen }" class="w-4 h-4 transition-transform transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <svg :class="{ 'rotate-180': mobileOpen }" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
             </button>
@@ -81,22 +83,33 @@
         </div>
     </div>
 
-    <div class="sm:hidden border-t-2 border-white"></div>
+    <!-- Coming Soon Section -->
+    <section class="flex-1 flex flex-col justify-center items-center text-center px-4">
+        <img src="{{ asset('img/logo.png') }}" alt="Autistic Led Logo" class="h-64 w-auto mb-6">
+        <h1 class="text-4xl sm:text-5xl font-bold text-yellow-500 mb-4">Coming Soon</h1>
+        <p class="text-lg text-gray-300 mb-8 max-w-xl">We're working hard to bring you the Autistic Led Directory. Stay tuned!</p>
 
-    <section class="bg-gray-900 w-full flex flex-col items-center justify-center py-6">
-        <img src="{{ asset('img/logo.png') }}" alt="Hero Logo" class="h-48 w-auto">
-        <h1 class="text-white text-lg sm:text-xl font-light text-center px-4 tracking-wide mt-3">
-            The journey may vary but it is always Autistic Led
-        </h1>
+        <div x-data="countdownTimer()" class="text-2xl sm:text-3xl font-mono flex gap-6 text-white">
+            <div class="text-center">
+                <div x-text="days"></div>
+                <span class="text-sm">Days</span>
+            </div>
+            <div class="text-center">
+                <div x-text="hours"></div>
+                <span class="text-sm">Hours</span>
+            </div>
+            <div class="text-center">
+                <div x-text="minutes"></div>
+                <span class="text-sm">Minutes</span>
+            </div>
+            <div class="text-center">
+                <div x-text="seconds"></div>
+                <span class="text-sm">Seconds</span>
+            </div>
+        </div>
     </section>
 
-    <div class="border-t-2 border-white"></div>
-
-    <main class="py-8 flex flex-1 justify-center">
-        @yield('content')
-        <h1>Content Coming Soon!</h1>
-    </main>
-
+    <!-- Footer -->
     <footer class="bg-gray-900 mt-12 border-t-2 border-white">
         <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-sm text-center sm:text-left">
@@ -134,10 +147,30 @@
     </footer>
 
     <script>
-        document.getElementById('hamburger-icon').addEventListener('click', function() {
+        function countdownTimer() {
+            const target = new Date("2025-06-01T00:00:00Z").getTime();
+            return {
+                days: '00', hours: '00', minutes: '00', seconds: '00',
+                update() {
+                    const now = new Date().getTime();
+                    const distance = target - now;
+
+                    this.days = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                    this.hours = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                    this.minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                    this.seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+                },
+                init() {
+                    this.update();
+                    setInterval(() => this.update(), 1000);
+                }
+            }
+        }
+
+        // Hamburger menu toggle
+        document.getElementById('hamburger-icon').addEventListener('click', function () {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
     </script>
-
 </body>
 </html>

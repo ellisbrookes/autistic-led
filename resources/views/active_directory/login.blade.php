@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autistic Led - Homepage</title>
+    <title>Autistic Led - Login</title>
     @vite('resources/css/app.css')
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
-<body class="text-white bg-gray-800 flex flex-col min-h-screen">
+<body class="text-white bg-gray-800">
 
     <nav class="bg-gray-900 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -92,9 +92,28 @@
 
     <div class="border-t-2 border-white"></div>
 
-    <main class="py-8 flex flex-1 justify-center">
+    <main class="py-8 flex justify-center">
         @yield('content')
-        <h1>Content Coming Soon!</h1>
+        <div class="mt-8 w-full max-w-md bg-gray-900 p-8 rounded-lg shadow-xl transform hover:scale-105 transition-all duration-300">
+            <h2 class="text-2xl font-semibold text-yellow-500 mb-6 text-center">Login</h2>
+
+            <form action="{{ route('active_directory.register') }}" method="POST">
+                @csrf
+                <div class="mb-5">
+                    <label for="email" class="block text-sm text-white">Email</label>
+                    <input type="email" name="email" id="email" class="w-full p-3 mt-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="password" class="block text-sm text-white">Password</label>
+                    <input type="password" name="password" id="password" class="w-full p-3 mt-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600" required>
+                </div>
+
+                <div class="text-center mt-6">
+                    <button type="submit" class="w-full py-3 bg-yellow-600 text-white rounded-md text-lg font-semibold hover:bg-yellow-500 transition duration-200">Login</button>
+                </div>
+            </form>
+        </div>
     </main>
 
     <footer class="bg-gray-900 mt-12 border-t-2 border-white">
