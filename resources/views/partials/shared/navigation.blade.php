@@ -9,7 +9,7 @@
                 <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Home</a>
                 <a href="{{ url('about') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
                 <a href="{{ route('contact') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
-                <a href="{{ url('what_we_offer') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">What We Offer</a>
+                <a href="{{ url('services') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Services</a>
 
                 <div x-data="{ open: false }" class="relative">
                     <button
@@ -50,7 +50,7 @@
         <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Home</a>
         <a href="{{ url('about') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
         <a href="{{ route('contact') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
-        <a href="{{ url('what_we_offer') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">What We Offer</a>
+        <a href="{{ url('services') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Services</a>
 
         <button
             @click="mobileOpen = !mobileOpen"

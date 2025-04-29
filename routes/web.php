@@ -14,9 +14,9 @@ Route::get('about', function () {
     return view('about.index');
 })->name('about');
 
-Route::get('what_we_offer', function () {
-    return view('what_we_offer.index');
-})->name('what_we_offer');
+Route::get('services', function () {
+    return view('services.index');
+})->name('services');
 
 Route::get('active_directory', function () {
     return view('active_directory.index');
