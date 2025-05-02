@@ -28,8 +28,8 @@
                         class="absolute left-0 mt-2 bg-gray-900 rounded-md shadow-lg z-50 w-max min-w-full"
                     >
                         <a href="{{ url('active_directory') }}" class="block px-6 py-3 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900">Directory Home</a>
-                        <a href="{{ route('active_directory.register') }}" class="block px-6 py-3 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900">Register</a>
-                        <a href="{{ route('active_directory.login') }}" class="block px-6 py-3 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900">Login</a>
+                        <a href="{{ route('register') }}" class="block px-6 py-3 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900">Register</a>
+                        <a href="{{ route('login') }}" class="block px-6 py-3 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900">Login</a>
                     </div>
                 </div>
             </div>
@@ -63,8 +63,8 @@
         </button>
         <div x-show="mobileOpen" x-transition class="w-full px-8 space-y-2">
             <a href="{{ url('active_directory') }}" class="block py-2 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900 rounded">Directory Home</a>
-            <a href="{{ route('active_directory.register') }}" class="block py-2 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900 rounded">Register</a>
-            <a href="{{ route('active_directory.login') }}" class="block py-2 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900 rounded">Login</a>
+            <a href="{{ route('register') }}" class="block py-2 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900 rounded">Register</a>
+            <a href="{{ route('login') }}" class="block py-2 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900 rounded">Login</a>
         </div>
     </div>
 </div>
