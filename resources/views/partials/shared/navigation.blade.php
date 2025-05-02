@@ -6,11 +6,21 @@
             </a>
 
             <div class="hidden sm:flex space-x-6 items-center whitespace-nowrap text-base">
-                <a href="{{ url('about') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">About</a>
-                <a href="{{ url('services') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Services</a>
-                <a href="{{ url('active_directory') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Active Directory</a>
-                <a href="{{ url('contact') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Contact</a>
-                <a href="{{ url('login') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Login</a>
+                <x-nav-link :href="route('about')" :active="request()->routeIs('about')">
+                    {{ __('About') }}
+                </x-nav-link>
+                <x-nav-link :href="route('services')" :active="request()->routeIs('services')">
+                    {{ __('Services') }}
+                </x-nav-link>
+                <x-nav-link :href="route('active_directory')" :active="request()->routeIs('active_directory')">
+                    {{ __('Active Directory') }}
+                </x-nav-link>
+                <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
+                    {{ __('Contact') }}
+                </x-nav-link>
+                <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                    {{ __('Login') }}
+                </x-nav-link>
             </div>
 
             <div class="sm:hidden flex items-center">
@@ -26,11 +36,21 @@
 
 <div id="mobile-menu" class="sm:hidden hidden bg-gray-700 text-white border-b-2 border-white" x-data="{ mobileOpen: false }">
     <div class="flex flex-col items-center py-4 space-y-4 text-base text-center">
-        <a href="{{ url('about') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
-        <a href="{{ url('services') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Services</a>
-        <a href="{{ url('active_directory') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Active Directory</a>
-        <a href="{{ url('contact') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
-        <a href="{{ url('login') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Login</a>
+        <x-nav-link :href="route('about')" :active="request()->routeIs('about')">
+            {{ __('About') }}
+        </x-nav-link>
+        <x-nav-link :href="route('services')" :active="request()->routeIs('services')">
+            {{ __('Services') }}
+        </x-nav-link>
+        <x-nav-link :href="route('active_directory')" :active="request()->routeIs('active_directory')">
+            {{ __('Active Directory') }}
+        </x-nav-link>
+        <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
+            {{ __('Contact') }}
+        </x-nav-link>
+        <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+            {{ __('Login') }}
+        </x-nav-link>
     </div>
 </div>
 

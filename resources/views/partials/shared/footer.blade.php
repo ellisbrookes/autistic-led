@@ -4,20 +4,32 @@
             <!-- Useful Links Column -->
             <div>
                 <h2 class="text-lg font-semibold mb-4">Useful Links</h2>
-                <ul class="space-y-2">
-                    <li><a href="{{ url('about') }}" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">About</a></li>
-                    <li><a href="{{ url('services') }}" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Services</a></li>
-                    <li><a href="{{ url('active_directory') }}" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Active Directory</a></li>
-                    <li><a href="{{ url('contact') }}" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Contact</a></li>
-                    <li><a href="{{ url('login') }}" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Login</a></li>
+                <ul class="flex flex-col space-y-2">
+                    <x-nav-link :href="route('about')" :active="request()->routeIs('about')">
+                        {{ __('About') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('services')" :active="request()->routeIs('services')">
+                        {{ __('Services') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('active_directory')" :active="request()->routeIs('active_directory')">
+                        {{ __('Active Directory') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
+                        {{ __('Contact') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                        {{ __('Login') }}
+                    </x-nav-link>
                 </ul>
             </div>
             
             <!-- Contact Us Column -->
             <div>
                 <h2 class="text-lg font-semibold mb-4">Contact Us</h2>
-                <p><strong>Email:</strong> <a href="mailto:hello@autisticled.com" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">hello@autisticled.com</a></p>
-                <p><strong>Phone:</strong> <a href="tel:07429145191" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">07429145191</a></p>
+                <div class="flex flex-col space-y-2">
+                    <p><strong>Email:</strong> <a href="mailto:hello@autisticled.com" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">hello@autisticled.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:07429145191" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">07429145191</a></p>
+                </div>
             </div>
 
             <!-- Follow Us Column -->
