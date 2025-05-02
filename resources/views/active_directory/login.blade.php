@@ -1,5 +1,8 @@
 @extends('../partials.layout')
 
+@section('title', 'Login')
+
+
 @section('content')
     <div class="w-full max-w-md bg-gray-900 px-8 py-16 rounded-lg shadow-xl">
         <h2 class="text-2xl font-semibold text-yellow-500 mb-6 text-center">Login</h2>

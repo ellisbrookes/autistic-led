@@ -1,5 +1,8 @@
 @extends('partials.layout')
 
+@section('title', 'Contact Us')
+
+
 @section('content')
 <div class="py-8 flex flex-col lg:flex-row justify-center px-4 space-x-8">
     <!-- Contact Form -->

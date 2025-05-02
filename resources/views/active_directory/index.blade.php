@@ -1,5 +1,7 @@
 @extends('../partials.layout')
 
+@section('title', 'Coming Soon!')
+
 @section('content')
     <!-- Coming Soon Section -->
     <section class="flex-1 flex flex-col justify-center items-center text-center px-4">

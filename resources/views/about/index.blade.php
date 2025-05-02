@@ -1,5 +1,7 @@
 @extends('partials.layout')
 
+@section('title', 'About')
+
 @section('content')
 <div class="text-white flex flex-col gap-3 container md:w-4xl">
     <p>Autistic Led is an autistic adult peer support group that started in 2018 and covers the South Holland area of Lincolnshire, UK.</p>

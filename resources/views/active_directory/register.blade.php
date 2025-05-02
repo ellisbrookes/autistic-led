@@ -1,5 +1,7 @@
 @extends('../partials.layout')
 
+@section('title', 'Register')
+
 @section('content')
     <div class="flex flex-col justify-center w-full max-w-md bg-gray-900 px-8 py-16 rounded-lg shadow-xl">
         <h2 class="text-2xl font-semibold text-yellow-500 mb-6 text-center">Register</h2>
