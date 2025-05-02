@@ -6,32 +6,11 @@
             </a>
 
             <div class="hidden sm:flex space-x-6 items-center whitespace-nowrap text-base">
-                <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Home</a>
-                <a href="{{ url('about') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
-                <a href="{{ route('contact') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
-                <a href="{{ url('services') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Services</a>
-
-                <div x-data="{ open: false }" class="relative">
-                    <button
-                        @click="open = !open"
-                        class="flex items-center space-x-1 text-white hover:text-yellow-600 hover:underline font-medium focus:outline-none"
-                    >
-                        <span>Active Directory</span>
-                        <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transition-transform transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <div
-                        x-show="open"
-                        @click.away="open = false"
-                        x-transition
-                        class="absolute left-0 mt-2 bg-gray-900 rounded-md shadow-lg z-50 w-max min-w-full"
-                    >
-                        <a href="{{ url('active_directory') }}" class="block px-6 py-3 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900">Directory Home</a>
-                        <a href="{{ route('register') }}" class="block px-6 py-3 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900">Register</a>
-                        <a href="{{ route('login') }}" class="block px-6 py-3 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900">Login</a>
-                    </div>
-                </div>
+                <a href="{{ url('about') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">About</a>
+                <a href="{{ url('services') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Services</a>
+                <a href="{{ url('active_directory') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Active Directory</a>
+                <a href="{{ url('contact') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Contact</a>
+                <a href="{{ route('login') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Login</a>
             </div>
 
             <div class="sm:hidden flex items-center">
@@ -47,25 +26,11 @@
 
 <div id="mobile-menu" class="sm:hidden hidden bg-gray-700 text-white border-b-2 border-white" x-data="{ mobileOpen: false }">
     <div class="flex flex-col items-center py-4 space-y-4 text-base text-center">
-        <a href="{{ url('/') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Home</a>
         <a href="{{ url('about') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">About</a>
-        <a href="{{ route('contact') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
         <a href="{{ url('services') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Services</a>
-
-        <button
-            @click="mobileOpen = !mobileOpen"
-            class="flex items-center justify-center space-x-1 text-white hover:text-yellow-600 hover:underline font-medium focus:outline-none"
-        >
-            <span>Active Directory</span>
-            <svg :class="{ 'rotate-180': mobileOpen }" class="w-4 h-4 transition-transform transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-        </button>
-        <div x-show="mobileOpen" x-transition class="w-full px-8 space-y-2">
-            <a href="{{ url('active_directory') }}" class="block py-2 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900 rounded">Directory Home</a>
-            <a href="{{ route('register') }}" class="block py-2 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900 rounded">Register</a>
-            <a href="{{ route('login') }}" class="block py-2 text-sm text-white hover:text-yellow-600 hover:underline hover:bg-gray-900 rounded">Login</a>
-        </div>
+        <a href="{{ url('active_directory') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Active Directory</a>
+        <a href="{{ url('contact') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Contact</a>
+        <a href="{{ url('login') }}" class="text-white hover:text-yellow-600 hover:underline font-medium">Login</a>
     </div>
 </div>
 

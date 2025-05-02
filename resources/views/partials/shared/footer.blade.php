@@ -4,17 +4,17 @@
             <div>
                 <h2 class="text-lg font-semibold mb-4">Useful Links</h2>
                 <ul class="space-y-2">
-                    <li><a href="/" class="hover:text-yellow-600 hover:underline">Home</a></li>
-                    <li><a href="{{ url('about') }}" class="hover:text-yellow-600 hover:underline">About</a></li>
-                    <li><a href="{{ url('contact') }}" class="hover:text-yellow-600 hover:underline">Contact</a></li>
-                    <li><a href="{{ url('services') }}" class="hover:text-yellow-600 hover:underline">Services</a></li>
-                    <li><a href="{{ url('active_directory') }}" class="hover:text-yellow-600 hover:underline">Active Directory</a></li>
+                    <li><a href="/" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Home</a></li>
+                    <li><a href="{{ url('about') }}" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">About</a></li>
+                    <li><a href="{{ url('contact') }}" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Contact</a></li>
+                    <li><a href="{{ url('services') }}" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Services</a></li>
+                    <li><a href="{{ url('active_directory') }}" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Active Directory</a></li>
                 </ul>
             </div>
             <div>
                 <h2 class="text-lg font-semibold mb-4">Contact Us</h2>
-                <p>Email: hello@autisticled.com</p>
-                <p>Phone: Coming soon!</p>
+                <p><strong>Email:</strong> <a href="mailto:hello@autisticled.com" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">hello@autisticled.com</a></p>
+                <p><strong>Phone:</strong> <a href="tel:07429145191" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">07429145191</a></p>
             </div>
             <div>
                 <h2 class="text-lg font-semibold mb-4">Follow Us</h2>
