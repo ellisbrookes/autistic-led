@@ -10,7 +10,7 @@
                 <a href="{{ url('services') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Services</a>
                 <a href="{{ url('active_directory') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Active Directory</a>
                 <a href="{{ url('contact') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Contact</a>
-                <a href="{{ route('login') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Login</a>
+                <a href="{{ url('login') }}" class="text-white hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">Login</a>
             </div>
 
             <div class="sm:hidden flex items-center">
