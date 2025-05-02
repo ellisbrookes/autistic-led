@@ -1,5 +1,5 @@
 <nav class="bg-gray-900 shadow-md border-b-2 border-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 md:px-0">
         <div class="flex justify-between items-center h-16">
             <a href="/">
                 <img src="{{ asset('img/nav-logo.png') }}" alt="Logo" class="h-12 w-12 object-cover rounded-full">

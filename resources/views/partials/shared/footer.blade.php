@@ -1,5 +1,5 @@
 <footer class="bg-gray-900 border-t-2 border-white text-white">
-    <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 py-8 md:px-0">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-sm text-center sm:text-left">
             <div>
                 <h2 class="text-lg font-semibold mb-4">Useful Links</h2>

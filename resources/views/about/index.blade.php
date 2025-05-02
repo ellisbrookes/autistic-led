@@ -3,7 +3,7 @@
 @section('title', 'About')
 
 @section('content')
-<div class="text-white flex flex-col gap-3 container md:w-4xl">
+<div class="text-white flex flex-col gap-3 container max-w-7xl">
     <p>Autistic Led is an autistic adult peer support group that started in 2018 and covers the South Holland area of Lincolnshire, UK.</p>
 
     <p>We have Thursday in-person groups at Polka Dot Studios (AKA The Umbrella) with the address as follows: Westlode Street, Spalding, PE11 2AE.</p>
