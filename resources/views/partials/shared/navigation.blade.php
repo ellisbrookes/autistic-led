@@ -16,7 +16,7 @@
                         @click="open = !open"
                         class="flex items-center space-x-1 text-white hover:text-yellow-600 hover:underline font-medium focus:outline-none"
                     >
-                        <span>Autistic Led Directory</span>
+                        <span>Active Directory</span>
                         <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transition-transform transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                         </svg>
@@ -56,7 +56,7 @@
             @click="mobileOpen = !mobileOpen"
             class="flex items-center justify-center space-x-1 text-white hover:text-yellow-600 hover:underline font-medium focus:outline-none"
         >
-            <span>Autistic Led Directory</span>
+            <span>Active Directory</span>
             <svg :class="{ 'rotate-180': mobileOpen }" class="w-4 h-4 transition-transform transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
             </svg>

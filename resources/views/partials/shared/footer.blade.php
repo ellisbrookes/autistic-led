@@ -6,9 +6,9 @@
                 <ul class="space-y-2">
                     <li><a href="/" class="hover:text-yellow-600 hover:underline">Home</a></li>
                     <li><a href="{{ url('about') }}" class="hover:text-yellow-600 hover:underline">About</a></li>
-                    <li><a href="{{ route('contact') }}" class="hover:text-yellow-600 hover:underline">Contact</a></li>
-                    <li><a href="{{ url('what_we_offer') }}" class="hover:text-yellow-600 hover:underline">What We Offer</a></li>
-                    <li><a href="{{ url('active_directory') }}" class="hover:text-yellow-600 hover:underline">Autistic Led Directory</a></li>
+                    <li><a href="{{ url('contact') }}" class="hover:text-yellow-600 hover:underline">Contact</a></li>
+                    <li><a href="{{ url('services') }}" class="hover:text-yellow-600 hover:underline">Services</a></li>
+                    <li><a href="{{ url('active_directory') }}" class="hover:text-yellow-600 hover:underline">Active Directory</a></li>
                 </ul>
             </div>
             <div>
