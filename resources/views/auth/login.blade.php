@@ -23,15 +23,11 @@
                     class="w-full p-3 mt-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600" required>
             </div>
 
-            <!-- Remember Me -->
-            <div class="flex items-center justify-between mb-5">
-                <label for="remember" class="flex items-center text-sm text-white">
-                    <input type="checkbox" name="remember" id="remember" class="form-checkbox text-yellow-600">
-                    <span class="ml-2">Remember me</span>
-                </label>
-
+            <div class="mb-5">
                 <!-- Forgot Password Link -->
-                <a href="{{ route('password.request') }}" class="text-sm text-yellow-500 hover:underline">Forgot your password?</a>
+                <x-nav-link :href="route('password.request')">
+                    {{ __('Forgot your password?') }}
+                </x-nav-link>
             </div>
 
             <!-- Submit -->
@@ -45,10 +41,9 @@
 
         <!-- Register Link -->
         <div class="text-center mt-6">
-            <p class="text-sm text-gray-300">
-                Don’t have an account?
-                <a href="{{ route('register') }}" class="text-yellow-500 hover:underline">Register here</a>
-            </p>
+            <x-nav-link :href="route('register')">
+                {{ __('Don\'t have an account?') }}
+            </x-nav-link>
         </div>
     </div>
 @endsection
