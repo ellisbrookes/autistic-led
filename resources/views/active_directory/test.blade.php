@@ -1,10 +1,10 @@
 @extends('../partials.layout')
 
-@section('title', 'Business Directory')
+@section('title', 'Active Directory')
 
 @section('content')
-<div x-data="categorySidebar()" class="flex h-screen w-full overflow-hidden text-white">
-    <aside class="w-64 flex-shrink-0 px-6 py-8 space-y-6 bg-white/5 backdrop-blur-sm border-r border-white/10">
+<div x-data="categorySidebar()" class="md:flex max-w-7xl h-screen w-full overflow-hidden">
+    <aside class="px-6 py-8 space-y-6 bg-white/5 backdrop-blur-sm border">
         <div>
             <h2 class="text-lg font-semibold text-yellow-400 mb-4 tracking-tight">Categories</h2>
             <nav class="flex flex-col gap-2">
@@ -33,9 +33,9 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 px-10 py-10 overflow-y-auto">
+    <div class="flex-1 px-10 py-7 overflow-y-auto">
         <header class="mb-8">
-            <h1 class="text-4xl font-bold text-yellow-400 mb-2">Business Directory</h1>
+            <h1 class="text-4xl font-bold text-yellow-400 mb-2">Active Directory</h1>
             <p class="text-gray-400">Use the category filters to refine your search.</p>
         </header>
 
@@ -46,7 +46,13 @@
                     <template x-for="category in selected" :key="category">
                         <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-yellow-400 text-black text-sm">
                             <span x-text="category"></span>
-                            <button
+                            <buttonBen
+                            Live
+                            Ben
+                            Ben
+                             
+                            Ben's Screen
+                            
                                 class="ml-2 text-black hover:text-gray-800"
                                 @click="toggleCategory(category)"
                             >
@@ -65,7 +71,7 @@
         <div class="mt-8 border-t border-white/10 pt-6 text-gray-400">
             <p>Filtered business listings will appear here.</p>
         </div>
-    </main>
+    </div>
 </div>
 
 <script>
