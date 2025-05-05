@@ -19,6 +19,10 @@ Route::get('services', function () {
     return view('services.index');
 })->name('services');
 
+Route::get('forums', function () {
+    return view('forums.index');
+})->name('forums');
+
 Route::get('active_directory', function () {
     return view('active_directory.index');
 })->name('active_directory');
