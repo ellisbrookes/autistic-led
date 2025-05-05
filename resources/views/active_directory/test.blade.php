@@ -64,23 +64,25 @@
         <!-- Directory Grid -->
         <div class="space-y-6">
             <template x-for="(business, index) in paginatedBusinesses" :key="index">
-                <div class="w-full bg-white/5 shadow-lg rounded-xl border border-white overflow-hidden transition-transform duration-300 hover:scale-[1.01] hover:shadow-xl">
-                    <div class="flex items-center p-4">
-                        <img :src="business.image" alt="Business Logo" class="w-20 h-20 rounded-full object-cover mr-4">
-                        <div class="flex-1">
-                            <div class="flex items-center space-x-2">
-                                <h2 class="text-lg font-semibold text-white" x-text="business.name"></h2>
-                                <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L9 13.414l4.707-4.707z" clip-rule="evenodd" />
-                                </svg>
+                <a href="/active_directory/show" class="block">
+                    <div class="w-full bg-white/5 shadow-lg rounded-xl border border-white overflow-hidden transition-transform duration-300 hover:scale-[1.01] hover:shadow-xl">
+                        <div class="flex items-center p-4">
+                            <img :src="business.image" alt="Business Logo" class="w-20 h-20 rounded-full object-cover mr-4">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <h2 class="text-lg font-semibold text-white" x-text="business.name"></h2>
+                                    <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L9 13.414l4.707-4.707z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <p class="text-sm text-white truncate" x-text="business.address"></p>
                             </div>
-                            <p class="text-sm text-white truncate" x-text="business.address"></p>
+                        </div>
+                        <div class="px-4 pb-4">
+                            <p class="text-sm text-white line-clamp-2" x-text="business.description"></p>
                         </div>
                     </div>
-                    <div class="px-4 pb-4">
-                        <p class="text-sm text-white line-clamp-2" x-text="business.description"></p>
-                    </div>
-                </div>
+                </a>
             </template>
         </div>
 
