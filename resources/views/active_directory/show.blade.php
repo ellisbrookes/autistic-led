@@ -19,7 +19,7 @@
             </div>
         </div>
         <a href="#" class="mt-4 lg:mt-0 px-5 py-2 bg-yellow-400 text-black rounded-md hover:bg-yellow-300">
-            Edit Business
+            Edit
         </a>
     </div>
 
