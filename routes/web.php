@@ -27,6 +27,14 @@ Route::get('active_directory', function () {
     return view('active_directory.index');
 })->name('active_directory');
 
+Route::get('active_directory/test', function () {
+    return view('active_directory.test');
+})->name('active_directory.test');
+
+Route::get('/active_directory/show', function () {
+    return view('active_directory.show');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
