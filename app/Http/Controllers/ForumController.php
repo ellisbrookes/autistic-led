@@ -6,10 +6,9 @@ use Illuminate\Http\Request;
 
 class ForumController extends Controller
 {
-    // Show a list of categories
     public function showCategories()
     {
-        // Static data for categories (replace with database query in real app)
+        // Static data for categories
         $categories = [
             'general-discussion' => [
                 'name' => 'General Discussion',
@@ -31,7 +30,7 @@ class ForumController extends Controller
     // Show posts within a category
     public function showCategory($slug)
     {
-        // Static data for categories and posts (replace with a database query in real app)
+        // Static data for categories and posts
         $categories = [
             'general-discussion' => [
                 'name' => 'General Discussion',
@@ -44,7 +43,7 @@ class ForumController extends Controller
                         'author' => 'Admin',
                         'date' => '2025-05-10',
                         'excerpt' => 'Introduce yourself here and say hi...',
-                        'comments_count' => 2,  // New: Comment count
+                        'comments_count' => 2,
                     ],
                     [
                         'id' => 2,
@@ -52,7 +51,7 @@ class ForumController extends Controller
                         'author' => 'User123',
                         'date' => '2025-05-09',
                         'excerpt' => 'I’m new to TailwindCSS and need some help...',
-                        'comments_count' => 1,  // New: Comment count
+                        'comments_count' => 1,
                     ],
                 ],
             ],
@@ -67,7 +66,7 @@ class ForumController extends Controller
                         'author' => 'DevMike',
                         'date' => '2025-05-09',
                         'excerpt' => 'Having issues with error handling? Let’s discuss solutions.',
-                        'comments_count' => 3,  // New: Comment count
+                        'comments_count' => 3,
                     ],
                 ],
             ],
@@ -75,7 +74,7 @@ class ForumController extends Controller
 
         // Check if category exists
         if (!isset($categories[$slug])) {
-            abort(404); // Category not found
+            abort(404);
         }
 
         $category = $categories[$slug];
@@ -86,12 +85,12 @@ class ForumController extends Controller
     // Show an individual post
     public function showPost($slug, $id)
     {
-        // Static data for posts (replace with a database query in real app)
+        // Static data for posts
         $posts = [
             1 => [
                 'title' => 'Welcome to the Forums!',
                 'content' => 'This is the full content of the post...',
-                'comments_count' => 2,  // New: Comment count
+                'comments_count' => 2,
                 'comments' => [
                     ['author' => 'User1', 'content' => 'Great post! Looking forward to more!', 'date' => '2025-05-10'],
                     ['author' => 'User2', 'content' => 'I agree, welcome everyone!', 'date' => '2025-05-09'],
@@ -100,7 +99,7 @@ class ForumController extends Controller
             2 => [
                 'title' => 'How do I set up Tailwind?',
                 'content' => 'Here is a detailed explanation on setting up TailwindCSS...',
-                'comments_count' => 1,  // New: Comment count
+                'comments_count' => 1,
                 'comments' => [
                     ['author' => 'User123', 'content' => 'This helped me a lot, thanks!', 'date' => '2025-05-09'],
                 ],
@@ -108,7 +107,7 @@ class ForumController extends Controller
             3 => [
                 'title' => 'How to troubleshoot errors?',
                 'content' => 'Let’s discuss solutions for error handling...',
-                'comments_count' => 3,  // New: Comment count
+                'comments_count' => 3,
                 'comments' => [
                     ['author' => 'DevMike', 'content' => 'This is very useful, will try it out!', 'date' => '2025-05-09'],
                     ['author' => 'UserX', 'content' => 'I have a similar issue, thanks for the tips!', 'date' => '2025-05-08'],
@@ -118,7 +117,7 @@ class ForumController extends Controller
 
         // Check if the post exists
         if (!isset($posts[$id])) {
-            abort(404); // Post not found
+            abort(404);
         }
 
         $post = $posts[$id];
