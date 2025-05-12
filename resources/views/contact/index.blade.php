@@ -2,9 +2,8 @@
 
 @section('title', 'Contact Us')
 
-
 @section('content')
-<div class="py-8 flex flex-col lg:flex-row justify-center px-4 space-x-8">
+<div class="max-w-7xl px-4 md:space-x-8 space-y-4 md:space-y-0 md:flex md:px-0 w-full">
     <!-- Contact Form -->
     <div class="w-full lg:w-1/2 space-y-6">
         <h2 class="text-2xl font-semibold text-center text-white">Contact Us</h2>
@@ -36,9 +35,11 @@
     <div class="w-full lg:w-1/2 space-y-6">
         <h2 class="text-2xl font-semibold text-center text-white">Our Contact Information</h2>
 
-        <div class="text-white text-center sm:text-left space-y-4">
-            <p><strong>Email:</strong> hello@autisticled.com</p>
-            <p><strong>Phone:</strong> Coming soon!</p>
+        <div class="flex flex-col text-white text-center sm:text-left space-y-4">
+            <div class="md:flex justify-between">
+                <p><strong>Email:</strong> <a href="mailto:hello@autisticled.com" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">hello@autisticled.com</a></p>
+                <p><strong>Phone:</strong> <a href="tel:07429145191" class="hover:underline hover:decoration-yellow-500 hover:decoration-wavy hover:decoration-2">07429145191</a></p>
+            </div>
             
             <div class="w-full h-64 bg-gray-700 mt-4">
                 <!-- Placeholder for map -->

@@ -60,10 +60,9 @@
 
         <!-- Login Link -->
         <div class="text-center mt-6">
-            <p class="text-sm text-gray-300">
-                Already have an account?
-                <a href="{{ route('login') }}" class="text-yellow-500 hover:underline">Login here</a>
-            </p>
+            <x-nav-link :href="route('login')">
+                    {{ __('Already have an account?') }}
+            </x-nav-link>
         </div>
     </div>
 @endsection
