@@ -12,6 +12,9 @@
                 <x-nav-link :href="route('services')" :active="request()->routeIs('services')">
                     {{ __('Services') }}
                 </x-nav-link>
+                <x-nav-link :href="route('forums')" :active="request()->routeIs('forums')">
+                    {{ __('Forums') }}
+                </x-nav-link>
                 <x-nav-link :href="route('active_directory')" :active="request()->routeIs('active_directory')">
                     {{ __('Active Directory') }}
                 </x-nav-link>
@@ -41,6 +44,9 @@
         </x-nav-link>
         <x-nav-link :href="route('services')" :active="request()->routeIs('services')">
             {{ __('Services') }}
+        </x-nav-link>
+        <x-nav-link :href="route('forums')" :active="request()->routeIs('forums')">
+            {{ __('Forums') }}
         </x-nav-link>
         <x-nav-link :href="route('active_directory')" :active="request()->routeIs('active_directory')">
             {{ __('Active Directory') }}

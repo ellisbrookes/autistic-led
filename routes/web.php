@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ForumController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +19,16 @@ Route::get('about', function () {
 Route::get('services', function () {
     return view('services.index');
 })->name('services');
+
+Route::get('forums', function () {
+    return view('forums.index');
+})->name('forums');
+
+Route::get('forums/test', [ForumController::class, 'showCategories'])->name('forums.test');
+
+Route::get('forums/category/{slug}', [ForumController::class, 'showCategory'])->name('forums.category');
+
+Route::get('forums/category/{slug}/post/{id}', [ForumController::class, 'showPost'])->name('forums.post');
 
 Route::get('active_directory', function () {
     return view('active_directory.index');
