@@ -1,0 +1,44 @@
+<nav class="bg-primary-800 border-b-2 border-white shadow-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      
+      <!-- Logo -->
+      <div class="flex items-center">
+        <%= link_to root_path, class: "flex items-center space-x-3 sm:space-x-4" do %>
+          <div class="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center">
+            <%= image_tag "nav-logo.png", alt: "Skedulaa Logo", class: "h-10 w-10 sm:h-12 sm:w-12 object-contain" %>
+          </div>
+          <span class="text-lg lg:text-xl font-bold text-white">Austistic Led</span>
+        <% end %>
+      </div>
+
+      <!-- Desktop Menu -->
+      <div class="hidden lg:flex lg:items-center lg:space-x-6">
+        <%= render(Website::NavLinkComponent.new(text: "Home", path: root_path)) %>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <div class="flex items-center lg:hidden">
+        <button id="hamburger-icon" class="text-white focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden border-t-2 border-white bg-primary-800 text-white">
+    <div class="flex flex-col items-center py-4 space-y-4 text-base text-center">
+        <%= render(Website::NavLinkComponent.new(text: "Home", path: root_path)) %>
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.getElementById('hamburger-icon').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+  });
+</script>
