@@ -4,14 +4,14 @@
     <title><%= content_for(:title) || "Autistic Led" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Autistic Led">
+    <meta name="application-name" content="Autistic Led - Coming soon!">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps %>
+    <%# Optional PWA manifest %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
     <link rel="icon" href="/icon.png" type="image/png">
@@ -20,19 +20,14 @@
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <!-- Add Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   </head>
 
   <body class="bg-primary-700 flex flex-col min-h-screen">
-
-    <!-- Navigation-->
-    <%= render Website::NavigationComponent.new %>
-
-    <!-- Page content -->
-    <main class="flex-1 flex flex-col text-white">
+    <main class="min-h-screen flex flex-col items-center justify-center font-sans px-6 text-center space-y-8">
       <%= yield %>
     </main>
-
-    <!-- Footer -->
-    <%= render Website::FooterComponent.new %>
   </body>
 </html>

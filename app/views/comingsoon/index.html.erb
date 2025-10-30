@@ -1,0 +1,69 @@
+<!-- Logo -->
+<div class="mx-auto h-20 w-auto flex justify-center">
+  <%= image_tag "nav-logo.png", alt: "Autistic Led Logo", class: "h-20 w-auto" %>
+</div>
+
+<!-- Title -->
+<header class="text-center">
+  <h1 class="text-4xl font-bold text-white mt-4">Coming Soon</h1>
+  <p class="mt-2 text-white">
+    We’re putting the final touches on something great. Stay tuned!
+  </p>
+</header>
+
+<!-- Countdown -->
+<div
+  x-data="countdown('2026-03-01T09:00:00+00:00')"
+  x-init="start()"
+  class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-5 text-center text-white"
+>
+  <template x-for="(label, key) in labels" :key="key">
+    <div>
+      <div class="text-5xl font-extrabold" x-text="parts[key]"></div>
+      <div class="mt-2 text-sm uppercase" x-text="label"></div>
+    </div>
+  </template>
+
+  <!-- Completion message -->
+  <template x-if="done">
+    <p class="col-span-full mt-6 text-lg font-semibold">
+      We’re live! 🎉 Refresh to check it out.
+    </p>
+  </template>
+</div>
+
+<script>
+  function countdown(launchDate) {
+    return {
+      target: new Date(launchDate),
+      now: new Date(),
+      done: false,
+      labels: {
+        days: "Days",
+        hours: "Hours",
+        minutes: "Minutes",
+        seconds: "Seconds",
+      },
+      get diffMs() {
+        return Math.max(this.target - this.now, 0);
+      },
+      get parts() {
+        const total = Math.floor(this.diffMs / 1000);
+        return {
+          days: Math.floor(total / 86400),
+          hours: Math.floor((total % 86400) / 3600),
+          minutes: Math.floor((total % 3600) / 60),
+          seconds: total % 60,
+        };
+      },
+      tick() {
+        this.now = new Date();
+        this.done = this.diffMs === 0;
+      },
+      start() {
+        this.tick();
+        setInterval(() => this.tick(), 1000);
+      },
+    };
+  }
+</script>
