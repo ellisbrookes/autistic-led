@@ -4,9 +4,9 @@
 </div>
 
 <!-- Title -->
-<header class="text-center">
-  <h1 class="text-4xl font-bold text-white mt-4">Coming Soon</h1>
-  <p class="mt-2 text-white">
+<header>
+  <h1 class="text-4xl font-bold mt-4">Coming Soon</h1>
+  <p class="mt-2">
     We’re putting the final touches on something great. Stay tuned!
   </p>
 </header>
@@ -15,7 +15,7 @@
 <div
   x-data="countdown('2026-03-01T09:00:00+00:00')"
   x-init="start()"
-  class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-5 text-center text-white"
+  class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-5"
 >
   <template x-for="(label, key) in labels" :key="key">
     <div>

@@ -15,7 +15,7 @@ class Website::LinkComponent < ViewComponent::Base
   end
 
   def classes
-    classes = "cursor-pointer transition-all duration-250 ease-in-out text-white"
+    classes = "cursor-pointer transition-all duration-250 ease-in-out "
     "#{classes} #{VARIANTS[@variant]}"
   end
 end
