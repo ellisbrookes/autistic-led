@@ -1,16 +1,14 @@
 <!-- Hero Section -->
 <%= render Website::SectionComponent.new(variant: :fill) do %>
-  <div class="text-center text-white">
-    <h1 class="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight">
-      The journey may vary but it is always
-      <span class="text-primary-500">Autistic Led</span>
-    </h1>
-  </div>
+  <h1 class="text-center text-4xl md:text-5xl font-bold leading-tight">
+    The journey may vary but it is always
+    <span class="text-yellow-400">Autistic Led</span>
+  </h1>
 <% end %>
 
 <!-- About Section -->
 <%= render Website::SectionComponent.new do %>
-  <div class="text-white text-center flex flex-col gap-4 max-w-4xl mx-auto">
+  <div class="flex flex-col gap-4 max-w-7xl mx-auto">
     <p>Autistic Led is an autistic adult peer support group that started in 2018 and covers the South Holland area of Lincolnshire, UK.</p>
     <p>We have Thursday in-person groups at Polka Dot Studios (AKA The Umbrella) with the address as follows: <strong>Westlode Street, Spalding, PE11 2AE.</strong></p>
   </div>
@@ -18,17 +16,18 @@
 
 <!-- Community Section -->
 <%= render Website::SectionComponent.new do %>
-  <div class="text-white text-center flex flex-col gap-4 max-w-4xl mx-auto">
+  <div class="flex flex-col gap-4 max-w-4xl mx-auto">
     <h2 class="text-2xl font-semibold text-primary-200">Community & Communication</h2>
     <p>But that's not where it ends!</p>
-    <p>At Autistic Led, it's all about meeting your own communication preferences as much as possible. So we have group chats on <strong>WhatsApp</strong> and <strong>Facebook</strong> as well as outdoor meet-ups.</p>
-    <p>We are always thinking about new ways to bring the community closer together — specifically our autistic community, but also the wider community through events. Check back on the <strong>What We Offer</strong> page or follow us on Facebook!</p>
+    <p>At Autistic Led, it's all about meeting your own communication preferences as much as possible.</p>
+    <p>So we have group chats on <strong>WhatsApp</strong> and <strong>Facebook</strong> as well as outdoor meet-ups.</p>
+    <p class="text-wrap">We are always thinking about new ways to bring the community closer together — specifically our autistic community, but also the wider community through events. Check back on the <strong>What We Offer</strong> page or follow us on Facebook!</p>
   </div>
 <% end %>
 
 <!-- About Me Section -->
 <%= render Website::SectionComponent.new do %>
-  <div class="text-white text-center flex flex-col gap-4 max-w-4xl mx-auto">
+  <div class="flex flex-col gap-4 max-w-7xl mx-auto">
     <h2 class="text-2xl font-semibold text-primary-200">A Little About Me</h2>
     <p>My name is <strong>Callum Brazzo</strong> and I am an autistic adult with OCD and Tourette's, diagnosed at 21 after my alternative journey through mainstream education.</p>
     <p>Poetry was, and still is, my most consistent communication tool — and I wouldn't be here without it!</p>
@@ -38,7 +37,7 @@
 
 <!-- Contact Section -->
 <%= render Website::SectionComponent.new do %>
-  <div class="text-white text-center flex flex-col gap-4 max-w-4xl mx-auto">
+  <div class="flex flex-col gap-4 max-w-7xl mx-auto">
     <h2 class="text-2xl font-semibold text-primary-200">Wanna Know More?</h2>
     <p>
       Contact me on <strong>07429 145 191</strong> or email 

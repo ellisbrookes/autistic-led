@@ -7,10 +7,10 @@ class Website::NavLinkComponent < ViewComponent::Base
   end
 
   def classes
-    classes = "block rounded-md px-3 py-2 font-medium hover:bg-primary-300 dark:hover:bg-primary-700"
+    classes = "block rounded-md px-3 py-2 font-medium hover:bg-gray-300 dark:hover:bg-gray-700"
 
     if current_page?(@path)
-      "#{classes} bg-primary-400 dark:bg-primary-500 text-white"
+      "#{classes} bg-gray-400 dark:bg-gray-500"
     else
       classes
     end
