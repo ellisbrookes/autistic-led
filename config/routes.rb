@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   get "login" => "sessions#new"
   delete "logout" => "sessions#destroy"
 
-  resources :blogs
+  resources :blogs do
+    resources :comments, only: :create
+  end
   get "home" => "home#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

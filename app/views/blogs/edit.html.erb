@@ -1,14 +1,14 @@
 <% content_for :title, "Editing blog" %>
 
 <%= render Website::SectionComponent.new do %>
-<div class="mx-auto w-full md:w-2/3">
+<div class="mx-auto w-full space-y-6 md:w-2/3">
   <h1 class="font-bold text-4xl">Editing blog</h1>
 
   <%= render "form", blog: @blog %>
 
-  <div class="flex flex-wrap gap-2">
-    <%= render(Website::ButtonComponent.new(text: "Show this blog", path: @blog, variant: :secondary)) %>
-    <%= render(Website::ButtonComponent.new(text: "Back to blogs", path: blogs_path, variant: :outline)) %>
+  <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+    <%= render(Website::ButtonComponent.new(text: "Show this blog", path: @blog, variant: :secondary, extra_classes: "w-full sm:w-auto")) %>
+    <%= render(Website::ButtonComponent.new(text: "Back to blogs", path: blogs_path, variant: :outline, extra_classes: "w-full sm:w-auto")) %>
   </div>
 </div>
 <% end %>

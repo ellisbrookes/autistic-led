@@ -1,0 +1,9 @@
+one:
+  blog: one
+  author_name: Alice
+  body: This post was super helpful.
+
+two:
+  blog: two
+  author_name: Ben
+  body: Looking forward to the next article.
