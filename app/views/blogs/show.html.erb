@@ -21,6 +21,11 @@
 
       <header class="mt-6 space-y-5 border-b border-slate-200 pb-8 dark:border-slate-700">
         <p class="text-xs font-semibold uppercase tracking-[0.2em] text-primary-700 dark:text-primary-300">Blog</p>
+        <% if !@blog.approved? %>
+          <p class="inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-800">
+            Pending approval
+          </p>
+        <% end %>
         <h1 class="text-4xl font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-5xl"><%= @blog.title %></h1>
         <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-600 dark:text-slate-300">
           <time datetime="<%= @blog.created_at.iso8601 %>"><%= @blog.created_at.strftime("%d %B %Y") %></time>
@@ -40,11 +45,14 @@
     </article>
 
     <div class="mt-8 flex flex-wrap gap-2">
-      <% if authenticated? %>
+      <% if owns_blog?(@blog) %>
         <%= render(Website::ButtonComponent.new(text: "Edit this blog", path: edit_blog_path(@blog), variant: :secondary, extra_classes: "w-full sm:w-auto")) %>
       <% end %>
-      <% if authenticated? %>
+      <% if owns_blog?(@blog) %>
         <%= render(Website::ButtonComponent.new(text: "Destroy this blog", path: blog_path(@blog), method: :delete, variant: :danger, form_class: "sm:inline-block", extra_classes: "w-full sm:w-auto", data: { turbo_confirm: "Are you sure?" })) %>
+      <% end %>
+      <% if admin? && !@blog.approved? %>
+        <%= render(Website::ButtonComponent.new(text: "Approve this blog", path: approve_blog_path(@blog), method: :patch, variant: :primary, form_class: "sm:inline-block", extra_classes: "w-full sm:w-auto")) %>
       <% end %>
     </div>
 

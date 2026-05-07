@@ -42,6 +42,12 @@
               <% end %>
 
               <div class="space-y-2 p-5">
+                <% if !blog.approved? && (admin? || owns_blog?(blog)) %>
+                  <p class="inline-flex rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-amber-800">
+                    Pending approval
+                  </p>
+                <% end %>
+
                 <h2 class="text-xl font-semibold leading-tight text-slate-900 transition-colors duration-300 group-hover:text-primary-700 dark:text-slate-100 dark:group-hover:text-primary-300">
                   <%= blog.title %>
                 </h2>
@@ -51,10 +57,16 @@
               </div>
             <% end %>
 
-            <% if authenticated? %>
+            <% if owns_blog?(blog) || (admin? && !blog.approved?) %>
               <div class="flex flex-wrap gap-2 px-5 pb-5">
-                <%= render(Website::ButtonComponent.new(text: "Edit", path: edit_blog_path(blog), variant: :primary, size: :sm)) %>
-                <%= render(Website::ButtonComponent.new(text: "Destroy", path: blog_path(blog), method: :delete, variant: :danger, size: :sm, form_class: "inline-flex", data: { turbo_confirm: "Are you sure?" })) %>
+                <% if owns_blog?(blog) %>
+                  <%= render(Website::ButtonComponent.new(text: "Edit", path: edit_blog_path(blog), variant: :primary, size: :sm)) %>
+                  <%= render(Website::ButtonComponent.new(text: "Destroy", path: blog_path(blog), method: :delete, variant: :danger, size: :sm, form_class: "inline-flex", data: { turbo_confirm: "Are you sure?" })) %>
+                <% end %>
+
+                <% if admin? && !blog.approved? %>
+                  <%= render(Website::ButtonComponent.new(text: "Approve", path: approve_blog_path(blog), method: :patch, variant: :secondary, size: :sm, form_class: "inline-flex")) %>
+                <% end %>
               </div>
             <% end %>
           </article>
