@@ -1,0 +1,19 @@
+one:
+  blog: one
+  author_name: Alice
+  body: This post was super helpful.
+  commenter_token: fixturetoken1
+
+two:
+  blog: two
+  author_name: Ben
+  body: Looking forward to the next article.
+  commenter_token: fixturetoken2
+
+reply_one:
+  blog: one
+  parent: one
+  reply_to: one
+  author_name: Chris
+  body: I agree, this helped me a lot.
+  commenter_token: fixturetoken3

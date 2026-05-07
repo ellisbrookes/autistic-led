@@ -12,7 +12,7 @@ class Website::SectionComponent < ViewComponent::Base
   end
 
   def classes
-    classes = "dark:bg-primary-900 px-4 flex flex-col gap-8 border-b border-primary-300 dark:border-primary-700"
+    classes = "flex flex-col gap-8 border-b border-slate-200 bg-white px-4 dark:border-slate-700 dark:bg-slate-900"
     "#{classes} #{VARIANTS[@variant]}"
   end
 end

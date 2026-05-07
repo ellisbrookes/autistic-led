@@ -1,0 +1,7 @@
+<% if submit_button? %>
+  <%= button_tag @text, type: @type, class: classes, data: @data, disabled: @disabled %>
+<% elsif non_get_route? %>
+  <%= button_to @text, @path, method: @method, class: classes, form_class: @form_class, data: @data, disabled: @disabled %>
+<% else %>
+  <%= link_to @text, @path, class: classes, data: @data %>
+<% end %>

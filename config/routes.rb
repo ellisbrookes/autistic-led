@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  resource :session, only: %i[new create destroy]
+  resource :registration, only: %i[new create]
+  get "login" => "sessions#new"
+  get "signup" => "registrations#new"
+  delete "logout" => "sessions#destroy"
+
+  resources :blogs do
+    resources :comments, only: %i[create update destroy] do
+      post :replies, to: "comments#create", on: :member
+    end
+  end
   get "home" => "home#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

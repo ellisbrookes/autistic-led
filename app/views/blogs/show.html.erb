@@ -1,0 +1,194 @@
+<% content_for :title, "Blog - #{@blog.title}" %>
+
+<%= render Website::SectionComponent.new do %>
+  <div class="mx-auto w-full max-w-4xl">
+    <% if notice.present? %>
+      <p class="mb-5 inline-block rounded-md bg-green-50 px-3 py-2 font-medium text-green-600 dark:bg-green-900/30 dark:text-green-300" id="notice"><%= notice %></p>
+    <% end %>
+    <% if alert.present? %>
+      <p class="mb-5 inline-block rounded-md bg-red-50 px-3 py-2 font-medium text-red-700 dark:bg-red-900/30 dark:text-red-200"><%= alert %></p>
+    <% end %>
+
+    <% cover_image = @blog.content&.embeds&.find { |attachment| attachment.blob.image? } %>
+    <% word_count = @blog.content.to_plain_text.split.size %>
+    <% reading_time = [1, (word_count / 220.0).ceil].max %>
+
+    <article id="<%= dom_id @blog %>" class="blog-article-shell">
+      <%= link_to blogs_path, class: "inline-flex items-center gap-2 text-sm font-medium text-primary-700 transition-colors hover:text-primary-900 dark:text-primary-300 dark:hover:text-primary-100" do %>
+        <span aria-hidden="true">&larr;</span>
+        <span>Back</span>
+      <% end %>
+
+      <header class="mt-6 space-y-5 border-b border-slate-200 pb-8 dark:border-slate-700">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-primary-700 dark:text-primary-300">Blog</p>
+        <h1 class="text-4xl font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-5xl"><%= @blog.title %></h1>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-600 dark:text-slate-300">
+          <time datetime="<%= @blog.created_at.iso8601 %>"><%= @blog.created_at.strftime("%d %B %Y") %></time>
+          <span><%= pluralize(reading_time, "minute") %> read</span>
+        </div>
+      </header>
+
+      <% if cover_image.present? %>
+        <%= image_tag cover_image,
+            alt: @blog.title,
+            class: "mt-8 max-h-[520px] w-full rounded-2xl object-cover shadow-[0_24px_55px_-28px_rgba(15,23,42,0.45)]" %>
+      <% end %>
+
+      <div class="blog-article-body mt-10">
+        <%= @blog.content %>
+      </div>
+    </article>
+
+    <div class="mt-8 flex flex-wrap gap-2">
+      <% if authenticated? %>
+        <%= render(Website::ButtonComponent.new(text: "Edit this blog", path: edit_blog_path(@blog), variant: :secondary, extra_classes: "w-full sm:w-auto")) %>
+      <% end %>
+      <% if authenticated? %>
+        <%= render(Website::ButtonComponent.new(text: "Destroy this blog", path: blog_path(@blog), method: :delete, variant: :danger, form_class: "sm:inline-block", extra_classes: "w-full sm:w-auto", data: { turbo_confirm: "Are you sure?" })) %>
+      <% end %>
+    </div>
+
+    <section class="comment-section-shell mt-10" data-controller="comment-reply" data-comment-reply-default-url-value="<%= blog_comments_path(@blog) %>">
+      <header class="flex flex-wrap items-end justify-between gap-3 border-b border-slate-200 pb-5 dark:border-slate-700">
+        <div>
+          <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">Comments</h2>
+          <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Share your thoughts on this post.</p>
+        </div>
+        <span class="rounded-full border border-slate-300 bg-white px-3 py-1 text-xs font-semibold text-slate-600 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300"><%= pluralize(@comments.size, "comment") %></span>
+      </header>
+
+      <% form_action = @reply_target.present? ? replies_blog_comment_path(@blog, @reply_target) : blog_comments_path(@blog) %>
+      <% form_title = @reply_target.present? ? "Replying to #{@reply_target.author_name}" : "Write a comment" %>
+
+      <%= form_with model: [@blog, @comment], url: form_action, class: "comment-reply-composer mt-6 space-y-4", data: { comment_reply_target: "form" } do |form| %>
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <p class="text-sm font-semibold text-slate-800 dark:text-slate-100" data-comment-reply-target="title"><%= form_title %></p>
+          <button type="button" class="comment-secondary-btn <%= @reply_target.present? ? "" : "hidden" %>" data-action="comment-reply#cancel" data-comment-reply-target="cancel">Cancel reply</button>
+        </div>
+
+        <% if @comment.errors.any? %>
+          <div class="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-700/60 dark:bg-red-900/20 dark:text-red-200">
+            <p class="font-semibold"><%= pluralize(@comment.errors.count, "error") %> prevented your comment from being posted:</p>
+            <ul class="mt-2 list-inside list-disc space-y-1">
+              <% @comment.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div>
+          <%= form.label :author_name, "Name", class: "mb-1 block text-sm font-medium text-slate-700 dark:text-slate-200" %>
+          <%= form.text_field :author_name, class: "comment-field", autocomplete: "name", maxlength: 80, required: true, data: { comment_reply_target: "name" } %>
+        </div>
+
+        <div>
+          <%= form.label :body, "Comment", class: "mb-1 block text-sm font-medium text-slate-700 dark:text-slate-200" %>
+          <%= form.text_area :body, class: "comment-field", rows: 4, maxlength: 1000, required: true, data: { comment_reply_target: "body", action: "input->comment-reply#updateCounter" } %>
+          <p class="comment-counter" data-comment-reply-target="counter"><%= (@comment.body || "").length %>/1000</p>
+        </div>
+
+        <div class="hidden" aria-hidden="true">
+          <%= form.label :website, "Website" %>
+          <%= form.text_field :website, tabindex: -1, autocomplete: "off" %>
+        </div>
+
+        <%= form.submit(@reply_target.present? ? "Post reply" : "Post comment", class: "comment-primary-btn", data: { comment_reply_target: "submit" }) %>
+      <% end %>
+
+      <div class="mt-8 space-y-4">
+        <% if @comments.any? %>
+          <% @comments.each_with_index do |comment, index| %>
+            <article id="<%= dom_id(comment) %>" class="comment-card comment-enter" style="animation-delay: <%= [index * 0.03, 0.24].min.round(2) %>s;">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <p class="font-semibold text-slate-900 dark:text-slate-100"><%= comment.author_name %></p>
+                  <div class="mt-0.5 flex items-center gap-2">
+                    <time datetime="<%= comment.created_at.iso8601 %>" title="<%= comment.created_at.strftime("%d %B %Y, %H:%M") %>" class="comment-meta"><%= time_ago_in_words(comment.created_at) %> ago</time>
+                    <% if comment.updated_at > comment.created_at + 1.second %>
+                      <span class="comment-meta" title="<%= comment.updated_at.strftime("%d %B %Y, %H:%M") %>">Edited</span>
+                    <% end %>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2 text-xs">
+                  <span class="rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-600 dark:bg-slate-700 dark:text-slate-200"><%= pluralize(comment.replies.size, "reply") %></span>
+                  <button type="button" class="comment-secondary-btn" data-action="comment-reply#reply" data-comment-reply-url-param="<%= replies_blog_comment_path(@blog, comment) %>" data-comment-reply-name-param="<%= comment.author_name %>">Reply</button>
+
+                  <% if owns_comment?(comment) %>
+                    <% editable_comment = @comment_with_errors&.id == comment.id ? @comment_with_errors : comment %>
+                    <details>
+                      <summary class="comment-secondary-btn">Edit</summary>
+                      <%= form_with model: [@blog, editable_comment], class: "mt-2 space-y-2 rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-600 dark:bg-slate-900/50" do |edit_form| %>
+                        <%= edit_form.text_field :author_name, class: "comment-field", maxlength: 80, required: true %>
+                        <%= edit_form.text_area :body, class: "comment-field", rows: 3, maxlength: 1000, required: true %>
+                        <% if editable_comment.errors.any? %>
+                          <p class="text-xs text-red-700 dark:text-red-300"><%= editable_comment.errors.full_messages.to_sentence %></p>
+                        <% end %>
+                        <%= edit_form.submit "Save", class: "comment-primary-btn" %>
+                      <% end %>
+                    </details>
+
+                    <%= button_to "Delete", blog_comment_path(@blog, comment), method: :delete, class: "comment-danger-btn", form: { data: { turbo_confirm: "Delete this comment?" } } %>
+                  <% end %>
+                </div>
+              </div>
+
+              <p class="mt-3 whitespace-pre-line text-sm leading-7 text-slate-700 dark:text-slate-200"><%= comment.body %></p>
+
+              <% if comment.replies.any? %>
+                <div class="mt-4 border-t border-slate-200 pt-4 dark:border-slate-700">
+                  <div class="space-y-3">
+                    <% comment.replies.sort_by(&:created_at).each_with_index do |reply, reply_index| %>
+                      <div id="<%= dom_id(reply) %>" class="comment-reply-card comment-enter" style="animation-delay: <%= [reply_index * 0.03, 0.18].min.round(2) %>s;">
+                        <div class="flex flex-wrap items-start justify-between gap-3">
+                          <div>
+                            <p class="text-sm font-semibold text-slate-900 dark:text-slate-100"><%= reply.author_name %></p>
+                            <div class="mt-0.5 flex items-center gap-2">
+                              <time datetime="<%= reply.created_at.iso8601 %>" title="<%= reply.created_at.strftime("%d %B %Y, %H:%M") %>" class="comment-meta"><%= time_ago_in_words(reply.created_at) %> ago</time>
+                              <% if reply.updated_at > reply.created_at + 1.second %>
+                                <span class="comment-meta" title="<%= reply.updated_at.strftime("%d %B %Y, %H:%M") %>">Edited</span>
+                              <% end %>
+                            </div>
+                          </div>
+
+                          <div class="flex flex-wrap items-center gap-2">
+                            <button type="button" class="comment-secondary-btn" data-action="comment-reply#reply" data-comment-reply-url-param="<%= replies_blog_comment_path(@blog, reply) %>" data-comment-reply-name-param="<%= reply.author_name %>">Reply</button>
+
+                            <% if owns_comment?(reply) %>
+                              <% editable_reply = @comment_with_errors&.id == reply.id ? @comment_with_errors : reply %>
+                              <details>
+                                <summary class="comment-secondary-btn">Edit</summary>
+                                <%= form_with model: [@blog, editable_reply], class: "mt-2 space-y-2" do |edit_reply_form| %>
+                                  <%= edit_reply_form.text_field :author_name, class: "comment-field", maxlength: 80, required: true %>
+                                  <%= edit_reply_form.text_area :body, class: "comment-field", rows: 3, maxlength: 1000, required: true %>
+                                  <%= edit_reply_form.submit "Save reply", class: "comment-primary-btn" %>
+                                <% end %>
+                              </details>
+
+                              <%= button_to "Delete", blog_comment_path(@blog, reply), method: :delete, class: "comment-danger-btn", form: { data: { turbo_confirm: "Delete this reply?" } } %>
+                            <% end %>
+                          </div>
+                        </div>
+
+                        <% if reply.reply_to.present? %>
+                          <p class="mt-2 rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-xs text-slate-600 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                            Replying to <span class="font-semibold"><%= reply.reply_to.author_name %></span>
+                          </p>
+                        <% end %>
+
+                        <p class="mt-2 whitespace-pre-line text-sm leading-6 text-slate-700 dark:text-slate-200"><%= reply.body %></p>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </article>
+          <% end %>
+        <% else %>
+          <p class="rounded-xl border border-dashed border-slate-300 px-4 py-6 text-center text-sm text-slate-600 dark:border-slate-600 dark:text-slate-300">No comments yet. Be the first to comment.</p>
+        <% end %>
+      </div>
+    </section>
+  </div>
+<% end %>

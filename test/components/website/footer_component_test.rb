@@ -3,10 +3,10 @@
 require "test_helper"
 
 class Website::FooterComponentTest < ViewComponent::TestCase
-  def test_component_renders_something_useful
-    # assert_equal(
-    #   %(<span>Hello, components!</span>),
-    #   render_inline(Website::FooterComponent.new(message: "Hello, components!")).css("span").to_html
-    # )
+  def test_renders_footer
+    render_inline(Website::FooterComponent.new)
+
+    assert_selector "footer"
+    assert_text "Autistic Led"
   end
 end

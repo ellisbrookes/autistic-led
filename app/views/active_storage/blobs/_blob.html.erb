@@ -1,0 +1,9 @@
+<figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
+  <% if blob.representable? %>
+    <%= image_tag blob, loading: "lazy", alt: blob.filename.base %>
+  <% end %>
+
+  <% if caption = blob.try(:caption) %>
+    <figcaption class="attachment__caption"><%= caption %></figcaption>
+  <% end %>
+</figure>

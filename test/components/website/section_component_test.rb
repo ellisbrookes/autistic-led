@@ -3,10 +3,9 @@
 require "test_helper"
 
 class Website::SectionComponentTest < ViewComponent::TestCase
-  def test_component_renders_something_useful
-    # assert_equal(
-    #   %(<span>Hello, components!</span>),
-    #   render_inline(Website::SectionComponent.new(message: "Hello, components!")).css("span").to_html
-    # )
+  def test_renders_content_inside_section
+    render_inline(Website::SectionComponent.new) { "Section content" }
+
+    assert_selector "section", text: "Section content"
   end
 end
