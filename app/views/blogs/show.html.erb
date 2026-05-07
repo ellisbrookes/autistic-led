@@ -48,7 +48,7 @@
       <% if owns_blog?(@blog) %>
         <%= render(Website::ButtonComponent.new(text: "Edit this blog", path: edit_blog_path(@blog), variant: :secondary, extra_classes: "w-full sm:w-auto")) %>
       <% end %>
-      <% if owns_blog?(@blog) %>
+      <% if owns_blog?(@blog) || admin? %>
         <%= render(Website::ButtonComponent.new(text: "Destroy this blog", path: blog_path(@blog), method: :delete, variant: :danger, form_class: "sm:inline-block", extra_classes: "w-full sm:w-auto", data: { turbo_confirm: "Are you sure?" })) %>
       <% end %>
       <% if admin? && !@blog.approved? %>

@@ -72,6 +72,16 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to blogs_url
   end
 
+  test "admin should destroy another user's blog" do
+    post session_url, params: { email_address: @user.email_address, password: "password123" }
+
+    assert_difference("Blog.count", -1) do
+      delete blog_url(@pending_blog)
+    end
+
+    assert_redirected_to blogs_url
+  end
+
   test "should not destroy another user's blog" do
     post session_url, params: { email_address: @other_user.email_address, password: "password123" }
 

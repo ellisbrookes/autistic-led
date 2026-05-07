@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_07_213000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_07_220000) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -88,5 +88,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_213000) do
   add_foreign_key "blogs", "users"
   add_foreign_key "comments", "blogs"
   add_foreign_key "comments", "comments", column: "parent_id"
-  add_foreign_key "comments", "comments", column: "reply_to_id"
+  add_foreign_key "comments", "comments", column: "reply_to_id", on_delete: :nullify
 end

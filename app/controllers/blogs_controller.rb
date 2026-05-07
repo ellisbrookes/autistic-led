@@ -1,7 +1,8 @@
 class BlogsController < ApplicationController
   before_action :require_authentication, except: %i[ index show ]
   before_action :set_blog, only: %i[ show edit update destroy approve ]
-  before_action :require_blog_owner, only: %i[ edit update destroy ]
+  before_action :require_blog_owner, only: %i[ edit update ]
+  before_action :require_blog_owner_or_admin, only: %i[ destroy ]
   before_action :require_admin, only: %i[ approve ]
 
   # GET /blogs or /blogs.json
@@ -98,6 +99,12 @@ class BlogsController < ApplicationController
 
     def require_blog_owner
       return if owns_blog?(@blog)
+
+      redirect_to blog_path(@blog), alert: "You can only manage your own blogs."
+    end
+
+    def require_blog_owner_or_admin
+      return if owns_blog?(@blog) || admin?
 
       redirect_to blog_path(@blog), alert: "You can only manage your own blogs."
     end
