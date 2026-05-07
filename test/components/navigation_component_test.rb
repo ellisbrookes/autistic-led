@@ -3,10 +3,9 @@
 require "test_helper"
 
 class NavigationComponentTest < ViewComponent::TestCase
-  def test_component_renders_something_useful
-    # assert_equal(
-    #   %(<span>Hello, components!</span>),
-    #   render_inline(NavigationComponent.new(message: "Hello, components!")).css("span").to_html
-    # )
+  def test_renders_navigation
+    render_inline(Website::NavigationComponent.new)
+
+    assert_selector "nav"
   end
 end

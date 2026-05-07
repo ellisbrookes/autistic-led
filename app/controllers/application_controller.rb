@@ -43,5 +43,4 @@ class ApplicationController < ActionController::Base
 
       ActiveSupport::SecurityUtils.secure_compare(comment.commenter_token, commenter_token)
     end
-
 end

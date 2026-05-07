@@ -3,10 +3,9 @@
 require "test_helper"
 
 class Website::NavLinkComponentTest < ViewComponent::TestCase
-  def test_component_renders_something_useful
-    # assert_equal(
-    #   %(<span>Hello, components!</span>),
-    #   render_inline(Website::NavLinkComponent.new(message: "Hello, components!")).css("span").to_html
-    # )
+  def test_renders_nav_link_with_text
+    render_inline(Website::NavLinkComponent.new(text: "Home", path: "/"))
+
+    assert_selector "a[href='/']", text: "Home"
   end
 end
