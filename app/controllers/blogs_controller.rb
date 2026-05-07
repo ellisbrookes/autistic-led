@@ -9,7 +9,7 @@ class BlogsController < ApplicationController
 
   # GET /blogs/1 or /blogs/1.json
   def show
-    @comments = @blog.comments.order(created_at: :desc)
+    @comments = @blog.comments.top_level.includes(replies: :reply_to).order(created_at: :desc)
     @comment = @blog.comments.new
   end
 

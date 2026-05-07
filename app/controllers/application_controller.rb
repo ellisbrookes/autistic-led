@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 
-  helper_method :current_user, :authenticated?
+  helper_method :current_user, :authenticated?, :owns_comment?
 
   private
 
@@ -24,4 +24,24 @@ class ApplicationController < ActionController::Base
 
       redirect_to login_path, alert: "Please log in to continue."
     end
+
+    def commenter_token
+      token = cookies.signed[:commenter_token]
+      return token if token.present?
+
+      token = SecureRandom.hex(16)
+      cookies.signed.permanent[:commenter_token] = {
+        value: token,
+        httponly: true,
+        same_site: :lax
+      }
+      token
+    end
+
+    def owns_comment?(comment)
+      return false if comment.commenter_token.blank?
+
+      ActiveSupport::SecurityUtils.secure_compare(comment.commenter_token, commenter_token)
+    end
+
 end

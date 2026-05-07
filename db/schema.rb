@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_07_182000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_07_200000) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -60,9 +60,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_182000) do
     t.string "author_name", null: false
     t.integer "blog_id", null: false
     t.text "body", null: false
+    t.string "commenter_token"
     t.datetime "created_at", null: false
+    t.integer "parent_id"
+    t.integer "reply_to_id"
     t.datetime "updated_at", null: false
     t.index ["blog_id"], name: "index_comments_on_blog_id"
+    t.index ["commenter_token"], name: "index_comments_on_commenter_token"
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
+    t.index ["reply_to_id"], name: "index_comments_on_reply_to_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -76,4 +82,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_182000) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "blogs"
+  add_foreign_key "comments", "comments", column: "parent_id"
+  add_foreign_key "comments", "comments", column: "reply_to_id"
 end
