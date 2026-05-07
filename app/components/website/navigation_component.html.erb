@@ -16,6 +16,11 @@
       <div class="hidden lg:flex lg:items-center lg:space-x-6">
         <%= render(Website::NavLinkComponent.new(text: "Home", path: root_path)) %>
         <%= render(Website::NavLinkComponent.new(text: "Blog", path: blogs_path)) %>
+        <% if helpers.authenticated? %>
+          <%= button_to "Logout", logout_path, method: :delete, class: "rounded-md px-3.5 py-2.5 bg-primary-100 hover:bg-primary-50 inline-block font-medium cursor-pointer" %>
+        <% else %>
+          <%= render(Website::NavLinkComponent.new(text: "Login", path: login_path)) %>
+        <% end %>
       </div>
 
       <!-- Mobile Hamburger -->
@@ -34,6 +39,12 @@
   <div id="mobile-menu" class="hidden border-t-2 border-white bg-primary-800">
     <div class="flex flex-col items-center py-4 space-y-4 text-base">
         <%= render(Website::NavLinkComponent.new(text: "Home", path: root_path)) %>
+        <%= render(Website::NavLinkComponent.new(text: "Blog", path: blogs_path)) %>
+        <% if helpers.authenticated? %>
+          <%= button_to "Logout", logout_path, method: :delete, class: "rounded-md px-3.5 py-2.5 bg-primary-100 hover:bg-primary-50 inline-block font-medium cursor-pointer" %>
+        <% else %>
+          <%= render(Website::NavLinkComponent.new(text: "Login", path: login_path)) %>
+        <% end %>
     </div>
   </div>
 </nav>
