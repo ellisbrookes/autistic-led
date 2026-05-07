@@ -18,6 +18,8 @@
         <%= render(Website::NavLinkComponent.new(text: "Blog", path: blogs_path)) %>
         <% if helpers.authenticated? %>
           <%= render(Website::ButtonComponent.new(text: "Logout", path: logout_path, method: :delete, variant: :secondary, size: :sm)) %>
+        <% else %>
+          <%= render(Website::ButtonComponent.new(text: "Login", path: login_path, variant: :outline, size: :sm)) %>
         <% end %>
       </div>
 
@@ -40,6 +42,8 @@
         <%= render(Website::NavLinkComponent.new(text: "Blog", path: blogs_path)) %>
         <% if helpers.authenticated? %>
           <%= render(Website::ButtonComponent.new(text: "Logout", path: logout_path, method: :delete, variant: :secondary, size: :sm)) %>
+        <% else %>
+          <%= render(Website::ButtonComponent.new(text: "Login", path: login_path, variant: :outline, size: :sm)) %>
         <% end %>
     </div>
   </div>
