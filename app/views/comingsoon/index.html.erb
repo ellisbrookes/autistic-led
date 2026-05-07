@@ -1,36 +1,38 @@
-<!-- Logo -->
-<div class="mx-auto h-20 w-auto flex justify-center">
-  <%= image_tag "nav-logo.png", alt: "Autistic Led Logo", class: "h-20 w-auto" %>
-</div>
+<section class="w-full max-w-4xl rounded-3xl border border-slate-200 bg-white/90 p-8 text-center shadow-lg backdrop-blur dark:border-slate-700 dark:bg-slate-800/85">
+  <!-- Logo -->
+  <div class="mx-auto flex h-20 w-auto justify-center">
+    <%= image_tag "nav-logo.png", alt: "Autistic Led Logo", class: "h-20 w-auto" %>
+  </div>
 
-<!-- Title -->
-<header>
-  <h1 class="text-4xl font-bold mt-4">Coming Soon</h1>
-  <p class="mt-2">
-    We’re putting the final touches on something great. Stay tuned!
-  </p>
-</header>
-
-<!-- Countdown -->
-<div
-  x-data="countdown('2026-03-01T09:00:00+00:00')"
-  x-init="start()"
-  class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-5"
->
-  <template x-for="(label, key) in labels" :key="key">
-    <div>
-      <div class="text-5xl font-extrabold" x-text="parts[key]"></div>
-      <div class="mt-2 text-sm uppercase" x-text="label"></div>
-    </div>
-  </template>
-
-  <!-- Completion message -->
-  <template x-if="done">
-    <p class="col-span-full mt-6 text-lg font-semibold">
-      We’re live! 🎉 Refresh to check it out.
+  <!-- Title -->
+  <header>
+    <h1 class="mt-4 text-4xl font-bold text-slate-900 dark:text-white">Coming Soon</h1>
+    <p class="mt-2 text-slate-700 dark:text-slate-300">
+      We’re putting the final touches on something great. Stay tuned!
     </p>
-  </template>
-</div>
+  </header>
+
+  <!-- Countdown -->
+  <div
+    x-data="countdown('2026-03-01T09:00:00+00:00')"
+    x-init="start()"
+    class="mt-5 grid grid-cols-2 gap-6 sm:grid-cols-4"
+  >
+    <template x-for="(label, key) in labels" :key="key">
+      <div>
+        <div class="text-5xl font-extrabold text-primary-700 dark:text-primary-300" x-text="parts[key]"></div>
+        <div class="mt-2 text-sm uppercase tracking-wide text-slate-600 dark:text-slate-400" x-text="label"></div>
+      </div>
+    </template>
+
+    <!-- Completion message -->
+    <template x-if="done">
+      <p class="col-span-full mt-6 text-lg font-semibold text-primary-700 dark:text-primary-300">
+        We’re live! 🎉 Refresh to check it out.
+      </p>
+    </template>
+  </div>
+</section>
 
 <script>
   function countdown(launchDate) {

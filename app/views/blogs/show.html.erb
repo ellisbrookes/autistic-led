@@ -1,17 +1,48 @@
 <% content_for :title, "Showing blog" %>
 
-<div class="md:w-2/3 w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-  <% end %>
+<%= render Website::SectionComponent.new do %>
+  <div class="mx-auto w-full max-w-4xl">
+    <% if notice.present? %>
+      <p class="mb-5 inline-block rounded-md bg-green-50 px-3 py-2 font-medium text-green-600 dark:bg-green-900/30 dark:text-green-300" id="notice"><%= notice %></p>
+    <% end %>
 
-  <%= render @blog %>
+    <% cover_image = @blog.content&.embeds&.find { |attachment| attachment.blob.image? } %>
+    <% word_count = @blog.content.to_plain_text.split.size %>
+    <% reading_time = [1, (word_count / 220.0).ceil].max %>
 
-  <% if authenticated? %>
-    <%= link_to "Edit this blog", edit_blog_path(@blog), class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <% end %>
-  <%= link_to "Back to blogs", blogs_path, class: "w-full sm:w-auto mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <% if authenticated? %>
-    <%= button_to "Destroy this blog", @blog, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3.5 py-2.5  bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
-  <% end %>
-</div>
+    <article id="<%= dom_id @blog %>" class="blog-article-shell">
+      <%= link_to blogs_path, class: "inline-flex items-center gap-2 text-sm font-medium text-primary-700 transition-colors hover:text-primary-900 dark:text-primary-300 dark:hover:text-primary-100" do %>
+        <span aria-hidden="true">&larr;</span>
+        <span>Back</span>
+      <% end %>
+
+      <header class="mt-6 space-y-5 border-b border-slate-200 pb-8 dark:border-slate-700">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-primary-700 dark:text-primary-300">Blog</p>
+        <h1 class="text-4xl font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-5xl"><%= @blog.title %></h1>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-600 dark:text-slate-300">
+          <time datetime="<%= @blog.created_at.iso8601 %>"><%= @blog.created_at.strftime("%d %B %Y") %></time>
+          <span><%= pluralize(reading_time, "minute") %> read</span>
+        </div>
+      </header>
+
+      <% if cover_image.present? %>
+        <%= image_tag cover_image,
+            alt: @blog.title,
+            class: "mt-8 max-h-[520px] w-full rounded-2xl object-cover shadow-[0_24px_55px_-28px_rgba(15,23,42,0.45)]" %>
+      <% end %>
+
+      <div class="blog-article-body mt-10">
+        <%= @blog.content %>
+      </div>
+    </article>
+
+    <div class="mt-8 flex flex-wrap gap-2">
+      <% if authenticated? %>
+        <%= render(Website::ButtonComponent.new(text: "Edit this blog", path: edit_blog_path(@blog), variant: :secondary, extra_classes: "w-full sm:w-auto")) %>
+      <% end %>
+      <% if authenticated? %>
+        <%= render(Website::ButtonComponent.new(text: "Destroy this blog", path: blog_path(@blog), method: :delete, variant: :danger, form_class: "sm:inline-block", extra_classes: "w-full sm:w-auto", data: { turbo_confirm: "Are you sure?" })) %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

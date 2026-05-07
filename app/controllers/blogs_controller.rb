@@ -4,7 +4,7 @@ class BlogsController < ApplicationController
 
   # GET /blogs or /blogs.json
   def index
-    @blogs = Blog.all
+    @blogs = Blog.with_rich_text_content_and_embeds.order(created_at: :desc)
   end
 
   # GET /blogs/1 or /blogs/1.json
