@@ -1,47 +1,81 @@
-<% content_for :title, "Neurodivergent-Friendly Directory" %>
+<% content_for :title, "Active Directory" %>
+
+<%= render Website::BannerComponent.new(
+  message: "Looking to join our active directory of neurodivergent-friendly businesses?",
+  link_text: "Contact Us",
+  link_path: "mailto:hello@autisticled.com"
+) %>
 
 <section class="relative overflow-hidden px-4 py-10 sm:py-14">
-  <div class="pointer-events-none absolute -left-24 top-0 h-64 w-64 rounded-full"></div>
-  <div class="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full"></div>
-
   <div class="relative mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[18rem_1fr]">
-    <aside class="rounded-2xl border p-4 shadow-sm backdrop-blur lg:sticky lg:top-6 lg:h-fit">
-      <h1 class="text-xl font-bold">Local Directory</h1>
-      <p class="mt-2 text-sm">Businesses with practical support for neurodivergent visitors.</p>
 
-      <ul class="mt-4 space-y-2">
-        <% @businesses.each do |business| %>
-          <li>
-            <a href="#<%= business.name.parameterize %>" class="block rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition hover:bg-slate-100 hover:text-slate-900">
-              <%= business.name %>
-            </a>
-          </li>
-        <% end %>
-      </ul>
+    <aside class="sticky top-6 h-fit rounded-2xl border p-4 shadow-sm backdrop-blur">
+      <header>
+        <h1 class="text-xl font-bold">Local Directory</h1>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+          Businesses with practical support for neurodivergent visitors.
+        </p>
+      </header>
+
+      <nav class="mt-4">
+        <ul class="space-y-2">
+          <% @businesses.each do |business| %>
+            <% anchor = business.name.parameterize %>
+
+            <li>
+              <a
+                href="#<%= anchor %>"
+                class="block rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition hover:bg-slate-100 hover:text-slate-900 dark:border-slate-700 dark:hover:bg-slate-800"
+              >
+                <%= business.name %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
     </aside>
 
-    <div class="space-y-4">
+    <section class="space-y-4">
       <% @businesses.each do |business| %>
-        <article id="<%= business.name.parameterize %>" class="rounded-2xl border p-5 shadow-sm">
-          <div class="flex flex-wrap items-center gap-2">
-            <h2 class="text-xl font-semibold"><%= business.name %></h2>
-            <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide"><%= business.type %></span>
-          </div>
+        <% anchor = business.name.parameterize %>
 
-          <p class="mt-2 text-sm"><strong>Location:</strong> <%= business.location %></p>
+        <article
+          id="<%= anchor %>"
+          class="rounded-2xl border p-5 shadow-sm"
+        >
+          <header class="flex flex-wrap items-center gap-2">
+            <h2 class="text-xl font-semibold">
+              <%= business.name %>
+            </h2>
 
-          <div class="mt-4">
-            <h3 class="text-sm font-semibold uppercase tracking-wide">Accommodations</h3>
-            <ul class="mt-2 flex flex-wrap gap-2">
-              <% business.supports.each do |support| %>
-                <li class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800"><%= support %></li>
-              <% end %>
-            </ul>
-          </div>
+            <span class="rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold uppercase tracking-wide dark:bg-slate-700">
+              <%= business.type %>
+            </span>
+          </header>
 
-          <p class="mt-4 rounded-xl border p-3 text-sm"><%= business.notes %></p>
+          <p class="mt-2 text-sm">
+            <span class="font-semibold">Location:</span>
+            <%= business.location %>
+          </p>
+
+          <% if business.supports.present? %>
+            <div class="mt-4">
+              <h3 class="text-sm font-semibold uppercase tracking-wide">
+                Accommodations
+              </h3>
+
+              <ul class="mt-2 flex flex-wrap gap-2">
+                <% business.supports.each do |support| %>
+                  <li class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800">
+                    <%= support %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
         </article>
       <% end %>
-    </div>
+    </section>
+
   </div>
 </section>
