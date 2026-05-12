@@ -1,0 +1,47 @@
+<% content_for :title, "Neurodivergent-Friendly Directory" %>
+
+<section class="relative overflow-hidden px-4 py-10 sm:py-14">
+  <div class="pointer-events-none absolute -left-24 top-0 h-64 w-64 rounded-full"></div>
+  <div class="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full"></div>
+
+  <div class="relative mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[18rem_1fr]">
+    <aside class="rounded-2xl border p-4 shadow-sm backdrop-blur lg:sticky lg:top-6 lg:h-fit">
+      <h1 class="text-xl font-bold">Local Directory</h1>
+      <p class="mt-2 text-sm">Businesses with practical support for neurodivergent visitors.</p>
+
+      <ul class="mt-4 space-y-2">
+        <% @businesses.each do |business| %>
+          <li>
+            <a href="#<%= business.name.parameterize %>" class="block rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition hover:bg-slate-100 hover:text-slate-900">
+              <%= business.name %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </aside>
+
+    <div class="space-y-4">
+      <% @businesses.each do |business| %>
+        <article id="<%= business.name.parameterize %>" class="rounded-2xl border p-5 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2">
+            <h2 class="text-xl font-semibold"><%= business.name %></h2>
+            <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide"><%= business.type %></span>
+          </div>
+
+          <p class="mt-2 text-sm"><strong>Location:</strong> <%= business.location %></p>
+
+          <div class="mt-4">
+            <h3 class="text-sm font-semibold uppercase tracking-wide">Accommodations</h3>
+            <ul class="mt-2 flex flex-wrap gap-2">
+              <% business.supports.each do |support| %>
+                <li class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800"><%= support %></li>
+              <% end %>
+            </ul>
+          </div>
+
+          <p class="mt-4 rounded-xl border p-3 text-sm"><%= business.notes %></p>
+        </article>
+      <% end %>
+    </div>
+  </div>
+</section>
