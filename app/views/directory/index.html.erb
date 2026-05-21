@@ -18,7 +18,7 @@
           <li>
             <a
               href="#join-directory"
-              class="block rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+              class="block rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition duration-200 hover:bg-slate-100 hover:shadow-sm dark:border-slate-700 dark:hover:bg-slate-800"
             >
               Join Our Directory
             </a>
@@ -30,7 +30,7 @@
             <li>
               <a
                 href="#<%= anchor %>"
-                class="block rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition hover:bg-slate-100 hover:text-slate-900 dark:border-slate-700 dark:hover:bg-slate-800"
+                class="block rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition duration-200 hover:bg-slate-100 hover:text-slate-900 hover:shadow-sm dark:border-slate-700 dark:hover:bg-slate-800"
               >
                 <%= business.name %>
               </a>
@@ -45,7 +45,7 @@
 
       <article
         id="join-directory"
-        class="rounded-2xl border p-5 shadow-sm"
+        class="rounded-2xl border p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md"
       >
         <header class="flex flex-wrap items-center gap-2">
           <h2 class="text-xl font-semibold">
@@ -75,7 +75,7 @@
 
         <article
           id="<%= anchor %>"
-          class="rounded-2xl border p-5 shadow-sm"
+          class="rounded-2xl border p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md"
         >
           <header class="flex flex-wrap items-center gap-2">
             <h2 class="text-xl font-semibold">
@@ -95,7 +95,7 @@
           <% if business.supports.present? %>
             <div class="mt-4">
               <h3 class="text-sm font-semibold uppercase tracking-wide">
-                Accommodations
+                What we offer
               </h3>
 
               <ul class="mt-2 flex flex-wrap gap-2">
