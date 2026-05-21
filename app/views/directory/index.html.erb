@@ -1,24 +1,29 @@
 <% content_for :title, "Active Directory" %>
 
-<%= render Website::BannerComponent.new(
-  message: "Looking to join our active directory of neurodivergent-friendly businesses?",
-  link_text: "Contact Us",
-  link_path: "mailto:hello@autisticled.com"
-) %>
-
 <section class="relative overflow-hidden px-4 py-10 sm:py-14">
   <div class="relative mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[18rem_1fr]">
 
     <aside class="sticky top-6 h-fit rounded-2xl border p-4 shadow-sm backdrop-blur">
       <header>
         <h1 class="text-xl font-bold">Local Directory</h1>
-        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+
+        <p class="mt-2 text-sm">
           Businesses with practical support for neurodivergent visitors.
         </p>
       </header>
 
       <nav class="mt-4">
         <ul class="space-y-2">
+
+          <li>
+            <a
+              href="#join-directory"
+              class="block rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+            >
+              Join Our Directory
+            </a>
+          </li>
+
           <% @businesses.each do |business| %>
             <% anchor = business.name.parameterize %>
 
@@ -31,11 +36,40 @@
               </a>
             </li>
           <% end %>
+
         </ul>
       </nav>
     </aside>
 
     <section class="space-y-4">
+
+      <article
+        id="join-directory"
+        class="rounded-2xl border p-5 shadow-sm"
+      >
+        <header class="flex flex-wrap items-center gap-2">
+          <h2 class="text-xl font-semibold">
+            Join Our Directory
+          </h2>
+
+          <span class="rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold uppercase tracking-wide dark:bg-slate-700">
+            Community
+          </span>
+        </header>
+
+        <p class="mt-2 text-sm">
+          Want your business featured in our active directory of
+          neurodivergent-friendly businesses?
+        </p>
+
+        <div class="mt-4">
+          <%= link_to "Contact Us",
+            "mailto:hello@autisticled.com",
+            class: "inline-flex items-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium transition hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+          %>
+        </div>
+      </article>
+
       <% @businesses.each do |business| %>
         <% anchor = business.name.parameterize %>
 
@@ -75,6 +109,7 @@
           <% end %>
         </article>
       <% end %>
+
     </section>
 
   </div>
