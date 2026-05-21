@@ -14,7 +14,7 @@
 
   <!-- Countdown -->
   <div
-    x-data="countdown('2026-03-01T09:00:00+00:00')"
+    x-data="countdown(2)"
     x-init="start()"
     class="mt-5 grid grid-cols-2 gap-6 sm:grid-cols-4"
   >
@@ -35,9 +35,12 @@
 </section>
 
 <script>
-  function countdown(launchDate) {
+  function countdown(monthsFromNow) {
+    const target = new Date();
+    target.setMonth(target.getMonth() + monthsFromNow);
+
     return {
-      target: new Date(launchDate),
+      target,
       now: new Date(),
       done: false,
       labels: {
@@ -64,7 +67,12 @@
       },
       start() {
         this.tick();
-        setInterval(() => this.tick(), 1000);
+        const timer = setInterval(() => {
+          this.tick();
+          if (this.done) {
+            clearInterval(timer);
+          }
+        }, 1000);
       },
     };
   }
