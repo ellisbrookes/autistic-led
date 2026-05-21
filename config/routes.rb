@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   delete "logout" => "sessions#destroy"
 
   resources :blogs do
+    patch :approve, on: :member
+
     resources :comments, only: %i[create update destroy] do
       post :replies, to: "comments#create", on: :member
     end
