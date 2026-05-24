@@ -1,50 +1,123 @@
-<!-- Hero Section -->
 <%= render Website::SectionComponent.new(variant: :fill) do %>
-  <h1 class="text-center text-4xl md:text-5xl font-bold leading-tight">
-    The journey may vary but it is always
-    <span class="text-yellow-400">Autistic Led</span>
-  </h1>
-<% end %>
+  <div class="home-shell flex flex-col gap-12 py-4 sm:gap-14 sm:py-8">
+    <div class="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">
+      <div class="flex flex-col items-center gap-6 text-center lg:items-start lg:text-left">
+        <p class="home-kicker">Peer support in South Holland</p>
 
-<!-- About Section -->
-<%= render Website::SectionComponent.new do %>
-  <div class="flex flex-col gap-4 max-w-7xl mx-auto">
-    <p>Autistic Led is an autistic adult peer support group that started in 2018 and covers the South Holland area of Lincolnshire, UK.</p>
-    <p>We have Thursday in-person groups at Polka Dot Studios (AKA The Umbrella) with the address as follows: <strong>Westlode Street, Spalding, PE11 2AE.</strong></p>
+        <h1 class="max-w-4xl text-balance text-4xl font-bold leading-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-white">
+          The journey may vary, but it is always
+          <span class="text-amber-500">Autistic Led</span>
+        </h1>
+
+        <p class="home-lead max-w-3xl">
+          We are an autistic adult peer support community helping people connect, communicate and feel understood online and in person.
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+          <%= render(Website::ButtonComponent.new(text: "Read the blog", path: blogs_path, variant: :primary, size: :md)) %>
+          <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700">
+            Contact us
+          </a>
+        </div>
+      </div>
+
+      <div class="home-hero-media">
+        <%= video_tag "video.mp4", autoplay: true, muted: true, loop: true, playsinline: true, preload: "metadata", class: "home-hero-video" %>
+      </div>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-3 sm:auto-rows-fr">
+      <div class="home-panel h-full text-center">
+        <p class="text-2xl font-semibold text-slate-900 dark:text-white">2018</p>
+        <p class="home-lead">Community running since</p>
+      </div>
+
+      <div class="home-panel h-full text-center">
+        <p class="text-2xl font-semibold text-slate-900 dark:text-white">Weekly</p>
+        <p class="home-lead">Thursday in-person meetups</p>
+      </div>
+
+      <div class="home-panel h-full text-center">
+        <p class="text-2xl font-semibold text-slate-900 dark:text-white">Online + Local</p>
+        <p class="home-lead">WhatsApp, Facebook and events</p>
+      </div>
+    </div>
   </div>
 <% end %>
 
-<!-- Community Section -->
 <%= render Website::SectionComponent.new do %>
-  <div class="flex flex-col gap-4 max-w-4xl mx-auto">
-    <h2 class="text-2xl font-semibold text-primary-700 dark:text-primary-300">Community & Communication</h2>
-    <p>But that's not where it ends!</p>
-    <p>At Autistic Led, it's all about meeting your own communication preferences as much as possible.</p>
-    <p>So we have group chats on <strong>WhatsApp</strong> and <strong>Facebook</strong> as well as outdoor meet-ups.</p>
-    <p class="text-wrap">We are always thinking about new ways to bring the community closer together — specifically our autistic community, but also the wider community through events. Check back on the <strong>What We Offer</strong> page or follow us on Facebook!</p>
+  <div class="home-shell grid gap-6 lg:grid-cols-2 lg:items-start">
+    <article class="home-panel space-y-4">
+      <h2 class="home-panel-title">About Autistic Led</h2>
+      <p class="home-lead">
+        Autistic Led is an autistic adult peer support group that started in 2018 and serves South Holland in Lincolnshire, UK.
+      </p>
+      <p class="home-lead">
+        Our Thursday in-person groups run at Polka Dot Studios (The Umbrella), <strong>Westlode Street, Spalding, PE11 2AE</strong>.
+      </p>
+      <p class="text-sm font-semibold uppercase tracking-wide text-primary-700 dark:text-primary-300">We are here</p>
+      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800/70">
+        <iframe
+          title="Autistic Led location on Google Maps"
+          src="https://www.google.com/maps?output=embed&f=q&source=s_q&hl=en&q=Polka+Dot+Studios,+Spalding,+PE11+2AE"
+          class="h-64 w-full border-0"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </article>
+
+    <article class="home-panel space-y-4">
+      <h2 class="home-panel-title">Community and communication</h2>
+      <p class="home-lead">
+        Support looks different for everyone, so we meet people where they are and adapt to different communication preferences.
+      </p>
+      <p class="home-lead">
+        Alongside in-person sessions, we keep connected with <strong>WhatsApp</strong> and <strong>Facebook</strong> chats, plus outdoor meetups and local events.
+      </p>
+    </article>
   </div>
 <% end %>
 
-<!-- About Me Section -->
 <%= render Website::SectionComponent.new do %>
-  <div class="flex flex-col gap-4 max-w-7xl mx-auto">
-    <h2 class="text-2xl font-semibold text-primary-700 dark:text-primary-300">A Little About Me</h2>
-    <p>My name is <strong>Callum Brazzo</strong> and I am an autistic adult with OCD and Tourette's, diagnosed at 21 after my alternative journey through mainstream education.</p>
-    <p>Poetry was, and still is, my most consistent communication tool — and I wouldn't be here without it!</p>
-    <p>I hope that people who connect with Autistic Led can find healthy outlets for their own expression as our journeys vary. Six years on, we are still going strong!</p>
+  <div class="home-shell">
+    <article class="home-panel space-y-4">
+      <h2 class="home-panel-title">A little about me</h2>
+      <p class="home-lead">
+        My name is <strong>Callum Brazzo</strong>. I am an autistic adult with OCD and Tourette's, diagnosed at 21 after my own alternative journey through mainstream education.
+      </p>
+      <p class="home-lead">
+        Poetry was, and still is, my most consistent communication tool and a key part of why this community exists today.
+      </p>
+      <p class="home-lead">
+        I hope everyone who connects with Autistic Led finds healthy outlets for expression and belonging as our journeys continue to grow.
+      </p>
+    </article>
   </div>
 <% end %>
 
-<!-- Contact Section -->
 <%= render Website::SectionComponent.new do %>
-  <div class="flex flex-col gap-4 max-w-7xl mx-auto">
-    <h2 class="text-2xl font-semibold text-primary-700 dark:text-primary-300">Wanna Know More?</h2>
-    <p>
-      Contact me on <strong>07429 145 191</strong> or email 
-      <a href="mailto:hello@autisticled.com" class="underline transition-colors hover:text-primary-700 dark:hover:text-primary-300">
-        hello@autisticled.com
-      </a> 
-      and I'll get back to you when I can!
-    </p>
+  <div id="contact" class="home-shell">
+    <article class="home-panel space-y-6">
+      <div class="space-y-2">
+        <h2 class="home-panel-title">Want to know more?</h2>
+        <p class="home-lead">If you are curious about joining, drop a message and we will get back to you as soon as we can.</p>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-2 sm:auto-rows-fr">
+        <div class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/70">
+          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Phone</p>
+          <p class="mt-1 text-base font-semibold text-slate-900 dark:text-white">07429 145 191</p>
+        </div>
+
+        <div class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/70">
+          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Email</p>
+          <a href="mailto:hello@autisticled.com" class="mt-1 inline-block text-base font-semibold text-primary-700 underline decoration-2 underline-offset-2 transition hover:text-primary-800 dark:text-primary-300 dark:hover:text-primary-200">
+            autisticled@hotmail.com
+          </a>
+        </div>
+      </div>
+    </article>
   </div>
 <% end %>
