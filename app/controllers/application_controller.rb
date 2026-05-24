@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 
-  helper_method :current_user, :authenticated?, :owns_comment?
+  helper_method :current_user, :authenticated?, :owns_comment?, :owns_blog?, :admin?
 
   private
 
@@ -25,6 +25,16 @@ class ApplicationController < ActionController::Base
       redirect_to login_path, alert: "Please log in to continue."
     end
 
+    def admin?
+      current_user&.email_address == "admin@autisticled.com"
+    end
+
+    def require_admin
+      return if admin?
+
+      redirect_to blogs_path, alert: "Only admins can perform that action."
+    end
+
     def commenter_token
       token = cookies.signed[:commenter_token]
       return token if token.present?
@@ -42,5 +52,11 @@ class ApplicationController < ActionController::Base
       return false if comment.commenter_token.blank?
 
       ActiveSupport::SecurityUtils.secure_compare(comment.commenter_token, commenter_token)
+    end
+
+    def owns_blog?(blog)
+      return false if current_user.blank? || blog.user_id.blank?
+
+      blog.user_id == current_user.id
     end
 end
