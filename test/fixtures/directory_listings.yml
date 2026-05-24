@@ -1,0 +1,30 @@
+one:
+  name: Calm Coding Collective
+  listing_type: Community group
+  location: Lincoln
+  description: Peer support and coding circles for autistic adults.
+  supports: Quiet room, visual agendas
+  website_url: https://example.com
+  contact_email: hello@example.com
+  approved: true
+  approved_at: <%= Time.current %>
+  user: one
+
+two:
+  name: Quiet Makers
+  listing_type: Art collective
+  location: Grantham
+  description: Neurodivergent-friendly maker sessions and workshops.
+  supports: Low-sensory sessions
+  approved: false
+  user: two
+
+three:
+  name: Spectrum Studio
+  listing_type: Creative services
+  location: Lincoln
+  description: Inclusive art and design sessions.
+  supports: Visual schedules
+  approved: true
+  approved_at: <%= Time.current %>
+  user: two
