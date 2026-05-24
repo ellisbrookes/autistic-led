@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_07_220000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_24_130000) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_220000) do
     t.bigint "record_id", null: false
     t.string "record_type", null: false
     t.datetime "updated_at", null: false
-    t.index [ "record_type", "record_id", "name" ], name: "index_action_text_rich_texts_uniqueness", unique: true
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -27,8 +27,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_220000) do
     t.string "name", null: false
     t.bigint "record_id", null: false
     t.string "record_type", null: false
-    t.index [ "blob_id" ], name: "index_active_storage_attachments_on_blob_id"
-    t.index [ "record_type", "record_id", "name", "blob_id" ], name: "index_active_storage_attachments_uniqueness", unique: true
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
   create_table "active_storage_blobs", force: :cascade do |t|
@@ -40,13 +40,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_220000) do
     t.string "key", null: false
     t.text "metadata"
     t.string "service_name", null: false
-    t.index [ "key" ], name: "index_active_storage_blobs_on_key", unique: true
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
-    t.index [ "blob_id", "variation_digest" ], name: "index_active_storage_variant_records_uniqueness", unique: true
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "blogs", force: :cascade do |t|
@@ -57,7 +57,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_220000) do
     t.string "title"
     t.datetime "updated_at", null: false
     t.integer "user_id"
-    t.index [ "user_id" ], name: "index_blogs_on_user_id"
+    t.index ["user_id"], name: "index_blogs_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -69,10 +69,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_220000) do
     t.integer "parent_id"
     t.integer "reply_to_id"
     t.datetime "updated_at", null: false
-    t.index [ "blog_id" ], name: "index_comments_on_blog_id"
-    t.index [ "commenter_token" ], name: "index_comments_on_commenter_token"
-    t.index [ "parent_id" ], name: "index_comments_on_parent_id"
-    t.index [ "reply_to_id" ], name: "index_comments_on_reply_to_id"
+    t.index ["blog_id"], name: "index_comments_on_blog_id"
+    t.index ["commenter_token"], name: "index_comments_on_commenter_token"
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
+    t.index ["reply_to_id"], name: "index_comments_on_reply_to_id"
+  end
+
+  create_table "directory_listings", force: :cascade do |t|
+    t.boolean "approved", default: false, null: false
+    t.datetime "approved_at"
+    t.string "contact_email"
+    t.datetime "created_at", null: false
+    t.text "description", null: false
+    t.text "labels"
+    t.string "listing_type", null: false
+    t.string "location", null: false
+    t.string "name", null: false
+    t.text "supports"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.string "website_url"
+    t.index ["user_id"], name: "index_directory_listings_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -80,7 +97,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_220000) do
     t.string "email_address", null: false
     t.string "password_digest", null: false
     t.datetime "updated_at", null: false
-    t.index [ "email_address" ], name: "index_users_on_email_address", unique: true
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -89,4 +106,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_220000) do
   add_foreign_key "comments", "blogs"
   add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "comments", "comments", column: "reply_to_id", on_delete: :nullify
+  add_foreign_key "directory_listings", "users"
 end
