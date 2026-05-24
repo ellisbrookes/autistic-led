@@ -26,8 +26,8 @@
           </div>
 
           <div class="flex flex-wrap gap-2">
-            <% if @directory_listing.website_url.present? %>
-              <%= link_to "Visit website", @directory_listing.website_url, class: "rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700" %>
+            <% if (safe_website_url = safe_http_url(@directory_listing.website_url)).present? %>
+              <%= link_to "Visit website", safe_website_url, class: "rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700", rel: "noopener noreferrer" %>
             <% end %>
             <% if @directory_listing.contact_email.present? %>
               <%= link_to "Email", "mailto:#{@directory_listing.contact_email}", class: "rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700" %>
