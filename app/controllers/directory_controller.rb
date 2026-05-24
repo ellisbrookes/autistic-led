@@ -1,38 +1,121 @@
 # frozen_string_literal: true
 
 class DirectoryController < ApplicationController
-  Business = Struct.new(:name, :type, :location, :supports, :notes, keyword_init: true)
+  before_action :require_authentication, only: %i[new create edit update]
+  before_action :set_directory_listing, only: %i[show edit update approve destroy]
+  before_action :require_directory_listing_visibility, only: %i[show]
+  before_action :require_directory_listing_owner_or_admin, only: %i[edit update]
+  before_action :require_admin, only: %i[approve destroy]
+
+  Business = Struct.new(:id, :name, :category, :location, :supports, :notes, :website_url, :contact_email, :approved, :editable, keyword_init: true)
 
   def index
-    @businesses = [
-      Business.new(
-        name: "Quiet Cup Cafe",
-        type: "Cafe",
-        location: "Spalding Town Centre",
-        supports: ["Low-sensory seating", "Noise-reduced hour", "Visual menus"],
-        notes: "Staff can switch music off in the back room on request."
-      ),
-      Business.new(
-        name: "Harbor Books & Co.",
-        type: "Bookshop",
-        location: "Market Deeping",
-        supports: ["Clear signage", "Calm checkout lane", "Text-first communication"],
-        notes: "You can request help by showing a card at the till."
-      ),
-      Business.new(
-        name: "Bloom Wellness Studio",
-        type: "Health & wellbeing",
-        location: "Pinchbeck",
-        supports: ["Dimmable lighting", "Predictable session plans", "Flexible appointment length"],
-        notes: "First-visit walkthrough available by email before booking."
-      ),
-      Business.new(
-        name: "Northbank Cinema",
-        type: "Leisure",
-        location: "Peterborough",
-        supports: ["Relaxed screenings", "Ear defender friendly", "Step-by-step visit guide"],
-        notes: "Weekend screenings include lower volume and softer lights."
-      )
-    ]
+    @businesses = submitted_businesses
   end
+
+  def new
+    @directory_listing = DirectoryListing.new
+  end
+
+  def show
+  end
+
+  def create
+    @directory_listing = DirectoryListing.new(directory_listing_params)
+    @directory_listing.user = current_user
+
+    if @directory_listing.save
+      redirect_to directory_listing_path(@directory_listing), notice: "Directory listing submitted for admin approval."
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    attrs = directory_listing_params
+    attrs = attrs.except(:images) if attrs[:images].blank?
+
+    attrs = if admin?
+      attrs
+    else
+      attrs.merge(approved: false, approved_at: nil)
+    end
+
+    if @directory_listing.update(attrs)
+      notice = if admin?
+        "Directory listing updated."
+      else
+        "Directory listing changes submitted for admin approval."
+      end
+      redirect_to directory_listing_path(@directory_listing), notice: notice
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def approve
+    if @directory_listing.approved?
+      redirect_to directory_listing_path(@directory_listing), notice: "Listing is already approved."
+      return
+    end
+
+    @directory_listing.update!(approved: true, approved_at: Time.current)
+    redirect_to directory_listing_path(@directory_listing), notice: "Directory listing approved and now live."
+  end
+
+  def destroy
+    @directory_listing.destroy!
+    redirect_to directory_path, notice: "Directory listing was removed."
+  end
+
+  private
+
+    def submitted_businesses
+      listings_scope = DirectoryListing.order(created_at: :desc)
+      listings_scope = if admin?
+        listings_scope
+      elsif authenticated?
+        listings_scope.where(approved: true).or(listings_scope.where(user_id: current_user.id))
+      else
+        listings_scope.where(approved: true)
+      end
+
+      listings_scope.map do |listing|
+        Business.new(
+          id: listing.id,
+          name: listing.name,
+          category: listing.listing_type,
+          location: listing.location,
+          supports: listing.support_tags,
+          notes: listing.description,
+          website_url: listing.website_url,
+          contact_email: listing.contact_email,
+          approved: listing.approved?,
+          editable: admin? || (authenticated? && listing.user_id == current_user.id)
+        )
+      end
+    end
+
+    def directory_listing_params
+      params.expect(directory_listing: [ :name, :listing_type, :location, :description, :supports, :website_url, :contact_email, { images: [] } ])
+    end
+
+    def set_directory_listing
+      @directory_listing = DirectoryListing.find(params.expect(:id))
+    end
+
+    def require_directory_listing_owner_or_admin
+      return if admin? || @directory_listing.user_id == current_user&.id
+
+      redirect_to directory_path, alert: "You can only edit your own listing."
+    end
+
+    def require_directory_listing_visibility
+      return if @directory_listing.approved? || admin? || @directory_listing.user_id == current_user&.id
+
+      redirect_to directory_path, alert: "This listing is awaiting admin approval."
+    end
 end

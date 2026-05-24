@@ -12,7 +12,14 @@ Rails.application.routes.draw do
       post :replies, to: "comments#create", on: :member
     end
   end
-  get "directory" => "directory#index"
+  get "directory" => "directory#index", as: :directory
+  get "directory/new" => "directory#new", as: :new_directory_listing
+  post "directory" => "directory#create"
+  get "directory/:id" => "directory#show", as: :directory_listing
+  get "directory/:id/edit" => "directory#edit", as: :edit_directory_listing
+  patch "directory/:id" => "directory#update", as: :update_directory_listing
+  patch "directory/:id/approve" => "directory#approve", as: :approve_directory_listing
+  delete "directory/:id" => "directory#destroy", as: :destroy_directory_listing
   get "home" => "home#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

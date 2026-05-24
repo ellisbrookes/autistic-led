@@ -1,6 +1,13 @@
 <% content_for :title, "Active Directory" %>
 
 <section class="relative overflow-hidden px-4 py-10 sm:py-14">
+  <% if notice.present? %>
+    <p class="mx-auto mb-5 w-full max-w-7xl rounded-md bg-green-50 px-3 py-2 text-sm font-medium text-green-700 dark:bg-green-900/30 dark:text-green-200" id="notice"><%= notice %></p>
+  <% end %>
+  <% if alert.present? %>
+    <p class="mx-auto mb-5 w-full max-w-7xl rounded-md bg-red-50 px-3 py-2 text-sm font-medium text-red-700 dark:bg-red-900/30 dark:text-red-200"><%= alert %></p>
+  <% end %>
+
   <div class="relative mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[18rem_1fr]">
 
     <aside class="sticky top-6 h-fit rounded-2xl border p-4 shadow-sm backdrop-blur">
@@ -25,15 +32,10 @@
           </li>
 
           <% @businesses.each do |business| %>
-            <% anchor = business.name.parameterize %>
-
             <li>
-              <a
-                href="#<%= anchor %>"
-                class="block rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition duration-200 hover:bg-slate-100 hover:text-slate-900 hover:shadow-sm dark:border-slate-700 dark:hover:bg-slate-800"
-              >
+              <%= link_to directory_listing_path(business.id), class: "block rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium transition duration-200 hover:bg-slate-100 hover:text-slate-900 hover:shadow-sm dark:border-slate-700 dark:hover:bg-slate-800" do %>
                 <%= business.name %>
-              </a>
+              <% end %>
             </li>
           <% end %>
 
@@ -62,28 +64,32 @@
         </p>
 
         <div class="mt-4">
-          <%= link_to "Contact Us",
-            "mailto:hello@autisticled.com",
-            class: "inline-flex items-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium transition hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
-          %>
+          <%= render(Website::ButtonComponent.new(text: "Post your listing", path: new_directory_listing_path, variant: :primary)) %>
         </div>
       </article>
 
-      <% @businesses.each do |business| %>
-        <% anchor = business.name.parameterize %>
+      <% if @businesses.empty? %>
+        <article class="rounded-2xl border p-5 shadow-sm">
+          <p class="text-sm text-slate-600 dark:text-slate-300">No listings yet. Be the first to post.</p>
+        </article>
+      <% end %>
 
+      <% @businesses.each do |business| %>
         <article
-          id="<%= anchor %>"
+          id="listing-<%= business.id %>"
           class="rounded-2xl border p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md"
         >
           <header class="flex flex-wrap items-center gap-2">
-            <h2 class="text-xl font-semibold">
-              <%= business.name %>
-            </h2>
+            <h2 class="text-xl font-semibold"><%= link_to business.name, directory_listing_path(business.id), class: "hover:underline" %></h2>
 
             <span class="rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold uppercase tracking-wide dark:bg-slate-700">
-              <%= business.type %>
+              <%= business.category %>
             </span>
+            <% unless business.approved %>
+              <span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-900">
+                Pending approval
+              </span>
+            <% end %>
           </header>
 
           <p class="mt-2 text-sm">
@@ -104,6 +110,43 @@
                   </li>
                 <% end %>
               </ul>
+            </div>
+          <% end %>
+
+          <% if business.notes.present? %>
+            <p class="mt-4 text-sm text-slate-700 dark:text-slate-300"><%= business.notes %></p>
+          <% end %>
+
+          <% if business.website_url.present? || business.contact_email.present? %>
+            <div class="mt-4 flex flex-wrap gap-3 text-sm">
+              <% if business.website_url.present? %>
+                <%= link_to "Website", business.website_url, class: "rounded-md border border-slate-300 px-3 py-1.5 font-medium hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800" %>
+              <% end %>
+              <% if business.contact_email.present? %>
+                <%= link_to "Email", "mailto:#{business.contact_email}", class: "rounded-md border border-slate-300 px-3 py-1.5 font-medium hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800" %>
+              <% end %>
+            </div>
+          <% end %>
+
+          <div class="mt-4">
+            <%= render(Website::ButtonComponent.new(text: "View details", path: directory_listing_path(business.id), variant: :outline, size: :sm)) %>
+          </div>
+
+          <% if admin? && business.id.present? %>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <% if business.editable %>
+                <%= render(Website::ButtonComponent.new(text: "Edit listing", path: edit_directory_listing_path(business.id), variant: :outline, size: :sm)) %>
+              <% end %>
+              <% unless business.approved %>
+                <%= render(Website::ButtonComponent.new(text: "Approve listing", path: approve_directory_listing_path(business.id), method: :patch, variant: :secondary, size: :sm)) %>
+              <% end %>
+              <%= render(Website::ButtonComponent.new(text: "Remove listing", path: destroy_directory_listing_path(business.id), method: :delete, variant: :danger, size: :sm)) %>
+            </div>
+          <% end %>
+
+          <% if !admin? && business.editable %>
+            <div class="mt-4">
+              <%= render(Website::ButtonComponent.new(text: "Edit listing", path: edit_directory_listing_path(business.id), variant: :outline, size: :sm)) %>
             </div>
           <% end %>
         </article>
