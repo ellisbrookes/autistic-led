@@ -37,9 +37,29 @@
   </div>
 
   <div class="my-5">
+    <%= form.label :cover_image, "Cover image (optional)", class: "font-medium text-slate-800 dark:text-slate-200" %>
+    <%= form.file_field :cover_image, accept: "image/*", class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-sm file:font-medium dark:bg-slate-800 dark:text-slate-100 dark:file:bg-slate-700" %>
+    <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">Used on the directory card preview.</p>
+
+    <% if directory_listing.cover_image.attached? %>
+      <div class="mt-4 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
+        <%= image_tag directory_listing.cover_image, class: "h-40 w-full object-cover", alt: directory_listing.name %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="my-5">
     <%= form.label :images, "Images (optional)", class: "font-medium text-slate-800 dark:text-slate-200" %>
     <%= form.file_field :images, multiple: true, accept: "image/*", class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-sm file:font-medium dark:bg-slate-800 dark:text-slate-100 dark:file:bg-slate-700" %>
-    <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">You can upload multiple photos.</p>
+    <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">You can upload multiple photos. On edit, new uploads are added to existing photos.</p>
+
+    <% if directory_listing.images.attached? %>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <% directory_listing.images.each do |image| %>
+          <%= image_tag image, class: "h-32 w-full rounded-lg object-cover", alt: directory_listing.name %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 
   <div class="my-5">

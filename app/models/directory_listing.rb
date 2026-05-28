@@ -1,5 +1,6 @@
 class DirectoryListing < ApplicationRecord
   belongs_to :user
+  has_one_attached :cover_image
   has_many_attached :images
 
   validates :name, :listing_type, :location, :description, presence: true

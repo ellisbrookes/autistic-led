@@ -7,7 +7,7 @@ class DirectoryController < ApplicationController
   before_action :require_directory_listing_owner_or_admin, only: %i[edit update]
   before_action :require_admin, only: %i[approve destroy]
 
-  Business = Struct.new(:id, :name, :category, :location, :supports, :notes, :website_url, :contact_email, :approved, :editable, keyword_init: true)
+  Business = Struct.new(:id, :name, :category, :location, :supports, :notes, :website_url, :contact_email, :approved, :editable, :cover_image, keyword_init: true)
 
   def index
     @businesses = submitted_businesses
@@ -37,6 +37,7 @@ class DirectoryController < ApplicationController
   def update
     attrs = directory_listing_params
     attrs = attrs.except(:images) if attrs[:images].blank?
+    attrs = attrs.except(:cover_image) if attrs[:cover_image].blank?
 
     attrs = if admin?
       attrs
@@ -94,13 +95,14 @@ class DirectoryController < ApplicationController
           website_url: listing.website_url,
           contact_email: listing.contact_email,
           approved: listing.approved?,
-          editable: admin? || (authenticated? && listing.user_id == current_user.id)
+          editable: admin? || (authenticated? && listing.user_id == current_user.id),
+          cover_image: (listing.cover_image.attached? ? listing.cover_image : listing.images.first)
         )
       end
     end
 
     def directory_listing_params
-      params.expect(directory_listing: [ :name, :listing_type, :location, :description, :supports, :website_url, :contact_email, { images: [] } ])
+      params.expect(directory_listing: [ :name, :listing_type, :location, :description, :supports, :website_url, :contact_email, :cover_image, { images: [] } ])
     end
 
     def set_directory_listing

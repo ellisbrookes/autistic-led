@@ -38,6 +38,12 @@
 
       <div class="grid gap-6 p-5 sm:p-8 lg:grid-cols-[1.45fr_0.85fr]">
         <div class="space-y-6">
+          <% if @directory_listing.cover_image.attached? %>
+            <section class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+              <%= image_tag @directory_listing.cover_image, class: "h-64 w-full object-cover", alt: @directory_listing.name %>
+            </section>
+          <% end %>
+
           <% if @directory_listing.images.attached? %>
             <section class="rounded-2xl border border-slate-200 p-5 dark:border-slate-700">
               <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-200">Images</h2>
