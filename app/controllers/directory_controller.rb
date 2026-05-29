@@ -8,9 +8,17 @@ class DirectoryController < ApplicationController
   before_action :require_admin, only: %i[approve destroy]
 
   Business = Struct.new(:id, :name, :category, :location, :supports, :notes, :website_url, :contact_email, :approved, :editable, :cover_image, keyword_init: true)
+  LOCATION_RADIUS_OPTIONS = [5, 10, 25, 50].freeze
 
   def index
-    @businesses = submitted_businesses
+    businesses = submitted_businesses
+
+    @category_query = params[:category].to_s.strip
+    @location_query = params[:location].to_s.strip
+    @radius_miles = radius_miles_param
+    @radius_options = LOCATION_RADIUS_OPTIONS
+    @category_options = businesses.map(&:category).compact_blank.reject { |category| category.to_s.strip.casecmp?("test") }.uniq.sort
+    @businesses = filter_businesses(businesses)
   end
 
   def new
@@ -99,6 +107,40 @@ class DirectoryController < ApplicationController
           cover_image: (listing.cover_image.attached? ? listing.cover_image : listing.images.first)
         )
       end
+    end
+
+    def filter_businesses(businesses)
+      filtered = businesses
+      if @category_query.present?
+        filtered = filtered.select { |business| business.category.to_s.casecmp?(@category_query) }
+      end
+
+      return filtered if @location_query.blank?
+
+      query = @location_query.downcase
+      query_words = query.split
+
+      filtered.select do |business|
+        location = business.location.to_s.downcase
+
+        case @radius_miles
+        when 5
+          location.include?(query)
+        when 10
+          query_words.all? { |word| location.include?(word) }
+        when 25
+          query_words.any? { |word| location.include?(word) }
+        else
+          location.include?(query) || query_words.any? { |word| location.include?(word) }
+        end
+      end
+    end
+
+    def radius_miles_param
+      requested_radius = params[:radius].to_i
+      return 25 if requested_radius.zero?
+
+      LOCATION_RADIUS_OPTIONS.include?(requested_radius) ? requested_radius : 25
     end
 
     def directory_listing_params
