@@ -8,7 +8,7 @@ class DirectoryController < ApplicationController
   before_action :require_admin, only: %i[approve destroy]
 
   Business = Struct.new(:id, :name, :category, :location, :supports, :notes, :website_url, :contact_email, :approved, :editable, :cover_image, keyword_init: true)
-  LOCATION_RADIUS_OPTIONS = [5, 10, 25, 50].freeze
+  LOCATION_RADIUS_OPTIONS = [ 5, 10, 25, 50 ].freeze
 
   def index
     businesses = submitted_businesses

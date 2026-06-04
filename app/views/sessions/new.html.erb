@@ -16,7 +16,18 @@
 
       <div class="my-5">
         <%= form.label :password, class: "font-medium text-slate-800 dark:text-slate-200" %>
-        <%= form.password_field :password, required: true, class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-primary-500 focus:outline-none dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100" %>
+        <div class="relative mt-2" data-controller="password-visibility">
+          <%= form.password_field :password, required: true, data: { password_visibility_target: "input" }, class: "block w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-11 text-slate-900 shadow-sm focus:border-primary-500 focus:outline-none dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100" %>
+          <button type="button" class="absolute inset-y-0 right-0 inline-flex items-center px-3 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200" data-action="password-visibility#toggle" aria-label="Show or hide password">
+            <svg data-password-visibility-target="showIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.25 12s3.75-6.75 9.75-6.75S21.75 12 21.75 12 18 18.75 12 18.75 2.25 12 2.25 12z" />
+              <circle cx="12" cy="12" r="3" stroke-width="1.8" />
+            </svg>
+            <svg data-password-visibility-target="hideIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="hidden h-5 w-5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3l18 18M10.58 10.58A3 3 0 0012 15a3 3 0 002.42-4.42M9.88 5.09A9.77 9.77 0 0112 4.88c6 0 9.75 7.12 9.75 7.12a16.75 16.75 0 01-4.64 5.58M6.56 6.56A16.97 16.97 0 002.25 12s3.75 6.75 9.75 6.75a9.8 9.8 0 003.12-.5" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div class="mt-6 flex flex-wrap items-center gap-3">
