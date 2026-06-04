@@ -17,6 +17,23 @@ class DirectoryControllerTest < ActionDispatch::IntegrationTest
     assert_no_match "Quiet Cup Cafe", response.body
   end
 
+  test "should filter index by location and radius" do
+    get directory_url, params: { location: "Lincoln", radius: 10 }
+
+    assert_response :success
+    assert_match "Calm Coding Collective", response.body
+    assert_match "Spectrum Studio", response.body
+    assert_no_match "Quiet Makers", response.body
+  end
+
+  test "should filter index by category" do
+    get directory_url, params: { category: "Creative services" }
+
+    assert_response :success
+    assert_match "Spectrum Studio", response.body
+    assert_no_match "Calm Coding Collective", response.body
+  end
+
   test "should redirect new when not logged in" do
     get new_directory_listing_url
 
