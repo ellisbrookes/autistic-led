@@ -25,7 +25,8 @@ class ProfilesController < ApplicationController
     def filtered_profile_params
       attrs = profile_params.to_h
       current_password = attrs.delete("current_password")
-      email_changed = attrs["email_address"].to_s.strip.downcase != @user.email_address
+      email_changed = attrs.key?("email_address") &&
+        attrs["email_address"].to_s.strip.downcase != @user.email_address.to_s.strip.downcase
       password_change_requested = attrs["password"].present? || attrs["password_confirmation"].present?
 
       if attrs["password"].blank? && attrs["password_confirmation"].blank?
