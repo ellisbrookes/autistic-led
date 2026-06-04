@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resource :session, only: %i[new create destroy]
   resource :registration, only: %i[new create]
+  resource :profile, only: %i[show update]
   get "login" => "sessions#new"
   get "signup" => "registrations#new"
   delete "logout" => "sessions#destroy"

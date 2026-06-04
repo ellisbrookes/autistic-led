@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     end
 
     def admin?
-      current_user&.email_address == "admin@autisticled.com"
+      current_user&.admin?
     end
 
     def require_admin
