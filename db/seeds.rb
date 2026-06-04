@@ -10,7 +10,9 @@
 
 if ENV["ADMIN_EMAIL"].present? && ENV["ADMIN_PASSWORD"].present?
   user = User.find_or_initialize_by(email_address: ENV["ADMIN_EMAIL"])
+  user.name = ENV.fetch("ADMIN_NAME", "Admin")
   user.password = ENV["ADMIN_PASSWORD"]
   user.password_confirmation = ENV["ADMIN_PASSWORD"]
+  user.role = :admin
   user.save!
 end

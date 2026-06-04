@@ -1,7 +1,11 @@
 one:
+  name: Admin User
   email_address: admin@autisticled.com
+  role: admin
   password_digest: <%= BCrypt::Password.create("password123") %>
 
 two:
+  name: Member User
   email_address: member@example.com
+  role: member
   password_digest: <%= BCrypt::Password.create("password123") %>
