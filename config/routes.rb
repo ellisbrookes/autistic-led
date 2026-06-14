@@ -1,37 +1,39 @@
 Rails.application.routes.draw do
+  # Authentication
   resource :session, only: %i[new create destroy]
   resource :registration, only: %i[new create]
   resource :profile, only: %i[show update]
-  get "login" => "sessions#new"
-  get "signup" => "registrations#new"
-  delete "logout" => "sessions#destroy"
 
+  get "login",  to: "sessions#new"
+  get "signup", to: "registrations#new"
+  delete "logout", to: "sessions#destroy"
+
+  # Blogs
   resources :blogs do
-    patch :approve, on: :member
+    member do
+      patch :approve
+    end
 
     resources :comments, only: %i[create update destroy] do
       post :replies, to: "comments#create", on: :member
     end
   end
-  get "directory" => "directory#index", as: :directory
-  get "directory/new" => "directory#new", as: :new_directory_listing
-  post "directory" => "directory#create"
-  get "directory/:id" => "directory#show", as: :directory_listing
-  get "directory/:id/edit" => "directory#edit", as: :edit_directory_listing
-  patch "directory/:id" => "directory#update", as: :update_directory_listing
-  patch "directory/:id/approve" => "directory#approve", as: :approve_directory_listing
-  delete "directory/:id" => "directory#destroy", as: :destroy_directory_listing
-  get "home" => "home#index"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  # Directory
+  resources :directory, except: [:destroy] do
+    member do
+      patch :approve
+    end
+  end
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+  delete "directory/:id", to: "directory#destroy", as: :destroy_directory_listing
 
-  # Defines the root path route ("/")
-  root "home#index"
+  # Static Pages
+  get "home", to: "home#index"
+
+  # Health Check
+  get "up", to: "rails/health#show", as: :rails_health_check
+
+  # Root
+  root "comingsoon#index"
 end
