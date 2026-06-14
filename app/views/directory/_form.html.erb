@@ -1,7 +1,16 @@
-<%= form_with(model: directory_listing, url: (directory_listing.persisted? ? update_directory_listing_path(directory_listing) : directory_path), method: (directory_listing.persisted? ? :patch : :post), class: "contents") do |form| %>
+<%= form_with(
+  model: directory_listing,
+  url: directory_listing.persisted? ? directory_path(directory_listing) : directory_index_path,
+  method: directory_listing.persisted? ? :patch : :post,
+  class: "contents"
+) do |form| %>
+
   <% if directory_listing.errors.any? %>
-    <div id="error_explanation" class="mt-3 rounded-md bg-red-50 px-3 py-2 font-medium text-red-600 dark:bg-red-900/30 dark:text-red-300">
-      <h2><%= pluralize(directory_listing.errors.count, "error") %> prohibited this listing from being saved:</h2>
+    <div class="mt-3 rounded-md bg-red-50 px-3 py-2 font-medium text-red-600 dark:bg-red-900/30 dark:text-red-300">
+      <h2>
+        <%= pluralize(directory_listing.errors.count, "error") %>
+        prohibited this listing from being saved:
+      </h2>
 
       <ul class="ml-6 list-disc">
         <% directory_listing.errors.each do |error| %>
@@ -11,68 +20,126 @@
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :name, "Name", class: "font-medium text-slate-800 dark:text-slate-200" %>
-    <%= form.text_field :name, class: ["mt-2 block w-full rounded-md border bg-white px-3 py-2 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-100", { "border-slate-300 focus:border-primary-500 focus:outline-none": directory_listing.errors[:name].none?, "border-red-400 focus:border-red-500 focus:outline-none": directory_listing.errors[:name].any? }] %>
-  </div>
 
   <div class="my-5">
-    <%= form.label :listing_type, "Type of listing", class: "font-medium text-slate-800 dark:text-slate-200" %>
-    <%= form.text_field :listing_type, class: ["mt-2 block w-full rounded-md border bg-white px-3 py-2 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-100", { "border-slate-300 focus:border-primary-500 focus:outline-none": directory_listing.errors[:listing_type].none?, "border-red-400 focus:border-red-500 focus:outline-none": directory_listing.errors[:listing_type].any? }] %>
+    <%= form.label :name,
+      class: "font-medium text-slate-800 dark:text-slate-200" %>
+
+    <%= form.text_field :name,
+      class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-primary-500 focus:outline-none dark:bg-slate-800 dark:text-slate-100" %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :location, "Address", class: "font-medium text-slate-800 dark:text-slate-200" %>
-    <%= form.text_field :location, class: ["mt-2 block w-full rounded-md border bg-white px-3 py-2 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-100", { "border-slate-300 focus:border-primary-500 focus:outline-none": directory_listing.errors[:location].none?, "border-red-400 focus:border-red-500 focus:outline-none": directory_listing.errors[:location].any? }] %>
-  </div>
 
   <div class="my-5">
-    <%= form.label :description, class: "font-medium text-slate-800 dark:text-slate-200" %>
-    <%= form.text_area :description, rows: 5, class: ["mt-2 block w-full rounded-md border bg-white px-3 py-2 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-100", { "border-slate-300 focus:border-primary-500 focus:outline-none": directory_listing.errors[:description].none?, "border-red-400 focus:border-red-500 focus:outline-none": directory_listing.errors[:description].any? }] %>
+    <%= form.label :listing_type, "Type of listing",
+      class: "font-medium text-slate-800 dark:text-slate-200" %>
+
+    <%= form.text_field :listing_type,
+      class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-primary-500 focus:outline-none dark:bg-slate-800 dark:text-slate-100" %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :supports, "What we offer", class: "font-medium text-slate-800 dark:text-slate-200" %>
-    <%= form.text_area :supports, rows: 3, placeholder: "One per line or comma-separated", class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-primary-500 focus:outline-none dark:bg-slate-800 dark:text-slate-100" %>
-  </div>
 
   <div class="my-5">
-    <%= form.label :cover_image, "Cover image (optional)", class: "font-medium text-slate-800 dark:text-slate-200" %>
-    <%= form.file_field :cover_image, accept: "image/*", class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-sm file:font-medium dark:bg-slate-800 dark:text-slate-100 dark:file:bg-slate-700" %>
-    <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">Used on the directory card preview.</p>
+    <%= form.label :location, "Address",
+      class: "font-medium text-slate-800 dark:text-slate-200" %>
+
+    <%= form.text_field :location,
+      class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-primary-500 focus:outline-none dark:bg-slate-800 dark:text-slate-100" %>
+  </div>
+
+
+  <div class="my-5">
+    <%= form.label :description,
+      class: "font-medium text-slate-800 dark:text-slate-200" %>
+
+    <%= form.text_area :description,
+      rows: 5,
+      class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-primary-500 focus:outline-none dark:bg-slate-800 dark:text-slate-100" %>
+  </div>
+
+
+  <div class="my-5">
+    <%= form.label :supports, "What we offer",
+      class: "font-medium text-slate-800 dark:text-slate-200" %>
+
+    <%= form.text_area :supports,
+      rows: 3,
+      placeholder: "One per line or comma-separated",
+      class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-primary-500 focus:outline-none dark:bg-slate-800 dark:text-slate-100" %>
+  </div>
+
+
+  <div class="my-5">
+    <%= form.label :cover_image, "Cover image (optional)",
+      class: "font-medium text-slate-800 dark:text-slate-200" %>
+
+    <%= form.file_field :cover_image,
+      accept: "image/*",
+      class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-sm file:font-medium dark:bg-slate-800 dark:text-slate-100 dark:file:bg-slate-700" %>
+
+    <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">
+      Used on the directory card preview.
+    </p>
 
     <% if directory_listing.cover_image.attached? %>
       <div class="mt-4 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
-        <%= image_tag directory_listing.cover_image, class: "h-40 w-full object-cover", alt: directory_listing.name %>
+        <%= image_tag directory_listing.cover_image,
+          class: "h-40 w-full object-cover",
+          alt: directory_listing.name %>
       </div>
     <% end %>
   </div>
 
+
   <div class="my-5">
-    <%= form.label :images, "Images (optional)", class: "font-medium text-slate-800 dark:text-slate-200" %>
-    <%= form.file_field :images, multiple: true, accept: "image/*", class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-sm file:font-medium dark:bg-slate-800 dark:text-slate-100 dark:file:bg-slate-700" %>
-    <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">You can upload multiple photos. On edit, new uploads are added to existing photos.</p>
+    <%= form.label :images, "Images (optional)",
+      class: "font-medium text-slate-800 dark:text-slate-200" %>
+
+    <%= form.file_field :images,
+      multiple: true,
+      accept: "image/*",
+      class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-sm file:font-medium dark:bg-slate-800 dark:text-slate-100 dark:file:bg-slate-700" %>
+
+    <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">
+      You can upload multiple photos.
+    </p>
 
     <% if directory_listing.images.attached? %>
       <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <% directory_listing.images.each do |image| %>
-          <%= image_tag image, class: "h-32 w-full rounded-lg object-cover", alt: directory_listing.name %>
+          <%= image_tag image,
+            class: "h-32 w-full rounded-lg object-cover",
+            alt: directory_listing.name %>
         <% end %>
       </div>
     <% end %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :website_url, "Website (optional)", class: "font-medium text-slate-800 dark:text-slate-200" %>
-    <%= form.url_field :website_url, class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-primary-500 focus:outline-none dark:bg-slate-800 dark:text-slate-100" %>
-  </div>
 
   <div class="my-5">
-    <%= form.label :contact_email, "Contact email (optional)", class: "font-medium text-slate-800 dark:text-slate-200" %>
-    <%= form.email_field :contact_email, class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-primary-500 focus:outline-none dark:bg-slate-800 dark:text-slate-100" %>
+    <%= form.label :website_url, "Website (optional)",
+      class: "font-medium text-slate-800 dark:text-slate-200" %>
+
+    <%= form.url_field :website_url,
+      class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-primary-500 focus:outline-none dark:bg-slate-800 dark:text-slate-100" %>
   </div>
+
+
+  <div class="my-5">
+    <%= form.label :contact_email, "Contact email (optional)",
+      class: "font-medium text-slate-800 dark:text-slate-200" %>
+
+    <%= form.email_field :contact_email,
+      class: "mt-2 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-primary-500 focus:outline-none dark:bg-slate-800 dark:text-slate-100" %>
+  </div>
+
 
   <div class="mt-6 flex">
-    <%= render(Website::ButtonComponent.new(text: (directory_listing.persisted? ? "Update listing" : "Post to directory"), type: "submit", variant: :primary, extra_classes: "w-full sm:w-auto")) %>
+    <%= render Website::ButtonComponent.new(
+      text: directory_listing.persisted? ? "Update listing" : "Post to directory",
+      type: "submit",
+      variant: :primary
+    ) %>
   </div>
+
 <% end %>
