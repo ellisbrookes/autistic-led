@@ -14,7 +14,7 @@
   </header>
 
   <div
-    x-data="countdown('2026-06-18T00:00:00')"
+    x-data="countdownUK(2026, 5, 18)"
     x-init="start()"
     class="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-4"
   >
@@ -41,9 +41,11 @@
 </section>
 
 <script>
-  function countdown(targetDate) {
+  function countdownUK(year, month, day) {
+    const target = new Date(year, month, day, 0, 0, 0);
+
     return {
-      target: new Date(targetDate),
+      target,
       now: new Date(),
       done: false,
 
@@ -51,7 +53,7 @@
         days: "Days",
         hours: "Hours",
         minutes: "Minutes",
-        seconds: "Seconds"
+        seconds: "Seconds",
       },
 
       get diffMs() {
@@ -65,7 +67,7 @@
           days: Math.floor(total / 86400),
           hours: Math.floor((total % 86400) / 3600),
           minutes: Math.floor((total % 3600) / 60),
-          seconds: total % 60
+          seconds: total % 60,
         };
       },
 
@@ -76,15 +78,8 @@
 
       start() {
         this.tick();
-
-        const timer = setInterval(() => {
-          this.tick();
-
-          if (this.done) {
-            clearInterval(timer);
-          }
-        }, 1000);
-      }
+        setInterval(() => this.tick(), 1000);
+      },
     };
   }
 </script>
