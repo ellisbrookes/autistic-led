@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   end
 
   # Directory
-  resources :directory, except: [:destroy] do
+  resources :directory, except: [ :destroy ] do
     member do
       patch :approve
     end

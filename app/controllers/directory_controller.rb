@@ -13,7 +13,7 @@ class DirectoryController < ApplicationController
     keyword_init: true
   )
 
-  LOCATION_RADIUS_OPTIONS = [5, 10, 25, 50].freeze
+  LOCATION_RADIUS_OPTIONS = [ 5, 10, 25, 50 ].freeze
 
   def index
     @businesses = filtered_businesses
@@ -60,7 +60,7 @@ class DirectoryController < ApplicationController
     end
 
     if @directory_listing.update(attrs)
-      notice = admin? ? "Directory listing updated." : "Directory listing changes submitted for admin approval." 
+      notice = admin? ? "Directory listing updated." : "Directory listing changes submitted for admin approval."
       redirect_to directory_path(@directory_listing), notice: notice
     else
       render :edit, status: :unprocessable_entity
