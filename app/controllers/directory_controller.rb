@@ -7,45 +7,51 @@ class DirectoryController < ApplicationController
   before_action :require_directory_listing_owner_or_admin, only: %i[edit update]
   before_action :require_admin, only: %i[approve destroy]
 
-  Business = Struct.new(:id, :name, :category, :location, :supports, :notes, :website_url, :contact_email, :approved, :editable, :cover_image, keyword_init: true)
-  LOCATION_RADIUS_OPTIONS = [ 5, 10, 25, 50 ].freeze
+  Business = Struct.new(
+    :id, :name, :category, :location, :supports, :notes,
+    :website_url, :contact_email, :approved, :editable, :cover_image,
+    keyword_init: true
+  )
+
+  LOCATION_RADIUS_OPTIONS = [5, 10, 25, 50].freeze
 
   def index
-    businesses = submitted_businesses
+    @businesses = filtered_businesses
+    @radius_options = LOCATION_RADIUS_OPTIONS
 
     @category_query = params[:category].to_s.strip
     @location_query = params[:location].to_s.strip
     @radius_miles = radius_miles_param
-    @radius_options = LOCATION_RADIUS_OPTIONS
-    @category_options = businesses.map(&:category).compact_blank.reject { |category| category.to_s.strip.casecmp?("test") }.uniq.sort
-    @businesses = filter_businesses(businesses)
+
+    @category_options = @businesses
+      .map(&:category)
+      .compact_blank
+      .reject { |c| c.to_s.strip.casecmp?("test") }
+      .uniq
+      .sort
   end
 
   def new
     @directory_listing = DirectoryListing.new
   end
 
-  def show
-  end
+  def show; end
+  def edit; end
 
   def create
     @directory_listing = DirectoryListing.new(directory_listing_params)
     @directory_listing.user = current_user
 
     if @directory_listing.save
-      redirect_to directory_listing_path(@directory_listing), notice: "Directory listing submitted for admin approval."
+      redirect_to directory_path(@directory_listing),
+      notice: "Directory listing submitted for admin approval."
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  def edit
-  end
-
   def update
-    attrs = directory_listing_params
-    attrs = attrs.except(:images) if attrs[:images].blank?
-    attrs = attrs.except(:cover_image) if attrs[:cover_image].blank?
+    attrs = cleaned_directory_listing_params
 
     attrs = if admin?
       attrs
@@ -54,12 +60,8 @@ class DirectoryController < ApplicationController
     end
 
     if @directory_listing.update(attrs)
-      notice = if admin?
-        "Directory listing updated."
-      else
-        "Directory listing changes submitted for admin approval."
-      end
-      redirect_to directory_listing_path(@directory_listing), notice: notice
+      notice = admin? ? "Directory listing updated." : "Directory listing changes submitted for admin approval." 
+      redirect_to directory_path(@directory_listing), notice: notice
     else
       render :edit, status: :unprocessable_entity
     end
@@ -67,99 +69,97 @@ class DirectoryController < ApplicationController
 
   def approve
     if @directory_listing.approved?
-      redirect_to directory_listing_path(@directory_listing), notice: "Listing is already approved."
+      redirect_to directory_path(@directory_listing), notice: "Listing is already approved."
       return
     end
 
     @directory_listing.update!(approved: true, approved_at: Time.current)
-    redirect_to directory_listing_path(@directory_listing), notice: "Directory listing approved and now live."
+    redirect_to directory_path(@directory_listing),
+    notice: "Directory listing approved and now live."
   end
 
   def destroy
     @directory_listing.destroy!
-    redirect_to directory_path, notice: "Directory listing was removed."
+    redirect_to directory_index_path, notice: "Directory listing was removed."
   end
 
   private
 
-    def submitted_businesses
-      listings_scope = DirectoryListing.order(created_at: :desc)
-      listings_scope = if admin?
-        listings_scope
+  def filtered_businesses
+    scope = DirectoryListing.order(created_at: :desc)
+
+    scope =
+      if admin?
+        scope
       elsif authenticated?
-        listings_scope.where(approved: true).or(listings_scope.where(user_id: current_user.id))
+        scope.where(approved: true).or(scope.where(user_id: current_user.id))
       else
-        listings_scope.where(approved: true)
+        scope.where(approved: true)
       end
 
-      listings_scope.map do |listing|
-        Business.new(
-          id: listing.id,
-          name: listing.name,
-          category: listing.listing_type,
-          location: listing.location,
-          supports: listing.support_tags,
-          notes: listing.description,
-          website_url: listing.website_url,
-          contact_email: listing.contact_email,
-          approved: listing.approved?,
-          editable: admin? || (authenticated? && listing.user_id == current_user.id),
-          cover_image: (listing.cover_image.attached? ? listing.cover_image : listing.images.first)
-        )
-      end
+    listings = scope.to_a
+
+    listings.map do |listing|
+      Business.new(
+        id: listing.id,
+        name: listing.name,
+        category: listing.listing_type,
+        location: listing.location,
+        supports: listing.support_tags,
+        notes: listing.description,
+        website_url: listing.website_url,
+        contact_email: listing.contact_email,
+        approved: listing.approved?,
+        editable: admin? || (authenticated? && listing.user_id == current_user.id),
+        cover_image: listing.cover_image.attached? ? listing.cover_image : listing.images.first
+      )
     end
+  end
 
-    def filter_businesses(businesses)
-      filtered = businesses
-      if @category_query.present?
-        filtered = filtered.select { |business| business.category.to_s.casecmp?(@category_query) }
-      end
+  def radius_miles_param
+    value = params[:radius].to_i
+    return 25 if value.zero?
 
-      return filtered if @location_query.blank?
+    LOCATION_RADIUS_OPTIONS.include?(value) ? value : 25
+  end
 
-      query = @location_query.downcase
-      query_words = query.split
+  def cleaned_directory_listing_params
+    attrs = directory_listing_params.to_h
 
-      filtered.select do |business|
-        location = business.location.to_s.downcase
+    attrs.delete("images") if attrs["images"].blank?
+    attrs.delete("cover_image") if attrs["cover_image"].blank?
 
-        case @radius_miles
-        when 5
-          location.include?(query)
-        when 10
-          query_words.all? { |word| location.include?(word) }
-        when 25
-          query_words.any? { |word| location.include?(word) }
-        else
-          location.include?(query) || query_words.any? { |word| location.include?(word) }
-        end
-      end
-    end
+    attrs
+  end
 
-    def radius_miles_param
-      requested_radius = params[:radius].to_i
-      return 25 if requested_radius.zero?
+  def directory_listing_params
+    params.expect(
+      directory_listing: [
+        :name,
+        :listing_type,
+        :location,
+        :description,
+        :supports,
+        :website_url,
+        :contact_email,
+        :cover_image,
+        { images: [] }
+      ]
+    )
+  end
 
-      LOCATION_RADIUS_OPTIONS.include?(requested_radius) ? requested_radius : 25
-    end
+  def set_directory_listing
+    @directory_listing = DirectoryListing.find(params.expect(:id))
+  end
 
-    def directory_listing_params
-      params.expect(directory_listing: [ :name, :listing_type, :location, :description, :supports, :website_url, :contact_email, :cover_image, { images: [] } ])
-    end
+  def require_directory_listing_owner_or_admin
+    return if admin? || @directory_listing.user_id == current_user&.id
 
-    def set_directory_listing
-      @directory_listing = DirectoryListing.find(params.expect(:id))
-    end
+    redirect_to directory_index_path, alert: "You can only edit your own listing."
+  end
 
-    def require_directory_listing_owner_or_admin
-      return if admin? || @directory_listing.user_id == current_user&.id
-
-      redirect_to directory_path, alert: "You can only edit your own listing."
-    end
-
-    def require_directory_listing_visibility
-      return if @directory_listing.approved? || admin? || @directory_listing.user_id == current_user&.id
-
-      redirect_to directory_path, alert: "This listing is awaiting admin approval."
-    end
+  def require_directory_listing_visibility
+    return if @directory_listing.approved? || admin? || @directory_listing.user_id == current_user&.id
+    redirect_to directory_index_path, alert: "This listing is awaiting admin approval."
+  end
 end

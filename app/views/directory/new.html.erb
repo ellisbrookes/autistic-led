@@ -2,11 +2,24 @@
 
 <%= render Website::SectionComponent.new do %>
   <div class="mx-auto w-full md:w-2/3">
+
     <h1 class="text-4xl font-bold">Post to directory</h1>
-    <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">Share your skills, services, or project with the Lincolnshire community. Listings are published after admin approval.</p>
+
+    <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
+      Share your skills, services, or project with the Lincolnshire community. Listings are published after admin approval.
+    </p>
 
     <%= render "form", directory_listing: @directory_listing %>
 
-    <%= render(Website::ButtonComponent.new(text: "Back to directory", path: directory_path, variant: :outline, extra_classes: "w-full sm:w-auto")) %>
+    <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+
+      <%= render Website::ButtonComponent.new(
+        text: "Back to directory",
+        path: directory_index_path,
+        variant: :outline
+      ) %>
+
+    </div>
+
   </div>
 <% end %>
