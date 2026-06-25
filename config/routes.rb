@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resource :registration, only: %i[new create]
   resource :profile, only: %i[show update]
 
+  get "team", to: "team#index"
   get "login",  to: "sessions#new"
   get "signup", to: "registrations#new"
   delete "logout", to: "sessions#destroy"

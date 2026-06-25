@@ -17,6 +17,7 @@
       <div class="hidden lg:flex lg:items-center lg:space-x-3">
         <%= render(Website::NavLinkComponent.new(text: "Home", path: root_path)) %> 
         <%= render(Website::NavLinkComponent.new(text: "Directory", path: directory_index_path)) %>
+        <%= render(Website::NavLinkComponent.new(text: "Team", path: team_path)) %>
         <%= render(Website::NavLinkComponent.new(text: "Blog", path: blogs_path)) %>
         <% if helpers.authenticated? %>
           <%= link_to profile_path, class: "inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700" do %>
