@@ -217,7 +217,7 @@
                 <% if admin? %>
                   <%= render Website::ButtonComponent.new(
                     text: "Remove listing",
-                    path: destroy_directory_listing_path(@directory_listing),
+                    path: directory_listing_path(@directory_listing),
                     method: :delete,
                     variant: :danger,
                     size: :sm,

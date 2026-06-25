@@ -146,7 +146,7 @@
               <% unless business.approved %>
                 <%= render(Website::ButtonComponent.new(text: "Approve listing", path: approve_directory_listing_path(business.id), method: :patch, variant: :secondary, size: :sm)) %>
               <% end %>
-              <%= render(Website::ButtonComponent.new(text: "Remove listing", path: destroy_directory_listing_path(business.id), method: :delete, variant: :danger, size: :sm)) %>
+              <%= render(Website::ButtonComponent.new(text: "Remove listing", path: directory_listing_path(business.id), method: :delete, variant: :danger, size: :sm)) %>
             </div>
           <% end %> 
 
