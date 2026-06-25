@@ -1,6 +1,6 @@
 <%= form_with(
   model: directory_listing,
-  url: directory_listing.persisted? ? directory_path(directory_listing) : directory_index_path,
+  url: directory_listing.persisted? ? directory_listing_path(directory_listing) : directory_listings_path,
   method: directory_listing.persisted? ? :patch : :post,
   class: "contents"
 ) do |form| %>

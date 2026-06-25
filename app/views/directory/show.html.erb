@@ -16,7 +16,7 @@
     <% end %>
 
 
-    <%= link_to directory_index_path,
+    <%= link_to directory_listings_path,
       class: "inline-flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100" do %>
       <span aria-hidden="true">&larr;</span>
       <span>Back</span>
@@ -199,7 +199,7 @@
 
                 <%= render Website::ButtonComponent.new(
                   text: "Edit listing",
-                  path: edit_directory_path(@directory_listing),
+                  path: edit_directory_listing_path(@directory_listing),
                   variant: :outline,
                   size: :sm
                 ) %>
@@ -207,7 +207,7 @@
                 <% if admin? && !@directory_listing.approved? %>
                   <%= render Website::ButtonComponent.new(
                     text: "Approve listing",
-                    path: approve_directory_path(@directory_listing),
+                    path: approve_directory_listing_path(@directory_listing),
                     method: :patch,
                     variant: :secondary,
                     size: :sm

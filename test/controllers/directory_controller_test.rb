@@ -10,7 +10,7 @@ class DirectoryControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get directory_url
+    get directory_listings_url
     assert_response :success
     assert_match "Calm Coding Collective", response.body
     assert_no_match "Quiet Makers", response.body
@@ -18,7 +18,7 @@ class DirectoryControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should filter index by location and radius" do
-    get directory_url, params: { location: "Lincoln", radius: 10 }
+    get directory_listings_url, params: { location: "Lincoln", radius: 10 }
 
     assert_response :success
     assert_match "Calm Coding Collective", response.body
@@ -27,7 +27,7 @@ class DirectoryControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should filter index by category" do
-    get directory_url, params: { category: "Creative services" }
+    get directory_listings_url, params: { category: "Creative services" }
 
     assert_response :success
     assert_match "Spectrum Studio", response.body
@@ -51,7 +51,7 @@ class DirectoryControllerTest < ActionDispatch::IntegrationTest
     post session_url, params: { email_address: @admin.email_address, password: "password123" }
 
     assert_difference("DirectoryListing.count") do
-      post directory_url, params: {
+      post directory_listings_url, params: {
         directory_listing: {
           name: "Neuro Art Studio",
           listing_type: "Creative services",
@@ -76,7 +76,7 @@ class DirectoryControllerTest < ActionDispatch::IntegrationTest
   test "should not show pending listing when not owner" do
     get directory_listing_url(@pending_listing)
 
-    assert_redirected_to directory_url
+    assert_redirected_to directory_listings_url
   end
 
   test "owner should show own pending listing" do
@@ -100,13 +100,13 @@ class DirectoryControllerTest < ActionDispatch::IntegrationTest
 
     get edit_directory_listing_url(@approved_listing)
 
-    assert_redirected_to directory_url
+    assert_redirected_to directory_listings_url
   end
 
   test "owner update should require re-approval" do
     post session_url, params: { email_address: @member.email_address, password: "password123" }
 
-    patch update_directory_listing_url(@member_approved_listing), params: {
+    patch directory_listing_url(@member_approved_listing), params: {
       directory_listing: {
         name: "Spectrum Studio Updated",
         listing_type: @member_approved_listing.listing_type,
@@ -126,7 +126,7 @@ class DirectoryControllerTest < ActionDispatch::IntegrationTest
   test "admin update should stay approved" do
     post session_url, params: { email_address: @admin.email_address, password: "password123" }
 
-    patch update_directory_listing_url(@approved_listing), params: {
+    patch directory_listing_url(@approved_listing), params: {
       directory_listing: {
         name: "Calm Coding Collective Updated",
         listing_type: @approved_listing.listing_type,
@@ -165,17 +165,17 @@ class DirectoryControllerTest < ActionDispatch::IntegrationTest
     post session_url, params: { email_address: @admin.email_address, password: "password123" }
 
     assert_difference("DirectoryListing.count", -1) do
-      delete destroy_directory_listing_url(@approved_listing)
+      delete directory_listing_url(@approved_listing)
     end
 
-    assert_redirected_to directory_url
+    assert_redirected_to directory_listings_url
   end
 
   test "non admin should not destroy a directory listing" do
     post session_url, params: { email_address: @member.email_address, password: "password123" }
 
     assert_no_difference("DirectoryListing.count") do
-      delete destroy_directory_listing_url(@approved_listing)
+      delete directory_listing_url(@approved_listing)
     end
 
     assert_redirected_to blogs_url

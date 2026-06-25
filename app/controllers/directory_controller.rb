@@ -43,7 +43,7 @@ class DirectoryController < ApplicationController
     @directory_listing.user = current_user
 
     if @directory_listing.save
-      redirect_to directory_path(@directory_listing),
+      redirect_to directory_listing_path(@directory_listing),
       notice: "Directory listing submitted for admin approval."
     else
       render :new, status: :unprocessable_entity
@@ -61,7 +61,7 @@ class DirectoryController < ApplicationController
 
     if @directory_listing.update(attrs)
       notice = admin? ? "Directory listing updated." : "Directory listing changes submitted for admin approval."
-      redirect_to directory_path(@directory_listing), notice: notice
+      redirect_to directory_listing_path(@directory_listing), notice: notice
     else
       render :edit, status: :unprocessable_entity
     end
@@ -69,18 +69,18 @@ class DirectoryController < ApplicationController
 
   def approve
     if @directory_listing.approved?
-      redirect_to directory_path(@directory_listing), notice: "Listing is already approved."
+      redirect_to directory_listing_path(@directory_listing), notice: "Listing is already approved."
       return
     end
 
     @directory_listing.update!(approved: true, approved_at: Time.current)
-    redirect_to directory_path(@directory_listing),
+    redirect_to directory_listing_path(@directory_listing),
     notice: "Directory listing approved and now live."
   end
 
   def destroy
     @directory_listing.destroy!
-    redirect_to directory_index_path, notice: "Directory listing was removed."
+    redirect_to directory_listings_path, notice: "Directory listing was removed."
   end
 
   private
@@ -96,6 +96,16 @@ class DirectoryController < ApplicationController
       else
         scope.where(approved: true)
       end
+
+    # Apply category filter
+    if params[:category].present?
+      scope = scope.where(listing_type: params[:category])
+    end
+
+    # Apply location filter
+    if params[:location].present?
+      scope = scope.where("location LIKE ?", "%#{params[:location]}%")
+    end
 
     listings = scope.to_a
 
@@ -155,11 +165,11 @@ class DirectoryController < ApplicationController
   def require_directory_listing_owner_or_admin
     return if admin? || @directory_listing.user_id == current_user&.id
 
-    redirect_to directory_index_path, alert: "You can only edit your own listing."
+    redirect_to directory_listings_path, alert: "You can only edit your own listing."
   end
 
   def require_directory_listing_visibility
     return if @directory_listing.approved? || admin? || @directory_listing.user_id == current_user&.id
-    redirect_to directory_index_path, alert: "This listing is awaiting admin approval."
+    redirect_to directory_listings_path, alert: "This listing is awaiting admin approval."
   end
 end

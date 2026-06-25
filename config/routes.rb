@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "login",  to: "sessions#new"
   get "signup", to: "registrations#new"
   delete "logout", to: "sessions#destroy"
+  get "home", to: "home#index"
 
   # Blogs
   resources :blogs do
@@ -21,13 +22,11 @@ Rails.application.routes.draw do
   end
 
   # Directory
-  resources :directory, except: [ :destroy ] do
+  resources :directory_listings, path: "directory", controller: "directory" do
     member do
       patch :approve
     end
   end
-
-  delete "directory/:id", to: "directory#destroy", as: :destroy_directory_listing
 
   # Health Check
   get "up", to: "rails/health#show", as: :rails_health_check
