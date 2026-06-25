@@ -1,0 +1,39 @@
+<%= render Website::SectionComponent.new(variant: :fill) do %>
+  <div class="team-shell mx-auto flex w-full max-w-7xl flex-col gap-10">
+    <div class="space-y-3 text-center">
+      <p>Meet our team</p>
+      <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+        People who keep Autistic Led moving forward
+      </h1>
+      <p class="max-w-2xl mx-auto text-sm leading-6 text-slate-600 dark:text-slate-300 sm:text-base">
+        A friendly group of volunteers, organisers and community members who help run Autistic Led and keep it going. We are always looking for new people to join the team, so if you are interested in helping out, please get in touch.
+      </p>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <% team_members = [
+        { name: "Callum Brazzo", role: "Facilitator", notes: "" },
+        { name: "Ellis Brookes", role: "Support Team", notes: "" },
+      ] %>
+
+      <% team_members.each do |member| %>
+        <div class="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-900">
+          <div class="h-56 overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center">
+            <svg class="h-24 w-24 text-slate-400 dark:text-slate-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+          </div>
+
+          <div class="space-y-3 p-6 text-center">
+            <p class="text-xl font-semibold text-slate-900 dark:text-white"><%= member[:name] %></p>
+            <p class="text-sm text-slate-600 dark:text-slate-400"><%= member[:role] %></p>
+            <% if member[:notes].present? %>
+              <p class="text-xs text-slate-500 dark:text-slate-500 italic"><%= member[:notes] %></p>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+  
