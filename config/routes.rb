@@ -28,12 +28,9 @@ Rails.application.routes.draw do
 
   delete "directory/:id", to: "directory#destroy", as: :destroy_directory_listing
 
-  # Static Pages
-  get "home", to: "home#index"
-
   # Health Check
   get "up", to: "rails/health#show", as: :rails_health_check
 
   # Root
-  root "comingsoon#index"
+  root "home#index"
 end
