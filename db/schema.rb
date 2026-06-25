@@ -83,7 +83,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_31_114500) do
     t.text "description", null: false
     t.text "labels"
     t.string "listing_type", null: false
-    t.string "location", null: false
+    t.string "location", null: true
     t.string "name", null: false
     t.text "supports"
     t.datetime "updated_at", null: false

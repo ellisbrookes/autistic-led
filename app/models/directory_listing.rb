@@ -3,7 +3,7 @@ class DirectoryListing < ApplicationRecord
   has_one_attached :cover_image
   has_many_attached :images
 
-  validates :name, :listing_type, :location, :description, presence: true
+  validates :name, :listing_type, :description, presence: true
   validates :website_url,
     format: {
       with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]),
