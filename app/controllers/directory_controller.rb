@@ -14,7 +14,7 @@ class DirectoryController < ApplicationController
   )
 
   LOCATION_RADIUS_OPTIONS = [ 5, 10, 25, 50 ].freeze
-  PER_PAGE_OPTIONS = [10, 20, 50, 100].freeze
+  PER_PAGE_OPTIONS = [ 10, 20, 50, 100 ].freeze
   DEFAULT_PER_PAGE = 10
 
   def index
@@ -26,10 +26,10 @@ class DirectoryController < ApplicationController
     @radius_miles = radius_miles_param
     @per_page = per_page_param
     @total_count = filtered_businesses_count
-    @current_page = [page_param, [(@total_count.to_f / @per_page).ceil, 1].max].min
-    @total_pages = [(@total_count.to_f / @per_page).ceil, 1].max
-    @start_result = [((@current_page - 1) * @per_page) + 1, @total_count].min
-    @end_result = [@current_page * @per_page, @total_count].min
+    @current_page = [ page_param, [ (@total_count.to_f / @per_page).ceil, 1 ].max ].min
+    @total_pages = [ (@total_count.to_f / @per_page).ceil, 1 ].max
+    @start_result = [ ((@current_page - 1) * @per_page) + 1, @total_count ].min
+    @end_result = [ @current_page * @per_page, @total_count ].min
 
     @per_page_options = PER_PAGE_OPTIONS
 
