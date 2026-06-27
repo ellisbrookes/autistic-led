@@ -14,16 +14,26 @@ class DirectoryController < ApplicationController
   )
 
   LOCATION_RADIUS_OPTIONS = [ 5, 10, 25, 50 ].freeze
+  PER_PAGE_OPTIONS = [10, 20, 50, 100].freeze
+  DEFAULT_PER_PAGE = 10
 
   def index
-    @businesses = filtered_businesses
+    @businesses = filtered_businesses(paginate: true)
     @radius_options = LOCATION_RADIUS_OPTIONS
 
     @category_query = params[:category].to_s.strip
     @location_query = params[:location].to_s.strip
     @radius_miles = radius_miles_param
+    @per_page = per_page_param
+    @total_count = filtered_businesses_count
+    @current_page = [page_param, [(@total_count.to_f / @per_page).ceil, 1].max].min
+    @total_pages = [(@total_count.to_f / @per_page).ceil, 1].max
+    @start_result = [((@current_page - 1) * @per_page) + 1, @total_count].min
+    @end_result = [@current_page * @per_page, @total_count].min
 
-    @category_options = @businesses
+    @per_page_options = PER_PAGE_OPTIONS
+
+    @category_options = filtered_businesses(paginate: false)
       .map(&:category)
       .compact_blank
       .reject { |c| c.to_s.strip.casecmp?("test") }
@@ -85,31 +95,11 @@ class DirectoryController < ApplicationController
 
   private
 
-  def filtered_businesses
-    scope = DirectoryListing.order(created_at: :desc)
+  def filtered_businesses(paginate: false)
+    scope = filtered_scope
+    listings = paginate ? scope.limit(@per_page).offset(offset_for_page) : scope
 
-    scope =
-      if admin?
-        scope
-      elsif authenticated?
-        scope.where(approved: true).or(scope.where(user_id: current_user.id))
-      else
-        scope.where(approved: true)
-      end
-
-    # Apply category filter
-    if params[:category].present?
-      scope = scope.where(listing_type: params[:category])
-    end
-
-    # Apply location filter
-    if params[:location].present?
-      scope = scope.where("location LIKE ?", "%#{params[:location]}%")
-    end
-
-    listings = scope.to_a
-
-    listings.map do |listing|
+    listings.to_a.map do |listing|
       Business.new(
         id: listing.id,
         name: listing.name,
@@ -124,6 +114,49 @@ class DirectoryController < ApplicationController
         cover_image: listing.cover_image.attached? ? listing.cover_image : listing.images.first
       )
     end
+  end
+
+  def filtered_businesses_count
+    filtered_scope.count
+  end
+
+  def filtered_scope
+    scope = DirectoryListing.order(created_at: :desc)
+
+    scope =
+      if admin?
+        scope
+      elsif authenticated?
+        scope.where(approved: true).or(scope.where(user_id: current_user.id))
+      else
+        scope.where(approved: true)
+      end
+
+    if params[:category].present?
+      scope = scope.where(listing_type: params[:category])
+    end
+
+    if params[:location].present?
+      scope = scope.where("location LIKE ?", "%#{params[:location]}%")
+    end
+
+    scope
+  end
+
+  def offset_for_page
+    (page_param - 1) * per_page_param
+  end
+
+  def page_param
+    value = params[:page].to_i
+    value.positive? ? value : 1
+  end
+
+  def per_page_param
+    value = params[:per_page].to_i
+    return DEFAULT_PER_PAGE if value <= 0
+
+    PER_PAGE_OPTIONS.include?(value) ? value : DEFAULT_PER_PAGE
   end
 
   def radius_miles_param

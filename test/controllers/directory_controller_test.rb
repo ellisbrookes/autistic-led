@@ -34,6 +34,36 @@ class DirectoryControllerTest < ActionDispatch::IntegrationTest
     assert_no_match "Calm Coding Collective", response.body
   end
 
+  test "should paginate directory listings" do
+    11.times do |index|
+      DirectoryListing.create!(
+        name: "Listing #{index}",
+        listing_type: "Community group",
+        location: "Lincoln",
+        description: "Test listing #{index}",
+        supports: "Support",
+        website_url: "https://example.com",
+        contact_email: "listing#{index}@example.com",
+        approved: true,
+        user: @admin
+      )
+    end
+
+    get directory_listings_url, params: { page: 2 }
+
+    assert_response :success
+    assert_match /Showing 11-13 of 13 results/, response.body
+  end
+
+  test "should render per page selector" do
+    get directory_listings_url
+
+    assert_response :success
+    assert_match "results per page", response.body
+    assert_match "10", response.body
+    assert_match "100", response.body
+  end
+
   test "should redirect new when not logged in" do
     get new_directory_listing_url
 
