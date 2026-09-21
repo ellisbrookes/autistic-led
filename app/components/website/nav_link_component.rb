@@ -1,18 +1,21 @@
 # frozen_string_literal: true
 
 class Website::NavLinkComponent < ViewComponent::Base
+  BASE_CLASSES = "inline-flex items-center rounded-[10px] px-3.5 py-3 text-[length:calc(16px*var(--a11y-scale))] " \
+    "[transition-duration:var(--a11y-motion-duration)] transition-colors"
+
   def initialize(text:, path:)
     @text = text
     @path = path
   end
 
   def classes
-    classes = "block rounded-md px-3 py-2 font-medium text-slate-700 transition-colors hover:bg-slate-200 hover:text-slate-900 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-white"
-
     if current_page?(@path)
-      "#{classes} bg-slate-200 text-slate-900 dark:bg-slate-700 dark:text-white"
+      "#{BASE_CLASSES} font-bold text-[var(--a11y-accent)] underline decoration-2 underline-offset-[4px] " \
+        "[text-decoration-color:var(--a11y-accent)]"
     else
-      classes
+      "#{BASE_CLASSES} font-semibold text-[var(--a11y-text)] [text-decoration:var(--a11y-underline)] " \
+        "hover:bg-[var(--a11y-surface-alt)]"
     end
   end
 end

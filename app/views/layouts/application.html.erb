@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-controller="theme">
+<html>
   <head>
     <title><%= content_for?(:title) ? "Autistic Led - #{content_for(:title)}" : "Autistic Led" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -24,13 +24,18 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="flex min-h-screen flex-col">
+  <body class="flex min-h-screen flex-col bg-[var(--a11y-bg)] text-[var(--a11y-text)] [font-family:var(--a11y-font)] [line-height:var(--a11y-line-height)] [letter-spacing:var(--a11y-letter-spacing)] transition-colors [transition-duration:var(--a11y-motion-duration)]"
+        data-controller="accessibility">
+
+    <a href="#main"
+       class="absolute left-3 -top-16 z-[100] rounded-lg bg-[var(--a11y-accent)] px-4 py-2.5 text-sm font-bold text-[var(--a11y-accent-text)] transition-[top] duration-150 focus:outline-none focus-visible:top-3">Skip to main content</a>
+    <div data-accessibility-target="liveRegion" aria-live="polite" class="sr-only"></div>
 
     <!-- Navigation-->
     <%= render Website::NavigationComponent.new %>
 
     <!-- Page content -->
-    <main class="flex flex-1 flex-col">
+    <main id="main" class="flex flex-1 flex-col">
       <%= yield %>
     </main>
 

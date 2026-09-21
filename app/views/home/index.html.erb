@@ -1,61 +1,62 @@
-<%= render Website::SectionComponent.new(variant: :fill) do %>
-  <div class="home-shell flex flex-col gap-12 py-4 sm:gap-14 sm:py-8">
-    <div class="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">
-      <div class="flex flex-col items-center gap-6 text-center lg:items-start lg:text-left">
-        <p class="home-kicker">Peer support in South Holland</p>
+<% content_for :title, "Home" %>
 
-        <h1 class="max-w-4xl text-balance text-4xl font-bold leading-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-white">
-          The journey may vary, but it is always
-          <span class="text-amber-500">Autistic Led</span>
-        </h1>
+<!-- HERO -->
+<section id="top" class="mx-auto grid w-full max-w-6xl gap-8 px-4 py-10 sm:py-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8 lg:py-16">
+  <div class="flex flex-col items-center gap-6 text-center lg:items-start lg:text-left">
+    <h1 class="max-w-4xl text-balance font-extrabold text-[var(--a11y-text)] [line-height:1.05] text-[length:clamp(36px,6vw,calc(66px*var(--a11y-scale)))]">
+      The journey may vary, but it is always
+      <span class="text-[var(--a11y-accent)]">Autistic Led</span>
+    </h1>
 
-        <p class="home-lead max-w-3xl">
-          We are an autistic adult peer support community helping people connect, communicate and feel understood online and in person.
-        </p>
+    <p class="max-w-3xl text-[var(--a11y-muted)] text-[length:calc(17px*var(--a11y-scale))] [line-height:1.6]">
+      We are an autistic adult peer support community helping people connect, communicate and feel understood online and in person.
+    </p>
 
-        <div class="flex flex-wrap items-center justify-center gap-3 lg:justify-start">
-          <%= render(Website::ButtonComponent.new(text: "Read the blog", path: blogs_path, variant: :primary, size: :md)) %>
-          <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700">
-            Contact us
-          </a>
-        </div>
-      </div>
-
-      <div class="home-hero-media">
-        <%= video_tag "video.mp4", autoplay: true, muted: true, loop: true, playsinline: true, preload: "metadata", class: "home-hero-video" %>
-      </div>
-    </div>
-
-    <div class="grid gap-4 sm:grid-cols-3 sm:auto-rows-fr">
-      <div class="home-panel h-full text-center">
-        <p class="text-2xl font-semibold text-slate-900 dark:text-white">2018</p>
-        <p class="home-lead">Community running since</p>
-      </div>
-
-      <div class="home-panel h-full text-center">
-        <p class="text-2xl font-semibold text-slate-900 dark:text-white">Weekly</p>
-        <p class="home-lead">Thursday in-person meetups</p>
-      </div>
-
-      <div class="home-panel h-full text-center">
-        <p class="text-2xl font-semibold text-slate-900 dark:text-white">Online + Local</p>
-        <p class="home-lead">WhatsApp, Facebook and events</p>
-      </div>
+    <div class="flex flex-wrap items-center justify-center gap-6 lg:justify-start">
+      <%= link_to "Read the blog", blogs_path,
+            class: "inline-flex items-center gap-1.5 border-b-2 pb-[3px] font-bold text-[var(--a11y-text)] text-[length:calc(16px*var(--a11y-scale))] [border-color:var(--a11y-accent)]" %>
+      <%= link_to "Contact us", "#contact",
+            class: "inline-flex items-center gap-1.5 border-b-2 pb-[3px] font-bold text-[var(--a11y-muted)] text-[length:calc(16px*var(--a11y-scale))] [border-color:var(--a11y-border)]" %>
     </div>
   </div>
-<% end %>
 
-<%= render Website::SectionComponent.new do %>
-  <div class="home-shell grid gap-6 lg:grid-cols-2 lg:items-start">
-    <article class="home-panel space-y-4">
-      <h2 class="home-panel-title">About Autistic Led</h2>
-      <p class="home-lead">
+  <div class="relative overflow-hidden rounded-[28px] bg-[var(--a11y-surface-alt)] p-2.5">
+    <%= video_tag "video.mp4", autoplay: true, muted: true, loop: true, playsinline: true, preload: "metadata",
+          class: "block aspect-[4/5] w-full rounded-[20px] object-cover sm:aspect-[16/10]",
+          data: { accessibility_target: "motionSensitive" } %>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="mx-auto w-full max-w-6xl px-4">
+  <div class="mt-[52px] flex flex-wrap border-t pt-[52px] [border-color:var(--a11y-border)]">
+    <div class="min-w-[160px] flex-1">
+      <p class="m-0 font-extrabold text-[var(--a11y-text)] text-[length:calc(27px*var(--a11y-scale))]">2018</p>
+      <p class="mt-1 text-[var(--a11y-muted)] text-[length:calc(14px*var(--a11y-scale))]">Community running since</p>
+    </div>
+    <div class="min-w-[160px] flex-1 border-l pl-7 [border-color:var(--a11y-border)]">
+      <p class="m-0 font-extrabold text-[var(--a11y-text)] text-[length:calc(27px*var(--a11y-scale))]">Weekly</p>
+      <p class="mt-1 text-[var(--a11y-muted)] text-[length:calc(14px*var(--a11y-scale))]">Thursday in-person meetups</p>
+    </div>
+    <div class="min-w-[160px] flex-1 border-l pl-7 [border-color:var(--a11y-border)]">
+      <p class="m-0 font-extrabold text-[var(--a11y-text)] text-[length:calc(27px*var(--a11y-scale))]">Online + Local</p>
+      <p class="mt-1 text-[var(--a11y-muted)] text-[length:calc(14px*var(--a11y-scale))]">WhatsApp, Facebook and events</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT + COMMUNITY -->
+<section id="about" class="mx-auto w-full max-w-6xl px-4">
+  <div class="mt-[52px] grid gap-10 border-t pt-[52px] [border-color:var(--a11y-border)] lg:grid-cols-2">
+    <article>
+      <h2 class="font-extrabold text-[var(--a11y-text)] text-[length:calc(23px*var(--a11y-scale))]">About Autistic Led</h2>
+      <p class="mt-3 text-[var(--a11y-muted)] text-[length:calc(17px*var(--a11y-scale))] [line-height:1.6]">
         Autistic Led is an autistic adult peer support group that started in 2018 and serves South Holland in Lincolnshire, UK.
       </p>
-      <p class="home-lead">
-        Our Thursday in-person groups run at <strong>The Vista Hall, Holland Road, Spalding, PE11 2PB</strong> from 4pm till 6pm
+      <p class="text-[var(--a11y-muted)] text-[length:calc(17px*var(--a11y-scale))] [line-height:1.6]">
+        Our Thursday in-person groups run at <strong>The Vista Hall, Holland Road, Spalding, PE11 2PB</strong> from 4pm till 6pm.
       </p>
-      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800/70">
+      <div class="mt-4 overflow-hidden rounded-2xl border [border-color:var(--a11y-border)]">
         <iframe
           title="Vista Hall location on Google Maps"
           src="https://www.google.com/maps?output=embed&f=q&source=s_q&hl=en&q=Vista+Hall,+Holland+Rd,+Spalding+PE11+2PB"
@@ -67,56 +68,94 @@
       </div>
     </article>
 
-    <article class="home-panel space-y-4">
-      <h2 class="home-panel-title">Community and communication</h2>
-      <p class="home-lead">
+    <article class="border-l pl-7 [border-color:var(--a11y-border)]">
+      <h2 class="font-extrabold text-[var(--a11y-text)] text-[length:calc(23px*var(--a11y-scale))]">Community and communication</h2>
+      <p class="mt-3 text-[var(--a11y-muted)] text-[length:calc(17px*var(--a11y-scale))] [line-height:1.6]">
         Support looks different for everyone, so we meet people where they are and adapt to different communication preferences.
       </p>
-      <p class="home-lead">
+      <p class="text-[var(--a11y-muted)] text-[length:calc(17px*var(--a11y-scale))] [line-height:1.6]">
         Alongside in-person sessions, we keep connected with <strong>WhatsApp</strong> and <strong>Facebook</strong> chats, plus outdoor meetups and local events.
       </p>
     </article>
   </div>
-<% end %>
+</section>
 
-<%= render Website::SectionComponent.new do %>
-  <div class="home-shell">
-    <article class="home-panel space-y-4">
-      <h2 class="home-panel-title">A little about me</h2>
-      <p class="home-lead">
+<!-- STORY -->
+<section class="mx-auto w-full max-w-6xl px-4">
+  <div class="mt-[52px] border-t pt-[52px] [border-color:var(--a11y-border)]">
+    <article class="max-w-[66ch]">
+      <h2 class="font-extrabold text-[var(--a11y-text)] text-[length:calc(23px*var(--a11y-scale))]">A little about me</h2>
+      <p class="mt-3 text-[var(--a11y-muted)] text-[length:calc(17px*var(--a11y-scale))] [line-height:1.6]">
         My name is <strong>Callum Brazzo</strong>. I am an autistic adult with OCD and Tourette's, diagnosed at 21 after my own alternative journey through mainstream education.
       </p>
-      <p class="home-lead">
+      <p class="text-[var(--a11y-muted)] text-[length:calc(17px*var(--a11y-scale))] [line-height:1.6]">
         Poetry was, and still is, my most consistent communication tool and a key part of why this community exists today.
       </p>
-      <p class="home-lead">
+      <p class="text-[var(--a11y-muted)] text-[length:calc(17px*var(--a11y-scale))] [line-height:1.6]">
         I hope everyone who connects with Autistic Led finds healthy outlets for expression and belonging as our journeys continue to grow.
       </p>
     </article>
   </div>
-<% end %>
+</section>
 
-<%= render Website::SectionComponent.new do %>
-  <div id="contact" class="home-shell">
-    <article class="home-panel space-y-6">
-      <div class="space-y-2">
-        <h2 class="home-panel-title">Want to know more?</h2>
-        <p class="home-lead">If you are curious about joining, drop a message and we will get back to you as soon as we can.</p>
+<!-- CONTACT -->
+<section id="contact" class="mx-auto w-full max-w-6xl px-4 pb-16">
+  <div class="mt-[52px] border-t pt-[52px] [border-color:var(--a11y-border)]">
+    <h2 class="font-extrabold text-[var(--a11y-text)] text-[length:calc(23px*var(--a11y-scale))]">Want to know more?</h2>
+    <p class="mt-2 max-w-[60ch] text-[var(--a11y-muted)] text-[length:calc(17px*var(--a11y-scale))] [line-height:1.6]">If you are curious about joining, drop a message and we will get back to you as soon as we can.</p>
+
+    <div class="mt-3 flex flex-wrap">
+      <div class="min-w-[180px] flex-1">
+        <p class="text-[length:calc(12px*var(--a11y-scale))] font-bold uppercase tracking-[0.08em] text-[var(--a11y-muted)]">Phone</p>
+        <p class="mt-1.5 font-bold text-[var(--a11y-text)]">07429 145 191</p>
+      </div>
+      <div class="min-w-[180px] flex-1 border-l pl-7 [border-color:var(--a11y-border)]">
+        <p class="text-[length:calc(12px*var(--a11y-scale))] font-bold uppercase tracking-[0.08em] text-[var(--a11y-muted)]">Email</p>
+        <%= link_to "autisticled@hotmail.com", "mailto:autisticled@hotmail.com",
+              class: "mt-1.5 inline-block font-semibold text-[var(--a11y-link)] underline-offset-[3px] [text-decoration:var(--a11y-underline)]" %>
+      </div>
+    </div>
+
+    <!-- Message form -->
+    <div class="mt-11 max-w-xl border-t pt-9 [border-color:var(--a11y-border)]" data-controller="contact-form">
+      <h3 class="font-extrabold text-[var(--a11y-text)] text-[length:calc(20px*var(--a11y-scale))]">Send us a message</h3>
+      <p class="mt-1.5 text-[var(--a11y-muted)] text-[length:calc(17px*var(--a11y-scale))] [line-height:1.6]">Prefer to write it down? Fill this in and we will reply by email.</p>
+
+      <div data-contact-form-target="confirmation" hidden tabindex="-1" class="mt-4 flex items-start gap-2.5 outline-none">
+        <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-[var(--a11y-accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M20 6 9 17l-5-5"/>
+        </svg>
+        <div>
+          <p class="m-0 font-bold text-[var(--a11y-text)]">Thanks — that has been noted.</p>
+          <p class="mt-1 text-[var(--a11y-muted)] text-[length:calc(14px*var(--a11y-scale))]">This form is not connected to email yet, so nothing was actually sent.</p>
+          <button type="button"
+                  class="mt-2.5 bg-transparent p-0 font-semibold text-[var(--a11y-link)] underline-offset-[3px] [text-decoration:var(--a11y-underline)]"
+                  data-action="click->contact-form#reset">Send another message</button>
+        </div>
       </div>
 
-      <div class="grid gap-3 sm:grid-cols-2 sm:auto-rows-fr">
-        <div class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/70">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Phone</p>
-          <p class="mt-1 text-base font-semibold text-slate-900 dark:text-white">07429 145 191</p>
+      <%= form_with url: "#", method: :post, local: true,
+            html: { class: "mt-4 flex flex-col gap-4.5", data: { contact_form_target: "form", action: "submit->contact-form#submit" } } do |form| %>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <%= form.label :name, "Name", class: "text-[length:calc(12px*var(--a11y-scale))] font-bold uppercase tracking-[0.08em] text-[var(--a11y-muted)]" %>
+            <%= form.text_field :name, required: true,
+                  class: "mt-1.5 block w-full border-0 border-b bg-transparent px-0.5 py-2 text-[var(--a11y-text)] text-[length:calc(16px*var(--a11y-scale))] [border-color:var(--a11y-border)] focus:outline-none focus-visible:[outline:2px_solid_var(--a11y-accent)] focus-visible:outline-offset-2" %>
+          </div>
+          <div>
+            <%= form.label :email, "Email", class: "text-[length:calc(12px*var(--a11y-scale))] font-bold uppercase tracking-[0.08em] text-[var(--a11y-muted)]" %>
+            <%= form.email_field :email, required: true,
+                  class: "mt-1.5 block w-full border-0 border-b bg-transparent px-0.5 py-2 text-[var(--a11y-text)] text-[length:calc(16px*var(--a11y-scale))] [border-color:var(--a11y-border)] focus:outline-none focus-visible:[outline:2px_solid_var(--a11y-accent)] focus-visible:outline-offset-2" %>
+          </div>
         </div>
-
-        <div class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/70">
-          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Email</p>
-          <a href="mailto:autisticled@hotmail.com" class="mt-1 inline-block text-base font-semibold text-primary-700 underline decoration-2 underline-offset-2 transition hover:text-primary-800 dark:text-primary-300 dark:hover:text-primary-200">
-            autisticled@hotmail.com
-          </a>
+        <div>
+          <%= form.label :message, "Message", class: "text-[length:calc(12px*var(--a11y-scale))] font-bold uppercase tracking-[0.08em] text-[var(--a11y-muted)]" %>
+          <%= form.text_area :message, rows: 4, required: true,
+                class: "mt-1.5 block w-full resize-y border-0 border-b bg-transparent px-0.5 py-2 text-[var(--a11y-text)] text-[length:calc(16px*var(--a11y-scale))] [border-color:var(--a11y-border)] focus:outline-none focus-visible:[outline:2px_solid_var(--a11y-accent)] focus-visible:outline-offset-2" %>
         </div>
-      </div>
-    </article>
+        <%= form.submit "Send message",
+              class: "inline-flex cursor-pointer items-center gap-1.5 self-start border-0 border-b-2 bg-transparent py-2 font-bold text-[var(--a11y-text)] text-[length:calc(16px*var(--a11y-scale))] [border-color:var(--a11y-accent)]" %>
+      <% end %>
+    </div>
   </div>
-<% end %>
+</section>
