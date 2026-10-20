@@ -1,77 +1,144 @@
-<footer class="border-t border-slate-200 bg-white text-slate-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+<footer class="border-t bg-[var(--a11y-bg)] [border-color:var(--a11y-border)]">
 
-  <div class="mx-auto max-w-6xl px-4 py-12">
+  <div class="mx-auto max-w-6xl px-4">
 
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
+    <!-- Brand / Links / Accessibility -->
+    <div class="grid gap-10 pt-10 sm:grid-cols-[1.3fr_1fr_1fr]">
 
-      <!-- Company Info -->
-      <div class="md:col-span-2">
-        <div class="mb-4 flex items-center gap-4">
-          <%= image_tag "nav-logo.png",
-            alt: "Autistic Led Logo",
-            class: "h-16 w-16 object-contain" %>
-
-          <span class="text-3xl font-bold text-slate-900 dark:text-white">
-            Autistic Led
-          </span>
-        </div>
-
-        <p class="mb-4 max-w-md">
-          The journey may vary but it is always Autistic Led.
-        </p>
+      <div>
+        <p class="text-2xl font-extrabold text-[var(--a11y-text)]">Autistic Led</p>
+        <p class="mt-3 max-w-sm font-medium text-[var(--a11y-muted)] text-[length:calc(17px*var(--a11y-scale))] [line-height:1.5]">The journey may vary, but it is always Autistic Led.</p>
 
         <a href="https://www.facebook.com/AutisticLedSouthHolland"
            target="_blank"
            rel="noopener noreferrer"
-           class="text-slate-500 transition-colors hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
-          <span class="sr-only">Facebook</span>
-
-          <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+           class="mt-4 inline-flex text-[var(--a11y-muted)]"
+           aria-label="Autistic Led on Facebook">
+          <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
           </svg>
         </a>
       </div>
 
-      <!-- Company Links -->
       <div>
-        <h3 class="text-sm font-bold uppercase">Company</h3>
-
-        <ul class="mt-4 space-y-3">
-          <li><%= render Website::LinkComponent.new(text: "About", path: "#", variant: :small) %></li>
-          <li><%= render Website::LinkComponent.new(text: "Blog", path: "#", variant: :small) %></li>
-          <li><%= render Website::LinkComponent.new(text: "Contact", path: "#", variant: :small) %></li>
+        <p class="text-[length:calc(13px*var(--a11y-scale))] font-bold uppercase tracking-[0.1em] text-[var(--a11y-muted)]">Links</p>
+        <ul class="mt-4 flex flex-col gap-3">
+          <li>
+            <%= link_to "About", root_path(anchor: "about"),
+                  class: "font-semibold text-[var(--a11y-link)] text-[length:calc(17px*var(--a11y-scale))] underline-offset-[3px] [text-decoration:var(--a11y-underline)]" %>
+          </li>
+          <li>
+            <%= link_to "Contact", root_path(anchor: "contact"),
+                  class: "font-semibold text-[var(--a11y-link)] text-[length:calc(17px*var(--a11y-scale))] underline-offset-[3px] [text-decoration:var(--a11y-underline)]" %>
+          </li>
         </ul>
+      </div>
+
+      <div>
+        <p class="text-[length:calc(13px*var(--a11y-scale))] font-bold uppercase tracking-[0.1em] text-[var(--a11y-muted)]">Accessibility</p>
+        <button type="button"
+                class="mt-4 flex items-center gap-2 bg-transparent p-0 font-bold text-[var(--a11y-link)] text-[length:calc(17px*var(--a11y-scale))]"
+                data-accessibility-target="toggleButton"
+                data-action="click->accessibility#togglePanel"
+                aria-expanded="false"
+                aria-controls="a11y-panel">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 15.5v.01"/>
+          </svg>
+          Accessibility settings
+        </button>
       </div>
 
     </div>
 
-    <!-- Bottom section -->
-    <div class="mt-10 flex flex-col items-center gap-3 text-center">
+    <!-- Accessibility settings panel -->
+    <div id="a11y-panel"
+         class="hidden mt-7 border-t pt-7 [border-color:var(--a11y-border)]"
+         data-accessibility-target="panel">
+      <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
 
-      <p class="text-sm">
-        &copy; <%= Time.current.year %> Autistic Led. All rights reserved.
-      </p>
-      <p class="text-sm">
-         Site Made by <%= link_to "Ellis Development", "https://ebrookes.dev", target: "_blank", rel: "noopener noreferrer", class: "underline" %>
-      </p>
+        <fieldset class="m-0 border-0 p-0">
+          <legend class="mb-3 text-[length:calc(13px*var(--a11y-scale))] font-bold uppercase tracking-[0.08em] text-[var(--a11y-muted)]">Colour &amp; contrast</legend>
+          <div class="flex flex-wrap gap-2">
+            <% [["Light", "light"], ["Dark", "dark"], ["High contrast", "high-contrast"], ["Calm", "calm"]].each_with_index do |(label, value), index| %>
+              <button type="button"
+                      class="inline-flex items-center gap-1.5 rounded-full border-2 px-4 py-2 font-semibold text-[var(--a11y-text)] text-[length:calc(15px*var(--a11y-scale))] [border-color:var(--a11y-border)] aria-pressed:bg-[var(--a11y-accent)] aria-pressed:text-[var(--a11y-accent-text)] aria-pressed:[border-color:var(--a11y-accent)]"
+                      data-accessibility-target="control"
+                      data-action="click->accessibility#choose"
+                      data-accessibility-key-param="theme"
+                      data-accessibility-value-param="<%= value %>"
+                      aria-pressed="<%= index.zero? %>"><%= label %></button>
+            <% end %>
+          </div>
+        </fieldset>
 
-      <button type="button" class="mt-2 inline-flex items-center gap-2 rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-700"
-        data-action="click->theme#toggle"
-        aria-label="Toggle theme">
+        <fieldset class="m-0 border-0 p-0">
+          <legend class="mb-3 text-[length:calc(13px*var(--a11y-scale))] font-bold uppercase tracking-[0.08em] text-[var(--a11y-muted)]">Text size</legend>
+          <div class="flex flex-wrap gap-2">
+            <% [["A-", "small"], ["A", "medium"], ["A+", "large"], ["A++", "xlarge"]].each do |(label, value)| %>
+              <button type="button"
+                      class="inline-flex items-center gap-1.5 rounded-full border-2 px-4 py-2 font-semibold text-[var(--a11y-text)] text-[length:calc(15px*var(--a11y-scale))] [border-color:var(--a11y-border)] aria-pressed:bg-[var(--a11y-accent)] aria-pressed:text-[var(--a11y-accent-text)] aria-pressed:[border-color:var(--a11y-accent)]"
+                      data-accessibility-target="control"
+                      data-action="click->accessibility#choose"
+                      data-accessibility-key-param="size"
+                      data-accessibility-value-param="<%= value %>"
+                      aria-pressed="<%= value == "medium" %>"><%= label %></button>
+            <% end %>
+          </div>
+        </fieldset>
 
-        <svg class="block h-4 w-4 dark:hidden" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="10" cy="10" r="3.25" />
-          <path d="M10 1.5v1.75M10 16.75v1.75M3.75 10H2M18 10h-1.75M4.93 4.93l-1.24-1.24M16.31 16.31l-1.24-1.24M4.93 15.07l-1.24 1.24M16.31 3.69l-1.24 1.24" />
-        </svg>
+        <fieldset class="m-0 border-0 p-0">
+          <legend class="mb-3 text-[length:calc(13px*var(--a11y-scale))] font-bold uppercase tracking-[0.08em] text-[var(--a11y-muted)]">Reading font</legend>
+          <div class="flex flex-wrap gap-2">
+            <% [["Standard", "standard"], ["Dyslexia-friendly", "dyslexia"]].each do |(label, value)| %>
+              <button type="button"
+                      class="inline-flex items-center gap-1.5 rounded-full border-2 px-4 py-2 font-semibold text-[var(--a11y-text)] text-[length:calc(15px*var(--a11y-scale))] [border-color:var(--a11y-border)] aria-pressed:bg-[var(--a11y-accent)] aria-pressed:text-[var(--a11y-accent-text)] aria-pressed:[border-color:var(--a11y-accent)]"
+                      data-accessibility-target="control"
+                      data-action="click->accessibility#choose"
+                      data-accessibility-key-param="font"
+                      data-accessibility-value-param="<%= value %>"
+                      aria-pressed="<%= value == "standard" %>"><%= label %></button>
+            <% end %>
+          </div>
+        </fieldset>
 
-        <svg class="hidden h-4 w-4 dark:block" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M11.54 1.87a.75.75 0 0 0-1.16.8 7 7 0 0 1-8.01 9.92.75.75 0 0 0-.82 1.14A8.5 8.5 0 1 0 11.54 1.87Z"/>
-        </svg>
+        <fieldset class="m-0 border-0 p-0">
+          <legend class="mb-3 text-[length:calc(13px*var(--a11y-scale))] font-bold uppercase tracking-[0.08em] text-[var(--a11y-muted)]">More options</legend>
+          <div class="flex flex-col gap-3">
+            <% [
+                 ["Roomier line spacing", "spacing", "relaxed"],
+                 ["Wider letter spacing", "letters", "wide"],
+                 ["Always underline links", "underline", "true"],
+                 ["Reduce motion", "motion", "reduce"]
+               ].each do |(label, key, value)| %>
+              <button type="button"
+                      class="group flex items-center justify-between gap-3 bg-transparent p-0 font-medium text-[var(--a11y-text)] text-[length:calc(16px*var(--a11y-scale))]"
+                      data-accessibility-target="control"
+                      data-action="click->accessibility#toggleSwitch"
+                      data-accessibility-key-param="<%= key %>"
+                      data-accessibility-value-param="<%= value %>"
+                      aria-pressed="false">
+                <span><%= label %></span>
+                <span class="relative inline-block h-[22px] w-[38px] flex-shrink-0 rounded-full border-2 [border-color:var(--a11y-border)] group-aria-pressed:bg-[var(--a11y-accent)] group-aria-pressed:[border-color:var(--a11y-accent)]" aria-hidden="true">
+                  <span class="absolute left-0.5 top-0.5 h-3.5 w-3.5 rounded-full bg-[var(--a11y-muted)] [transition-duration:var(--a11y-motion-duration)] transition-[left] group-aria-pressed:left-[18px] group-aria-pressed:bg-[var(--a11y-accent-text)]"></span>
+                </span>
+              </button>
+            <% end %>
+          </div>
+        </fieldset>
 
-        <span>Theme</span>
-      </button>
+      </div>
 
+      <button type="button"
+              class="mt-5 bg-transparent p-0 font-semibold text-[var(--a11y-muted)] text-[length:calc(14px*var(--a11y-scale))] underline"
+              data-action="click->accessibility#reset">Reset to defaults</button>
     </div>
+
+    <p class="mt-6 border-t pb-6 pt-6 text-center font-medium text-[var(--a11y-muted)] text-[length:calc(15px*var(--a11y-scale))] [border-color:var(--a11y-border)]">
+      &copy; <%= Time.current.year %> Autistic Led. All rights reserved.
+      &middot;
+      Site made by <%= link_to "Ellis Development", "https://ebrookes.dev", target: "_blank", rel: "noopener noreferrer", class: "underline" %>
+    </p>
 
   </div>
 </footer>
