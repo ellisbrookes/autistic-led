@@ -81,7 +81,7 @@
       Used on the directory card preview.
     </p>
 
-    <% if directory_listing.cover_image.attached? %>
+    <% if directory_listing.cover_image.attached? && directory_listing.cover_image.blob.persisted? %>
       <div class="mt-4 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
         <%= image_tag directory_listing.cover_image,
           class: "h-40 w-full object-cover",
@@ -106,7 +106,7 @@
 
     <% if directory_listing.images.attached? %>
       <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <% directory_listing.images.each do |image| %>
+        <% directory_listing.images.select { |image| image.blob.persisted? }.each do |image| %>
           <%= image_tag image,
             class: "h-32 w-full rounded-lg object-cover",
             alt: directory_listing.name %>

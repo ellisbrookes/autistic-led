@@ -55,7 +55,7 @@
                   form_class: "inline-flex",
                   data: { turbo_confirm: "Are you sure?" } %>
             <% if admin? && !blog.approved? %>
-              <%= button_to "Approve", approve_blog_path(blog), method: :patch,
+              <%= button_to "Approve", approve_blog_path(blog, version: blog.updated_at.to_fs(:usec)), method: :patch,
                     class: "bg-transparent p-0 font-semibold text-[var(--a11y-link)] text-[length:calc(14px*var(--a11y-scale))] underline-offset-[3px] [text-decoration:var(--a11y-underline)]",
                     form_class: "inline-flex" %>
             <% end %>

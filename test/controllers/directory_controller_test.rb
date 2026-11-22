@@ -175,7 +175,7 @@ class DirectoryControllerTest < ActionDispatch::IntegrationTest
   test "admin should approve a directory listing" do
     post session_url, params: { email_address: @admin.email_address, password: "password123" }
 
-    patch approve_directory_listing_url(@pending_listing)
+    patch approve_directory_listing_url(@pending_listing, version: @pending_listing.updated_at.to_fs(:usec))
 
     assert_redirected_to directory_listing_url(@pending_listing)
     assert @pending_listing.reload.approved?

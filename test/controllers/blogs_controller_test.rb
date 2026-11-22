@@ -95,7 +95,7 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
   test "admin should approve a blog" do
     post session_url, params: { email_address: @user.email_address, password: "password123" }
 
-    patch approve_blog_url(@pending_blog)
+    patch approve_blog_url(@pending_blog, version: @pending_blog.updated_at.to_fs(:usec))
 
     assert_redirected_to blog_url(@pending_blog)
     assert @pending_blog.reload.approved?

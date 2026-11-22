@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Authentication
+
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
@@ -8,16 +10,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :authenticated?, :owns_comment?, :owns_blog?, :admin?
 
   private
-
-    def current_user
-      return @current_user if defined?(@current_user)
-
-      @current_user = User.find_by(id: session[:user_id])
-    end
-
-    def authenticated?
-      current_user.present?
-    end
 
     def require_authentication
       return if authenticated?
@@ -33,6 +25,17 @@ class ApplicationController < ActionController::Base
       return if admin?
 
       redirect_to blogs_path, alert: "Only admins can perform that action."
+    end
+
+    def require_blog_visibility
+      return if @blog.approved? || owns_blog?(@blog) || admin?
+
+      redirect_to blogs_path, alert: "This blog is awaiting admin approval."
+    end
+
+    # An approval only counts for the version the admin was looking at.
+    def reviewed_current_version?(record)
+      params[:version].to_s == record.updated_at.to_fs(:usec)
     end
 
     def commenter_token

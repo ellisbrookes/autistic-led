@@ -178,7 +178,7 @@
                 <% if admin? && !@directory_listing.approved? %>
                   <%= render Website::ButtonComponent.new(
                     text: "Approve listing",
-                    path: approve_directory_listing_path(@directory_listing),
+                    path: approve_directory_listing_path(@directory_listing, version: @directory_listing.updated_at.to_fs(:usec)),
                     method: :patch,
                     variant: :secondary,
                     size: :sm

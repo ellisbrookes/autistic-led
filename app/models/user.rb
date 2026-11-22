@@ -6,6 +6,7 @@ class User < ApplicationRecord
   normalizes :name, with: ->(value) { value.to_s.strip }
 
   validates :name, presence: true
+  validates :password, length: { minimum: 8 }, allow_nil: true
   validates :role, presence: true
   validates :email_address, presence: true, uniqueness: true
 

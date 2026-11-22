@@ -126,8 +126,9 @@
 
           <% if business.website_url.present? || business.contact_email.present? || business.location.present? %>
             <div class="relative z-20 mt-4 flex flex-wrap gap-3 text-sm">
-              <% if business.website_url.present? %>
-                <%= link_to "Website", business.website_url, class: "rounded-md border border-slate-300 px-3 py-1.5 font-medium hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800" %>
+              <% website = safe_http_url(business.website_url) %>
+              <% if website %>
+                <%= link_to "Website", website, rel: "noopener noreferrer", class: "rounded-md border border-slate-300 px-3 py-1.5 font-medium hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800" %>
               <% end %>
               <% if business.contact_email.present? %>
                 <%= link_to "Email", "mailto:#{business.contact_email}", class: "rounded-md border border-slate-300 px-3 py-1.5 font-medium hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800" %>
@@ -144,7 +145,7 @@
                 <%= render(Website::ButtonComponent.new(text: "Edit listing", path: edit_directory_listing_path(business.id), variant: :outline, size: :sm)) %>
               <% end %>
               <% unless business.approved %>
-                <%= render(Website::ButtonComponent.new(text: "Approve listing", path: approve_directory_listing_path(business.id), method: :patch, variant: :secondary, size: :sm)) %>
+                <%= render(Website::ButtonComponent.new(text: "Approve listing", path: approve_directory_listing_path(business.id, version: business.version), method: :patch, variant: :secondary, size: :sm)) %>
               <% end %>
               <%= render(Website::ButtonComponent.new(text: "Remove listing", path: directory_listing_path(business.id), method: :delete, variant: :danger, size: :sm)) %>
             </div>
