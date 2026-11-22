@@ -10,6 +10,7 @@ class ProfilesController < ApplicationController
     attributes = filtered_profile_params
 
     if attributes && @user.update(attributes)
+      log_in(@user) if @user.saved_change_to_password_digest?
       redirect_to profile_path, notice: "Profile updated."
     else
       render :show, status: :unprocessable_entity

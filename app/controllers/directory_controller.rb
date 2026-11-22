@@ -9,7 +9,7 @@ class DirectoryController < ApplicationController
 
   Business = Struct.new(
     :id, :name, :category, :location, :supports, :notes,
-    :website_url, :contact_email, :approved, :editable, :cover_image,
+    :website_url, :contact_email, :approved, :editable, :cover_image, :version,
     keyword_init: true
   )
 
@@ -83,6 +83,12 @@ class DirectoryController < ApplicationController
       return
     end
 
+    unless reviewed_current_version?(@directory_listing)
+      redirect_to directory_listing_path(@directory_listing),
+      alert: "This listing changed since you opened it. Review it again before approving."
+      return
+    end
+
     @directory_listing.update!(approved: true, approved_at: Time.current)
     redirect_to directory_listing_path(@directory_listing),
     notice: "Directory listing approved and now live."
@@ -110,6 +116,7 @@ class DirectoryController < ApplicationController
         website_url: listing.website_url,
         contact_email: listing.contact_email,
         approved: listing.approved?,
+        version: listing.updated_at.to_fs(:usec),
         editable: admin? || (authenticated? && listing.user_id == current_user.id),
         cover_image: listing.cover_image.attached? ? listing.cover_image : listing.images.first
       )
@@ -169,7 +176,7 @@ class DirectoryController < ApplicationController
   def cleaned_directory_listing_params
     attrs = directory_listing_params.to_h
 
-    attrs.delete("images") if attrs["images"].blank?
+    attrs.delete("images") if Array(attrs["images"]).compact_blank.empty?
     attrs.delete("cover_image") if attrs["cover_image"].blank?
 
     attrs

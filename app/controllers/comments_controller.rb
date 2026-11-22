@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_blog
+  before_action :require_blog_visibility
   before_action :set_comment, only: %i[update destroy]
   before_action :require_comment_owner, only: %i[update destroy]
 

@@ -4,6 +4,7 @@ class BlogsController < ApplicationController
   before_action :require_blog_owner, only: %i[ edit update ]
   before_action :require_blog_owner_or_admin, only: %i[ destroy ]
   before_action :require_admin, only: %i[ approve ]
+  before_action :require_blog_visibility, only: %i[ show ]
 
   # GET /blogs or /blogs.json
   def index
@@ -19,11 +20,6 @@ class BlogsController < ApplicationController
 
   # GET /blogs/1 or /blogs/1.json
   def show
-    unless @blog.approved? || owns_blog?(@blog) || admin?
-      redirect_to blogs_path, alert: "This blog is awaiting admin approval."
-      return
-    end
-
     @comments = @blog.comments.top_level.includes(replies: :reply_to).order(created_at: :desc)
     @comment = @blog.comments.new
   end
@@ -55,9 +51,13 @@ class BlogsController < ApplicationController
 
   # PATCH/PUT /blogs/1 or /blogs/1.json
   def update
+    attrs = blog_params
+    attrs = attrs.merge(approved: false, approved_at: nil) unless admin?
+
     respond_to do |format|
-      if @blog.update(blog_params)
-        format.html { redirect_to @blog, notice: "Blog was successfully updated.", status: :see_other }
+      if @blog.update(attrs)
+        notice = admin? ? "Blog was successfully updated." : "Blog changes submitted for admin approval."
+        format.html { redirect_to @blog, notice: notice, status: :see_other }
         format.json { render :show, status: :ok, location: @blog }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -79,6 +79,11 @@ class BlogsController < ApplicationController
   def approve
     if @blog.approved?
       redirect_to blog_path(@blog), notice: "Blog is already approved."
+      return
+    end
+
+    unless reviewed_current_version?(@blog)
+      redirect_to blog_path(@blog), alert: "This blog changed since you opened it. Review it again before approving."
       return
     end
 

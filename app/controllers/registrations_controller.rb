@@ -1,4 +1,6 @@
 class RegistrationsController < ApplicationController
+  rate_limit to: 20, within: 1.hour, only: :create,
+    with: -> { redirect_to signup_path, alert: "Too many signups from your connection. Please try again later." }
   before_action :redirect_if_authenticated
 
   def new
@@ -9,7 +11,7 @@ class RegistrationsController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      session[:user_id] = @user.id
+      log_in(@user)
       redirect_to blogs_path, notice: "Account created successfully."
     else
       render :new, status: :unprocessable_entity

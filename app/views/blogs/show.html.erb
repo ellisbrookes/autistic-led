@@ -52,7 +52,7 @@
         <%= render(Website::ButtonComponent.new(text: "Destroy this blog", path: blog_path(@blog), method: :delete, variant: :danger, form_class: "sm:inline-block", extra_classes: "w-full sm:w-auto", data: { turbo_confirm: "Are you sure?" })) %>
       <% end %>
       <% if admin? && !@blog.approved? %>
-        <%= render(Website::ButtonComponent.new(text: "Approve this blog", path: approve_blog_path(@blog), method: :patch, variant: :primary, form_class: "sm:inline-block", extra_classes: "w-full sm:w-auto")) %>
+        <%= render(Website::ButtonComponent.new(text: "Approve this blog", path: approve_blog_path(@blog, version: @blog.updated_at.to_fs(:usec)), method: :patch, variant: :primary, form_class: "sm:inline-block", extra_classes: "w-full sm:w-auto")) %>
       <% end %>
     </div>
 
