@@ -210,4 +210,58 @@ class DirectoryControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to blogs_url
   end
+
+  test "member edit without new images keeps existing images" do
+    assert_edit_keeps_images(@member)
+  end
+
+  test "admin edit without new images keeps existing images" do
+    assert_edit_keeps_images(@admin)
+  end
+
+  test "edit with new images replaces existing images" do
+    attach_gallery
+    post session_url, params: { email_address: @member.email_address, password: "password123" }
+    upload = Rack::Test::UploadedFile.new(Rails.root.join("public/favicon-16x16.png"), "image/png")
+
+    patch directory_listing_url(@member_approved_listing), params: { directory_listing: { images: [ "", upload ] } }
+
+    assert_equal [ "favicon-16x16.png" ], gallery_filenames
+  end
+
+  test "edit with a rejected image keeps existing images" do
+    attach_gallery
+    post session_url, params: { email_address: @member.email_address, password: "password123" }
+    upload = Rack::Test::UploadedFile.new(Rails.root.join("public/robots.txt"), "text/plain")
+
+    patch directory_listing_url(@member_approved_listing), params: { directory_listing: { images: [ "", upload ] } }
+
+    assert_response :unprocessable_entity
+    assert_equal %w[first.png second.png], gallery_filenames
+  end
+
+  private
+
+    def assert_edit_keeps_images(user)
+      attach_gallery
+      post session_url, params: { email_address: user.email_address, password: "password123" }
+
+      # The form's hidden field sends [""] when no files are picked.
+      patch directory_listing_url(@member_approved_listing), params: { directory_listing: { name: "Typo fixed", images: [ "" ] } }
+
+      assert_redirected_to directory_listing_url(@member_approved_listing)
+      assert_equal "Typo fixed", @member_approved_listing.reload.name
+      assert_equal %w[first.png second.png], gallery_filenames
+    end
+
+    def attach_gallery
+      files = %w[first.png second.png].map do |name|
+        { io: StringIO.new(Rails.root.join("public/favicon-32x32.png").binread), filename: name, content_type: "image/png" }
+      end
+      @member_approved_listing.images.attach(files)
+    end
+
+    def gallery_filenames
+      DirectoryListing.find(@member_approved_listing.id).images.map { it.filename.to_s }.sort
+    end
 end

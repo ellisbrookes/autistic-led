@@ -176,7 +176,7 @@ class DirectoryController < ApplicationController
   def cleaned_directory_listing_params
     attrs = directory_listing_params.to_h
 
-    attrs.delete("images") if attrs["images"].blank?
+    attrs.delete("images") if Array(attrs["images"]).compact_blank.empty?
     attrs.delete("cover_image") if attrs["cover_image"].blank?
 
     attrs
