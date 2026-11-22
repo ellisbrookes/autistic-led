@@ -98,6 +98,14 @@ class SiteTest < ApplicationSystemTestCase
     assert_no_browser_errors
   end
 
+  test "results per page selector reloads the directory" do
+    visit directory_listings_path
+    select "20", from: "per_page"
+    assert_current_path(/per_page=20/, url: true)
+    assert_select "per_page", selected: "20"
+    assert_no_browser_errors
+  end
+
   test "injected scripts are blocked" do
     visit root_path
     page.execute_script(<<~JS)

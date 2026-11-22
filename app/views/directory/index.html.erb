@@ -165,13 +165,13 @@
             Showing <%= @start_result %>-<%= @end_result %> of <%= @total_count %> results
           </p>
 
-          <%= form_with url: directory_listings_path, method: :get, local: true, class: "flex items-center gap-2" do |form| %>
+          <%= form_with url: directory_listings_path, method: :get, local: true, class: "flex items-center gap-2", data: { controller: "auto-submit" } do |form| %>
             <%= hidden_field_tag :page, 1 %>
             <% request.query_parameters.except(:per_page, :page).each do |key, value| %>
               <%= hidden_field_tag key, value %>
             <% end %>
             <label for="per_page" class="text-sm">results per page</label>
-            <%= form.select :per_page, options_for_select(@per_page_options.map { |count| [count, count] }, @per_page), {}, class: "rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm shadow-sm focus:border-primary-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800", onchange: "this.form.submit()" %>
+            <%= form.select :per_page, options_for_select(@per_page_options.map { |count| [count, count] }, @per_page), {}, class: "rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm shadow-sm focus:border-primary-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800", data: { action: "change->auto-submit#submit" } %>
           <% end %>
         </div>
       <% end %>
